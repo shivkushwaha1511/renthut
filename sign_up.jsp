@@ -31,31 +31,31 @@
                     <div class="right">
                         <p class="right-text-top">Register</p>
                         <a href="signin.do" class="text-white ml-5" style="font-size:18px;">Already have an account?</a>
-                        <form action="" class="right-form">
+                        <form action="signup.do" class="right-form" method="post">
                             <div class="form-group">
-                                <label for="">User Name</label>
-                                <input type="text" class="form-control">
+                                <label for="">Name</label>
+                                <input type="text" class="form-control" name="name" maxlength="50" minlength="3">
                             </div>
                             <div class="form-group">
                                 <label for="">Email</label>
-                                <input type="email" class="form-control">
+                                <input type="email" class="form-control" name="email">
                             </div>
                             <div class="form-group">
                                 <label for="">Password</label>
-                                <input type="password" class="form-control">
+                                <input type="password" class="form-control" name="password" maxlength="20" minlength="8">
                             </div>
                             <div class="form-group">
                                 <label for="">Address</label>
-                                <textarea class="form-control"></textarea>
+                                <textarea class="form-control" name="address"></textarea>
                             </div>
-                            <div class="form-group">
+                     <%--   <div class="form-group">
                                 <label for="">City</label>
-                                <select class="form-control">
-                                    <option value="">Select</option>
-                                    <option value="">Jabalpur</option>
-                                    <option value="">Panagar</option>
+                                <select class="form-control" name="city">
+                                    <option value="none">Select</option>
+                                    <option value="Jabalpur">Jabalpur</option>
+                                    <option value="Panagar">Panagar</option>
                                 </select>
-                            </div>
+                            </div> --%>
 
                             <div class="text-center">
                                 <button type="submit" class="btn head-btn btn-reg mt-5">Register</button>
@@ -68,6 +68,8 @@
     </div>
     
 	<%@ include file="footer.jsp" %>
+	
+	<script src="static/js/sign.js"></script>
 
 </body>
 </html>

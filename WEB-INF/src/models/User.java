@@ -1,9 +1,13 @@
 package models;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class User {
 	private int userId;
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String email;
 	private String password;
 	private String address;
@@ -13,6 +17,38 @@ public class User {
 	private int contactNo;
 	private String profilePic;
 	
+	public User() {
+		
+	}
+	
+	public User(String name, String email, String password, String address) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+	}
+	
+	public void signUp() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "insert into users (name,email,password,address) value (?,?,?,?)";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			ps.setString(1,name);
+			ps.setString(2,email);
+			ps.setString(3,password);
+			ps.setString(4,address);
+			
+			ps.executeUpdate();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
@@ -21,20 +57,12 @@ public class User {
 		return userId;
 	}
 	
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	public String getFirstName() {
-		return firstName;
-	}
-	
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
-	public String getLastName() {
-		return lastName;
+	public String getName() {
+		return name;
 	}
 	
 	public void setEmail(String email) {

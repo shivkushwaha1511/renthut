@@ -61,3 +61,15 @@ label{
 .btn-reg{
     font-size: 22px;
 }
+
+.success{
+	border-color: green;
+}
+
+.fail{
+	border-color: red;
+}
+
+input{
+    outline: none !important;
+}

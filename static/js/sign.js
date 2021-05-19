@@ -14,15 +14,25 @@ const result = {
 };
 
 const validate = function(pattern,field){
+    let help = document.querySelector("#help_"+field.name);
+    let err = document.querySelector("#err_"+field.name);
+
     if(pattern.test(field.value)){
         field.classList.replace("fail","success");
         result[field.name] = true;
+        help.classList.replace("hide","show");
+        err.classList.replace("show","hide");
     }
     else{
-        if(field.classList.contains("success"))
-            field.classList.replace("success","fail");
+        if(field.classList.contains("success")){
+                field.classList.replace("success","fail");
+                help.classList.replace("show","hide");
+                err.classList.replace("hide","show");
+        }
         else{
             field.classList.add("fail");
+            help.classList.add("hide");
+            err.classList.replace("hide","show");
         }
 
         result[field.name] = false;
@@ -36,7 +46,7 @@ inputs.forEach(function(input){
          validate(pattern,field);
     });
 
-    input.addEventListener("click",function(event){
+    input.addEventListener("blur",function(event){
          let pattern = Patterns[event.target.name];
          let field = event.target;
          validate(pattern,field);

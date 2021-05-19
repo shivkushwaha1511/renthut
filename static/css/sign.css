@@ -64,12 +64,27 @@ label{
 
 .success{
 	border-color: green;
+    color: green;
 }
 
 .fail{
 	border-color: red;
+    color: red;
 }
 
 input{
     outline: none !important;
+}
+
+.hide{
+    display: none;
+}
+
+.show{
+    display: block;
+}
+
+.err-box{
+    padding-left: 100px; 
+    color: red;
 }

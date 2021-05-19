@@ -17,6 +17,8 @@
 <body>
       
 	<%@ include file="header.jsp" %>
+	
+	<% String error = (String)request.getAttribute("error"); %>
 
     <div class="main-body">
         <div class="container">
@@ -31,22 +33,35 @@
                     <div class="right">
                         <p class="right-text-top">Register</p>
                         <a href="signin.do" class="text-white ml-5" style="font-size:18px;">Already have an account?</a>
+                        
+                        <% if(error != null){ %>
+	                        <div class="err-box pt-3 w-75">
+	                        	<%= error %>	
+	                        </div>
+                        <% } %>
+                        
                         <form action="signup.do" class="right-form" method="post">
                             <div class="form-group">
                                 <label for="">Name</label>
-                                <input type="text" class="form-control" name="name" maxlength="50" minlength="3">
+                                <input value="${param.name}" type="text" class="form-control" name="name" maxlength="50" minlength="3" autocomplete="off" placeholder="Enter your name">
+                                <small class="form-text" id="help_name">Enter alphabets only(min-3)</small>
+                                <small class="form-text hide" id="err_name">Invalid name</small>
                             </div>
                             <div class="form-group">
                                 <label for="">Email</label>
-                                <input type="email" class="form-control" name="email">
+                                <input value="${param.email}" type="email" class="form-control" name="email" autocomplete="off" placeholder="Enter your email">
+                                <small class="form-text" id="help_email">Enter valid email</small>
+                                <small class="form-text hide" id="err_email">Invalid Email</small>
                             </div>
                             <div class="form-group">
                                 <label for="">Password</label>
-                                <input type="password" class="form-control" name="password" maxlength="20" minlength="8">
+                                <input type="password" class="form-control" name="password" maxlength="20" minlength="8" placeholder="Enter your password">
+                                <small class="form-text" id="help_password">Combination of alphabets,numbers & symbols(@,-,_)</small>
+                                <small class="form-text hide" id="err_password">Invalid Password</small>
                             </div>
                             <div class="form-group">
                                 <label for="">Address</label>
-                                <textarea class="form-control" name="address"></textarea>
+                                <textarea class="form-control" name="address" placeholder="Enter your address"></textarea>
                             </div>
                      <%--   <div class="form-group">
                                 <label for="">City</label>
@@ -69,7 +84,7 @@
     
 	<%@ include file="footer.jsp" %>
 	
-	<script src="static/js/sign.js"></script>
+	<%-- <script src="static/js/sign.js"></script> --%>
 
 </body>
 </html>

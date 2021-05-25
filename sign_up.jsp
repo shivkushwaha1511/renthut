@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Sign Up</title>
 </head>
 
@@ -61,7 +62,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Address</label>
-                                <textarea class="form-control" name="address" placeholder="Enter your address"></textarea>
+                                <textarea class="form-control" name="address" placeholder="Enter your address" id="address"></textarea>
+                                <small class="form-text hide" id="err_address">Enter Address</small>
                             </div>
                      <%--   <div class="form-group">
                                 <label for="">City</label>
@@ -71,6 +73,8 @@
                                     <option value="Panagar">Panagar</option>
                                 </select>
                             </div> --%>
+                            
+                            <div class="g-recaptcha mt-5" style="padding-left:40px;" data-sitekey="6LdtcecaAAAAAIR-dal3QPvbdt5Ixb98veWLqjeO"></div>
 
                             <div class="text-center">
                                 <button type="submit" class="btn head-btn btn-reg mt-5">Register</button>
@@ -84,7 +88,7 @@
     
 	<%@ include file="footer.jsp" %>
 	
-	<%-- <script src="static/js/sign.js"></script> --%>
+	<script src="static/js/sign.js"></script>
 
 </body>
 </html>

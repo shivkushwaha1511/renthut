@@ -1,5 +1,8 @@
 const inputs = document.querySelectorAll("input");
+const address = document.querySelector("#address");
+const err_address = document.querySelector("#err_address");
 const form = document.forms[0];
+
 
 const Patterns = {
     name : /^[A-z a-z]{3,50}$/,
@@ -10,7 +13,8 @@ const Patterns = {
 const result = {
     name : false,
     email: false,
-    password: false
+    password: false,
+    address: false
 };
 
 const validate = function(pattern,field){
@@ -53,9 +57,43 @@ inputs.forEach(function(input){
     });
 });
 
+address.addEventListener("keyup",function(event){
+    if(address.value == ""){
+        if(address.classList.contains("success")){
+            address.classList.replace("success","fail");
+            err_address.classList.replace("hide","show");
+        }
+        else{
+            address.classList.add("fail");
+            err_address.classList.replace("hide","show");
+        }
+    }else{
+        address.classList.replace("fail","success");
+        result.address = true;
+        err_address.classList.replace("show","hide");
+    }
+});
+
+address.addEventListener("blur",function(event){
+    if(address.value == ""){
+        if(address.classList.contains("success")){
+            address.classList.replace("success","fail");
+            err_address.classList.replace("hide","show");
+        }
+        else{
+            address.classList.add("fail");
+            err_address.classList.replace("hide","show");
+        }
+    }else{
+        address.classList.replace("fail","success");
+        result.address = true;
+        err_address.classList.replace("show","hide");
+    }
+});
+
 
 form.addEventListener("submit",function(event){
-    if(result.name && result.email && result.password){
+    if(result.name && result.email && result.password && result.address){
         return true;
     }else{
         event.preventDefault();

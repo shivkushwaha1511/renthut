@@ -1,14 +1,15 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import models.User;
 import utils.GoogleCaptcha;
@@ -56,6 +57,12 @@ public class SignUpServlet extends HttpServlet{
 			if(validate) {
 				User user = new User(name,email,password,address);
 				user.signUp();
+				
+				ServletContext context = request.getServletContext();
+				String parentpath = context.getRealPath("/WEB-INF/uploads");
+				File file = new File(parentpath,email);
+				file.mkdir();
+				
 				response.sendRedirect("index.jsp");;
 			}else {
 				request.setAttribute("error", err);

@@ -31,5 +31,15 @@
 		<servlet-name>a2</servlet-name>
 		<url-pattern>/signin.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a3</servlet-name>
+		<servlet-class>controllers.ActivateUser</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a3</servlet-name>
+		<url-pattern>/activateuser.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>

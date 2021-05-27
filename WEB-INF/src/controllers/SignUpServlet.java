@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.User;
+import utils.EmailSender;
 import utils.GoogleCaptcha;
+import utils.MessageTemplate;
+import java.util.Random;
 
 public class SignUpServlet extends HttpServlet{
 	public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
@@ -38,7 +41,7 @@ public class SignUpServlet extends HttpServlet{
 				err += "<li>Enter Valid Name</li>";
 			}
 			
-			pattern = Pattern.compile("^([A-Za-z][A-Za-z\\d-_]*)@([A-Za-z]{2,})\\.([A-Za-z]{2,5})(\\.[A-Za-z]{2,5})?$");
+			pattern = Pattern.compile("^([a-z][a-z\\d-_]*)@([a-z]{2,})\\.([a-z]{2,5})(\\.[a-z]{2,5})?$");
 			matcher = pattern.matcher(email);
 			if(!matcher.matches()) {
 				validate = false;
@@ -55,13 +58,25 @@ public class SignUpServlet extends HttpServlet{
 			err += "</ul>";
 			
 			if(validate) {
-				User user = new User(name,email,password,address);
+				
+				Long authCode = new Random().nextLong();
+				
+				if(authCode<0) {
+					authCode = authCode * -1;
+				}
+				
+				User user = new User(name,email,password,address,Long.toString(authCode));
+				
 				user.signUp();
 				
 				ServletContext context = request.getServletContext();
 				String parentpath = context.getRealPath("/WEB-INF/uploads");
 				File file = new File(parentpath,email);
 				file.mkdir();
+				
+				String message = MessageTemplate.activateAccount(name,email,authCode);
+				String subject = "Activate Account";
+				EmailSender.sendEmail(email,subject, message);
 				
 				response.sendRedirect("index.jsp");;
 			}else {

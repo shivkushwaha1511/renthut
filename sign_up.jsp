@@ -45,25 +45,25 @@
                             <div class="form-group">
                                 <label for="">Name</label>
                                 <input value="${param.name}" type="text" class="form-control" name="name" maxlength="50" minlength="3" autocomplete="off" placeholder="Enter your name">
-                                <small class="form-text" id="help_name">Enter alphabets only(min-3)</small>
-                                <small class="form-text hide" id="err_name">Invalid name</small>
+                                <small class="form-text text-warning" id="help_name">Enter alphabets only(min-3)</small>
+                                <small class="form-text hide text-danger" id="err_name">Invalid name</small>
                             </div>
                             <div class="form-group">
                                 <label for="">Email</label>
                                 <input value="${param.email}" type="email" class="form-control" name="email" autocomplete="off" placeholder="Enter your email">
-                                <small class="form-text" id="help_email">Enter valid email</small>
-                                <small class="form-text hide" id="err_email">Invalid Email</small>
+                                <small class="form-text text-warning" id="help_email">Enter valid email</small>
+                                <small class="form-text hide text-danger" id="err_email">Invalid Email</small>
                             </div>
                             <div class="form-group">
                                 <label for="">Password</label>
                                 <input type="password" class="form-control" name="password" maxlength="20" minlength="8" placeholder="Enter your password">
-                                <small class="form-text" id="help_password">Combination of alphabets,numbers & symbols(@,-,_)</small>
-                                <small class="form-text hide" id="err_password">Invalid Password</small>
+                                <small class="form-text text-warning" id="help_password">Combination of alphabets,numbers & symbols(@,-,_)</small>
+                                <small class="form-text hide text-danger" id="err_password">Invalid Password</small>
                             </div>
                             <div class="form-group">
                                 <label for="">Address</label>
                                 <textarea class="form-control" name="address" placeholder="Enter your address" id="address"></textarea>
-                                <small class="form-text hide" id="err_address">Enter Address</small>
+                                <small class="form-text hide text-danger" id="err_address">Enter Address</small>
                             </div>
                      <%--   <div class="form-group">
                                 <label for="">City</label>

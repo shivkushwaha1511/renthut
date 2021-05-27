@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 public class User {
 	private int userId;
 	private String name;
@@ -21,32 +23,67 @@ public class User {
 		
 	}
 	
-	public User(String name, String email, String password, String address) {
+	public User(String name, String email, String password, String address, String activationCode) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.address = address;
+		this.activationCode = activationCode;
 	}
-	
+
+	public User(String email, String activationCode) {
+		super();
+		this.email = email;
+		this.activationCode = activationCode;
+	}
+
 	public void signUp() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
 			
-			String query = "insert into users (name,email,password,address) value (?,?,?,?)";
+			String query = "insert into users (name,email,password,address,activation_code) value (?,?,?,?,?)";
 			
 			PreparedStatement ps = con.prepareStatement(query);
 			
 			ps.setString(1,name);
 			ps.setString(2,email);
-			ps.setString(3,password);
+			
+			StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+			String encryptedPassword = encryptor.encryptPassword(password);
+			
+			ps.setString(3,encryptedPassword);
 			ps.setString(4,address);
+			ps.setString(5,activationCode);
 			
 			ps.executeUpdate();
 		}catch(SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean activateUser() {
+		boolean activate = false;
+		int row;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "UPDATE users SET status_id=1,activation_code=NULL WHERE email=? AND activation_code=?";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1,email);
+			ps.setString(2,activationCode);
+			
+			row = ps.executeUpdate();		
+			if(row == 1)
+				activate = true;
+			
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return activate;
 	}
 
 	public void setUserId(int userId) {

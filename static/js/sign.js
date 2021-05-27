@@ -6,7 +6,7 @@ const form = document.forms[0];
 
 const Patterns = {
     name : /^[A-z a-z]{3,50}$/,
-    email : /^([A-Za-z][A-Za-z\d-_]*)@([A-Za-z]{2,})\.([A-Za-z]{2,5})(\.[A-Za-z]{2,5})?$/,
+    email : /^([a-z][a-z\d-_]*)@([a-z]{2,})\.([a-z]{2,5})(\.[a-z]{2,5})?$/,
     password : /^[A-Za-z\d@_-]{8,20}$/
 };
 

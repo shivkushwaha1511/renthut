@@ -14,5 +14,8 @@
 	<classpathentry kind="src" output="work" path="work"/>
 	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/javax.json-1.1.2.jar"/>
 	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/javax.json-api-1.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/jasypt-1.9.2.jar"/>
+	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/activation-1.1.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

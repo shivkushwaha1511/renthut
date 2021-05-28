@@ -1,8 +1,25 @@
+//View Password---------------------------------------------
+const eye = document.querySelector("#eye-view");
+
+let flag = true;
+
+eye.addEventListener("click",(event)=>{
+	let pass = document.querySelector("#pass");
+	if(flag){
+		pass.type = "text";
+		flag = false;
+	}else{
+		pass.type = "password";
+		flag = true;
+	}
+});
+
+
+//Field Validation------------------------------------------
 const inputs = document.querySelectorAll("input");
 const address = document.querySelector("#address");
 const err_address = document.querySelector("#err_address");
 const form = document.forms[0];
-
 
 const Patterns = {
     name : /^[A-z a-z]{3,50}$/,

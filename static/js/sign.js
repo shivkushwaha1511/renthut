@@ -1,3 +1,31 @@
+//Unique email-----------------------------------------------
+const email_field = document.querySelector("#email_field");
+
+
+const ajaxReq = async ()=>{
+    let response = await fetch(`uniqueemail.do?email=${email_field.value}`);
+    return response.text();
+};
+
+const checkEmail = ()=>{
+    ajaxReq().then((data)=>{
+        if(result.email){
+            if(data == "true"){
+                const Ehelp = document.querySelector("#help_email");
+                const Eerror = document.querySelector("#err_email");
+
+                Ehelp.classList.replace("show","hide");
+                Eerror.classList.replace("hide","show");
+                Eerror.innerHTML = "User With Entered Email Already Exists";
+                result.email = false;
+                email_field.classList.replace("success","fail");
+            }
+        }
+    });
+};
+
+email_field.addEventListener("blur",checkEmail);
+
 //View Password---------------------------------------------
 const eye = document.querySelector("#eye-view");
 
@@ -37,6 +65,10 @@ const result = {
 const validate = function(pattern,field){
     let help = document.querySelector("#help_"+field.name);
     let err = document.querySelector("#err_"+field.name);
+
+    if(err.id == "err_email"){
+        err.innerHTML = "Invalid Email";
+    }
 
     if(pattern.test(field.value)){
         field.classList.replace("fail","success");

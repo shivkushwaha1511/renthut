@@ -42,12 +42,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Email</label>
-                                <input value="${param.email}" type="email" class="form-control" name="email" autocomplete="off" placeholder="Enter your email">
+                                <input value="${param.email}" id="email_field" type="email" class="form-control" name="email" autocomplete="off" placeholder="Enter your email">
                                 <small class="form-text text-warning" id="help_email">Enter valid email</small>
                                 <small class="form-text hide text-danger" id="err_email">Invalid Email</small>
                             </div>
                             <div class="form-group">
-                                <label for="">Password</label><i class="fa fa-eye ml-3" id="eye-view"></i>
+                                <label for="">Password</label><i class="fa fa-eye ml-3" id="eye-view" style="cursor:pointer;"></i>
                                 <input type="password" class="form-control" name="password" id="pass" maxlength="20" minlength="8" placeholder="Enter your password">
                                 <small class="form-text text-warning" id="help_password">Combination of alphabets,numbers & symbols(@,-,_)</small>
                                 <small class="form-text hide text-danger" id="err_password">Invalid Password</small>

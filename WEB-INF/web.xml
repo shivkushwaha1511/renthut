@@ -41,5 +41,15 @@
 		<servlet-name>a3</servlet-name>
 		<url-pattern>/activateuser.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a4</servlet-name>
+		<servlet-class>controllers.UniqueEmailServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a4</servlet-name>
+		<url-pattern>/uniqueemail.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>

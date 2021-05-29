@@ -3,6 +3,7 @@ package models;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
@@ -18,6 +19,8 @@ public class User {
 	private City cityId;
 	private int contactNo;
 	private String profilePic;
+	
+//	Constructor Summary
 	
 	public User() {
 		
@@ -37,7 +40,58 @@ public class User {
 		this.email = email;
 		this.activationCode = activationCode;
 	}
+	
+	public User(String email) {
+		this.email = email;
+	}
 
+//	Method Summary
+	
+	public boolean uniqueEmail() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "select * from users where email=?";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			ps.setString(1,email);
+			
+			ResultSet rs =  ps.executeQuery();
+			
+			if(rs.next())
+				return true;
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean activateUser() {
+		boolean activate = false;
+		int row;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "UPDATE users SET status_id=1,activation_code=NULL WHERE email=? AND activation_code=?";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1,email);
+			ps.setString(2,activationCode);
+			
+			row = ps.executeUpdate();		
+			if(row == 1)
+				activate = true;
+			
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return activate;
+	}
+	
 	public void signUp() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -63,28 +117,7 @@ public class User {
 		}
 	}
 	
-	public boolean activateUser() {
-		boolean activate = false;
-		int row;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
-			
-			String query = "UPDATE users SET status_id=1,activation_code=NULL WHERE email=? AND activation_code=?";
-			
-			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1,email);
-			ps.setString(2,activationCode);
-			
-			row = ps.executeUpdate();		
-			if(row == 1)
-				activate = true;
-			
-		}catch(SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return activate;
-	}
+//	Getter & Setters
 
 	public void setUserId(int userId) {
 		this.userId = userId;

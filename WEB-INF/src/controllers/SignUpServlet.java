@@ -78,7 +78,7 @@ public class SignUpServlet extends HttpServlet{
 				String subject = "Activate Account";
 				EmailSender.sendEmail(email,subject, message);
 				
-				response.sendRedirect("index.jsp");;
+				response.sendRedirect("verify_email.jsp");;
 			}else {
 				request.setAttribute("error", err);
 				request.getRequestDispatcher("sign_up.jsp").forward(request, response);

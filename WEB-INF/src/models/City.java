@@ -5,6 +5,15 @@ public class City {
 	private String city;
 	private State stateId;
 	
+//	constructor summary
+	
+	public City(int cityId,String city) {
+		this.cityId = cityId;
+		this.city = city;
+	}
+	
+//	getters & setters
+	
 	public int getCityId() {
 		return cityId;
 	}

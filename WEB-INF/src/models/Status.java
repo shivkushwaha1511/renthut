@@ -4,6 +4,14 @@ public class Status {
 	private int statusId;
 	private String status;
 	
+//	constructor summary
+	
+	public Status(int statusId) {
+		this.statusId = statusId;
+	}
+	
+	
+//	getters & setters
 	public int getStatusId() {
 		return statusId;
 	}

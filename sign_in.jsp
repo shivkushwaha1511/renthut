@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
-    <link rel="stylesheet" href="static/css/bootstrap.css">
-    <link rel="stylesheet" href="static/css/common.css">
+    <%@ include file="headtags.jsp" %>
     <link rel="stylesheet" href="static/css/sign.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     <title>Sign In</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
       
 	<%@ include file="header.jsp" %>
+	
+	<% String error = (String)request.getAttribute("error"); %>
 
     <div class="main-body">
         <div class="container">
@@ -31,17 +26,30 @@
                     <div class="right" style="margin-top:50px;">
                         <p class="right-text-top">SignIn</p>
                         <a href="signup.do" class="text-white ml-5" style="font-size:18px;">Register a user?</a>
-                        <form action="" class="right-form">                    
+                        
+                        <% if(error != null){ %>
+	                        <div class="err-box pt-3 w-75">
+	                        	<%= error %>	
+	                        </div>
+                        <% } %>
+                        
+                        <form action="signin.do" method="post" class="right-form">                    
                             <div class="form-group">
                                 <label for="">Email</label>
-                                <input type="email" class="form-control">
+                                <input value="${param.email}" id="email_field" type="email" class="form-control" name="email" autocomplete="off" placeholder="Enter your email">
+                                <small class="form-text text-warning" id="help_email">Enter valid email</small>
+                                <small class="form-text hide text-danger" id="err_email">Invalid Email</small>
                             </div>
                             <div class="form-group">
-                                <label for="">Password</label>
-                                <input type="password" class="form-control">
-                            </div>                            
+                                <label for="">Password</label><i class="fa fa-eye ml-3" id="eye-view" style="cursor:pointer;"></i>
+                                <input type="password" class="form-control" name="password" id="pass" maxlength="20" minlength="8" placeholder="Enter your password" autocomplete="off">
+                                <small class="form-text text-warning" id="help_password">Combination of alphabets,numbers & symbols(@,-,_)</small>
+                                <small class="form-text hide text-danger" id="err_password">Invalid Password</small>
+                            </div>
+                            <div class="g-recaptcha mt-5" style="padding-left:40px;" data-sitekey="6LdtcecaAAAAAIR-dal3QPvbdt5Ixb98veWLqjeO"></div>
+
                             <div class="text-center">
-                                <button type="submit" class="btn head-btn btn-reg mt-5">SignIn</button>
+                                <button type="submit" class="btn head-btn btn-reg mt-5">Register</button>
                             </div>
                         </form>
                     </div>
@@ -51,6 +59,8 @@
     </div>
     
 	<%@ include file="footer.jsp" %>
+	
+	<script src="static/js/signin.js"></script>
 
 </body>
 </html>

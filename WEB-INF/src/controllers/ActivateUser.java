@@ -18,8 +18,7 @@ public class ActivateUser extends HttpServlet{
 		String email = request.getParameter("email");
 		String authCode = request.getParameter("authCode");
 		
-		User user = new User(email,authCode);
-		if(user.activateUser()) {
+		if(User.activateUser(email,authCode)) {
 			next = "sign_in.jsp";
 		}
 		

@@ -1,0 +1,98 @@
+body {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%),url("../images/bg1.jpg") no-repeat;
+    color: white;
+}
+
+
+.main-body{
+    margin-top: 65px;
+    margin-bottom: 120px;
+}
+
+
+.left-text{
+    padding-right: 0px;
+    padding-top: 100px;
+}
+
+.left-top-text{
+    font-size: 25px;
+    margin-bottom: 0px;
+}
+
+.left-bottom-text{
+    font-size: 60px;
+}
+
+.left-vl{
+    border-right: solid white 2px;
+    height: 600px;
+    padding-top: 90px;
+}
+
+.right-text{
+    padding-top: 80px;
+}
+
+.right-text-top{
+    margin-left:35px;
+    padding-left: 25px;
+    width: 55%;
+    font-size: 40px;
+    font-weight: 500;
+    border-bottom: solid white 2px;
+}
+
+.right-form{
+    padding-top: 20px;
+    margin-left: 50px;
+    width: 70%;
+}
+
+label{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.right{
+    padding-left: 100px;
+}
+
+.btn-reg{
+    font-size: 22px;
+}
+
+.success{
+	border-color: green;
+    color: green;
+}
+
+.fail{
+	border-color: red;
+    color: red;
+}
+
+input{
+    outline: none !important;
+}
+
+.hide{
+    display: none;
+}
+
+.show{
+    display: block;
+}
+
+.err-box{
+    padding-left: 100px; 
+    color: red;
+}
+
+#activation-msg-block{
+    width: 83%;
+    margin-top: 130px;
+    border-radius: 20px;
+    border:4px solid white;
+    margin-left: 40px;
+}

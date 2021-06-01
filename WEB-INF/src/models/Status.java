@@ -5,9 +5,11 @@ public class Status {
 	private String status;
 	
 //	Constants
-	public static int ACTIVE = 1;
-	public static int INACTIVE = 2;
-	public static int BLOCKED = 3;
+	public static final int ACTIVE = 1;
+	public static final int INACTIVE = 2;
+	public static final int BLOCKED = 3;
+	public static final int ENDED = 4;
+	public static final int PROFILE_INCOMPLETE = 5;
 	
 //	constructor summary
 	

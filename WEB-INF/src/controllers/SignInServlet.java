@@ -48,12 +48,19 @@ public class SignInServlet extends HttpServlet{
 			if(validate) {
 				User user = new User(email,password);
 				if(user.signIn()) {
-					if(user.getStatus().getStatusId() == Status.ACTIVE) {
+					int status = user.getStatus().getStatusId();
+					if(status == Status.ACTIVE) {
 						session.setAttribute("user", user);
-						next = "index.jsp";
-						response.sendRedirect(next);
-					}else {
+						next = "dashboard.do";
+					}else if(status == Status.PROFILE_INCOMPLETE){
+						session.setAttribute("user", user);
+						next = "complete_profile.jsp";
+					}else if(status == Status.BLOCKED) {
+//						Blocked Page
+					}else if(status == Status.INACTIVE){
 //						Email Verification Page
+					}else {
+//						Ended Page
 					}
 				}else {
 					error += "<li>User with entered credential exists</li></ul>";
@@ -64,6 +71,10 @@ public class SignInServlet extends HttpServlet{
 				error += "</ul>";
 				request.setAttribute("error", error);
 				request.getRequestDispatcher(next).forward(request, response);;
+			}
+			
+			if(validate) {
+				response.sendRedirect(next);
 			}
 		}else {
 //			Captcha Fail Page

@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-7 right-text">
                     <div class="right">
-                        <div class="text-center py-5" id="activation-msg-block">
+                        <div class="text-center py-5" id="activation-msg-block" style="margin-top: 130px;">
                             <p style="font-size: 20px; font-weight: bold;">We have sent you an account activation mail</p>
                             <p style="font-weight: bold;">Click over the link sent in mail</p>
                         </div>

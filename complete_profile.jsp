@@ -1,3 +1,5 @@
+<%@ page import="java.util.ArrayList,models.City" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,19 +27,38 @@
                             <p style="font-size: 20px; font-weight: bold;">Thank You For Verifying Your Email</p>
                         </div>
                         <div class="pl-5 pt-5">
-                        	<form action="complete_profile.do" method="post" style="width:75%; margin-left:30px;">
+                        	<form action="completeprofile.do" method="post" style="width:75%; margin-left:30px;">
+								<div class="form-group">
+	                                <label for="">Name</label>
+	                                <input value="${user.name}" type="text" class="form-control" name="name" maxlength="50" minlength="3" autocomplete="off" placeholder="Enter your name">
+	                                <small class="form-text text-warning" id="help_name">Enter alphabets only(min-3)</small>
+	                                <small class="form-text hide text-danger" id="err_name">Invalid name</small>
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">Email</label>
+	                                <input disabled="disabled" value="${user.email}" id="email_field" type="email" class="form-control" name="email" autocomplete="off" placeholder="Enter your email">
+	                                <small class="form-text text-warning" id="help_email">Enter valid email</small>
+	                                <small class="form-text hide text-danger" id="err_email">Invalid Email</small>
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">Address</label>
+	                                <textarea class="form-control" name="address" placeholder="Enter your address" id="address">${user.address}</textarea>
+	                                <small class="form-text hide text-danger" id="err_address">Enter Address</small>
+                            	</div>
 								<div class="form-group">
 	                                <label for="id_city">City</label>
 	                                <select class="form-control" name="city" id="id_city">
-	                                    <option value="none">Select</option>
-	                                    <option value="Jabalpur">Jabalpur</option>
-	                                    <option value="Panagar">Panagar</option>
+	                                	<% ArrayList<City> cities = City.getAllCities(); %>
+	                                    <option>Select</option>
+	                                    <% for(City city : cities){ %>
+	                                    	<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
+	                                    <% } %>
 	                                </select>
                             	</div>
                             	
                             	<div class="form-group">
                             		<label>Contact No.</label>
-                            		<input type="number" name="contact" class="form-control">
+                            		<input type="text" name="contact" class="form-control" value="${user.contactNo}" autocomplete="off">
                             	</div>
                             	
                             	<div class="text-center">

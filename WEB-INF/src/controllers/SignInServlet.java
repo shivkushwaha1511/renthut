@@ -54,7 +54,7 @@ public class SignInServlet extends HttpServlet{
 						next = "dashboard.do";
 					}else if(status == Status.PROFILE_INCOMPLETE){
 						session.setAttribute("user", user);
-						next = "complete_profile.jsp";
+						next = "completeprofile.do";
 					}else if(status == Status.BLOCKED) {
 //						Blocked Page
 					}else if(status == Status.INACTIVE){
@@ -63,7 +63,7 @@ public class SignInServlet extends HttpServlet{
 //						Ended Page
 					}
 				}else {
-					error += "<li>User with entered credential exists</li></ul>";
+					error += "<li>User with entered credential doesn't exists</li></ul>";
 					request.setAttribute("error", error);
 					request.getRequestDispatcher(next).forward(request, response);;
 				}

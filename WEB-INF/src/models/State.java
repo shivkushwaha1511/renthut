@@ -4,6 +4,12 @@ public class State {
 	private int stateId;
 	private String state;
 	
+//	Constructor Summary
+	public State(int stateId,String state) {
+		this.stateId = stateId;
+		this.state = state;
+	}
+	
 	public int getStateId() {
 		return stateId;
 	}

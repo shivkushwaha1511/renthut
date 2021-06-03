@@ -17,7 +17,7 @@ public class User {
 	private String activationCode;
 	private Status status;
 	private City city;
-	private int contactNo;
+	private String contactNo;
 	private String profilePic;
 	
 //	Constructor Summary
@@ -46,6 +46,32 @@ public class User {
 	}
 
 //	Method Summary
+	public boolean updateProfile() {
+		boolean success = false;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "UPDATE users SET name=?, address=?, city_id=?, contact_no=? WHERE user_id=?";
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			ps.setString(1, name);
+			ps.setString(2, address);
+			ps.setInt(3, city.getCityId());
+			ps.setString(4, contactNo);
+			ps.setInt(5, userId);
+			
+			ps.executeUpdate();
+			
+			success = true;
+			con.close();
+		}catch(SQLException|ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
+	}
 	
 	public boolean signIn() {
 		boolean flag = false;
@@ -69,7 +95,7 @@ public class User {
 					name = rs.getString(3);
 					address = rs.getString(4);
 					status = new Status(rs.getInt(5));
-					contactNo = rs.getInt(6);
+					contactNo = rs.getString(6);
 					profilePic = rs.getString(7);
 					city = new City(rs.getInt(8),rs.getString(9));
 					flag = true;
@@ -228,11 +254,11 @@ public class User {
 		return status;
 	}
 	
-	public void setContactNo(int contactNo) {
+	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
 	
-	public int getContactNo() {
+	public String getContactNo() {
 		return contactNo;
 	}
 	

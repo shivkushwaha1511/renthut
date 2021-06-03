@@ -51,5 +51,25 @@
 		<servlet-name>a4</servlet-name>
 		<url-pattern>/uniqueemail.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a5</servlet-name>
+		<servlet-class>controllers.CompleteProfileServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a5</servlet-name>
+		<url-pattern>/completeprofile.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a6</servlet-name>
+		<servlet-class>controllers.LogOutServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a6</servlet-name>
+		<url-pattern>/logout.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>

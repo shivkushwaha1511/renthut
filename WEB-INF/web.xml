@@ -34,7 +34,7 @@
 	
 	<servlet>
 		<servlet-name>a3</servlet-name>
-		<servlet-class>controllers.ActivateUser</servlet-class>
+		<servlet-class>controllers.ActivateUserServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
@@ -71,5 +71,14 @@
 		<servlet-name>a6</servlet-name>
 		<url-pattern>/logout.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a7</servlet-name>
+		<servlet-class>controllers.DpUploadServlet</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>a7</servlet-name>
+		<url-pattern>/dpupload.do</url-pattern>
+	</servlet-mapping>
 </web-app>

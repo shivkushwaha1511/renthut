@@ -11,7 +11,7 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 
 
-public class ActivateUser extends HttpServlet{
+public class ActivateUserServlet extends HttpServlet{
 	public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException {
 		String next = "index.jsp";
 		

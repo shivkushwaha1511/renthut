@@ -1,6 +1,5 @@
 body {
     background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%),url("../images/bg1.jpg") no-repeat;
-    color: white;
 }
 
 
@@ -18,10 +17,12 @@ body {
 .left-top-text{
     font-size: 25px;
     margin-bottom: 0px;
+    color:white;
 }
 
 .left-bottom-text{
     font-size: 60px;
+    color:white;
 }
 
 .left-vl{
@@ -32,6 +33,7 @@ body {
 
 .right-text{
     padding-top: 80px;
+    color:white;
 }
 
 .right-text-top{
@@ -41,6 +43,7 @@ body {
     font-size: 40px;
     font-weight: 500;
     border-bottom: solid white 2px;
+    color:white;
 }
 
 .right-form{

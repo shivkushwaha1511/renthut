@@ -37,12 +37,7 @@ public class CompleteProfileServlet extends HttpServlet{
 			City city = new City(cityId);
 			String contact = request.getParameter("contact");
 			
-			user.setName(name);
-			user.setAddress(address);
-			user.setCity(city);
-			user.setContactNo(contact);
-			
-			if(user.updateProfile()) {
+			if(user.updateProfile(name,address,city,contact)) {
 				next = "completeprofile.do";
 			}
 		}

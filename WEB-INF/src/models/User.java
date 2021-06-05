@@ -46,7 +46,30 @@ public class User {
 	}
 
 //	Method Summary
-	public boolean updateProfile() {
+	public void saveDpPath(String path) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "UPDATE users SET profile_pic=? WHERE user_id=?";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			ps.setString(1, path);
+			ps.setInt(2, userId);
+			
+			int rows = ps.executeUpdate();
+			
+			if(rows==1) {
+				this.profilePic = path;
+			}
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public boolean updateProfile(String name,String address,City city,String contactNo) {
 		boolean success = false;
 		
 		try {
@@ -62,9 +85,17 @@ public class User {
 			ps.setString(4, contactNo);
 			ps.setInt(5, userId);
 			
-			ps.executeUpdate();
+			int rows = ps.executeUpdate();
 			
-			success = true;
+			if(rows == 1) {
+				this.name = name;
+				this.address = address;
+				this.city = city;
+				this.contactNo = contactNo;
+				
+				success = true;
+			}
+			
 			con.close();
 		}catch(SQLException|ClassNotFoundException e) {
 			e.printStackTrace();

@@ -13,7 +13,7 @@
                         <div class="col-4 pt-3 head-link text-right">
                             <a href="signin.do" class="text-white mr-3">Sign In</a>
                             <a href="signup.do" class="text-white mr-3 pl-3 vl-head">Sign Up</a>
-                            <a class="btn head-btn text-white mr-4">Add Listings</a>
+                            <a class="btn head-btn text-white mr-1">Add Listings</a>
                             <a href="logout.do" class="btn head-btn text-white mr-4">LogOut</a>
                         </div>
                     </div>       

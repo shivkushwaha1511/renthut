@@ -1,11 +1,21 @@
-<%@ page import="java.util.ArrayList,models.City" %>
+<%@ page import="java.util.ArrayList,models.City,models.User" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <%@ include file="headtags.jsp" %>
+    <link rel="stylesheet" href="static/css/dropzone.min.css">
     <link rel="stylesheet" href="static/css/sign.css">
     <title>Complete Profile</title>
+    
+    <style type="text/css">
+    	#dpUpload{
+    		background: none;
+    		color:white;
+    		border: dashed 2px white;
+    		border-radius: 10px;
+    	}
+    </style>
 </head>
 
 <body>
@@ -17,8 +27,12 @@
             <div class="row body-bg">
                 <div class="col-5 left-text">
                     <div class="left-vl pl-4">
-                        <p class="left-top-text ml-2">ThankYou For</p>
-                        <p class="left-bottom-text">Registering With Us!</p>
+                        <p class="left-top-text" style="margin-left: 75px; text-decoration: underline;">Upload display photo</p>
+						<form class="dropzone mr-5 my-4" id="dpUpload">
+						</form>
+						<div style="padding-left: 150px;">						
+							<button id="dp-btn" class="btn head-btn">Upload</button>
+						</div>
                     </div>
                 </div>
                 <div class="col-7 right-text">
@@ -48,11 +62,16 @@
 								<div class="form-group">
 	                                <label for="id_city">City</label>
 	                                <select class="form-control" name="city" id="id_city">
-	                                	<% ArrayList<City> cities = City.getAllCities(); %>
+	                                	<% ArrayList<City> cities = City.getAllCities(); 
+	                                		User user = (User)session.getAttribute("user");
+	                                	%>
 	                                    <option>Select</option>
-	                                    <% for(City city : cities){ %>
+	                                    <% for(City city : cities){ 
+	                                    	if(user.getCity().getCityId() == city.getCityId() ){ %>
+	                                    	<option value="<%= city.getCityId() %>" selected="selected"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
+	                                    <% }else{ %>
 	                                    	<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
-	                                    <% } %>
+	                                    <% 	}} %>
 	                                </select>
                             	</div>
                             	
@@ -75,6 +94,27 @@
 	<%@ include file="footer.jsp" %>
 	
 	<script src="static/js/sign.js"></script>
+	<script type="text/javascript" src="static/js/dropzone.min.js"></script> 
+   	
+   	<script>
+   	Dropzone.autoDiscover = false;
+   	
+   	Dropzone.options.dpUpload = {
+   		maxFilesize : 2,
+   		maxFiles : 1,
+   		addRemoveLinks: true,
+   		acceptedFiles : ".jpeg,.jpg,.png,.gif",
+   		autoProcessQueue : false
+   	};
+   	
+   	let	dpDropzone = new Dropzone("#dpUpload",{url: "dpupload.do"});
+   	
+   	const dpBtn = document.querySelector("#dp-btn");
+   	
+   	dpBtn.addEventListener("click",()=>{
+   		dpDropzone.processQueue();
+   	});
+   	</script>
 
 </body>
 </html>

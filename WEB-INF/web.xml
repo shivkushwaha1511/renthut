@@ -81,4 +81,14 @@
 		<servlet-name>a7</servlet-name>
 		<url-pattern>/dpupload.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a8</servlet-name>
+		<servlet-class>controllers.ShowDpServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a8</servlet-name>
+		<url-pattern>/showdp.do</url-pattern>
+	</servlet-mapping>
 </web-app>

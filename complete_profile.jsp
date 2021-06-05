@@ -15,6 +15,13 @@
     		border: dashed 2px white;
     		border-radius: 10px;
     	}
+    	
+    	#dp{
+    		border-radius: 500px;
+    		width: 230px;
+    		margin-left: 80px;
+    		margin-bottom: 30px;
+    	}
     </style>
 </head>
 
@@ -27,6 +34,7 @@
             <div class="row body-bg">
                 <div class="col-5 left-text">
                     <div class="left-vl pl-4">
+                    	<img src="showdp.do?path=${user.profilePic}" id="dp">
                         <p class="left-top-text" style="margin-left: 75px; text-decoration: underline;">Upload display photo</p>
 						<form class="dropzone mr-5 my-4" id="dpUpload">
 						</form>

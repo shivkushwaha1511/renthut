@@ -17,8 +17,9 @@
     	}
     	
     	#dp{
-    		border-radius: 500px;
+    		border-radius: 50%;
     		width: 230px;
+    		height: 230px;
     		margin-left: 80px;
     		margin-bottom: 30px;
     	}
@@ -53,19 +54,15 @@
 								<div class="form-group">
 	                                <label for="">Name</label>
 	                                <input value="${user.name}" type="text" class="form-control" name="name" maxlength="50" minlength="3" autocomplete="off" placeholder="Enter your name">
-	                                <small class="form-text text-warning" id="help_name">Enter alphabets only(min-3)</small>
-	                                <small class="form-text hide text-danger" id="err_name">Invalid name</small>
+
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="">Email</label>
 	                                <input disabled="disabled" value="${user.email}" id="email_field" type="email" class="form-control" name="email" autocomplete="off" placeholder="Enter your email">
-	                                <small class="form-text text-warning" id="help_email">Enter valid email</small>
-	                                <small class="form-text hide text-danger" id="err_email">Invalid Email</small>
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="">Address</label>
 	                                <textarea class="form-control" name="address" placeholder="Enter your address" id="address">${user.address}</textarea>
-	                                <small class="form-text hide text-danger" id="err_address">Enter Address</small>
                             	</div>
 								<div class="form-group">
 	                                <label for="id_city">City</label>
@@ -121,6 +118,7 @@
    	
    	dpBtn.addEventListener("click",()=>{
    		dpDropzone.processQueue();
+   		document.querySelector("#dp").style.display = "none";
    	});
    	</script>
 

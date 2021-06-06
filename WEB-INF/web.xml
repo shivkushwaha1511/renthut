@@ -91,4 +91,14 @@
 		<servlet-name>a8</servlet-name>
 		<url-pattern>/showdp.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a9</servlet-name>
+		<servlet-class>controllers.DashboardServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a9</servlet-name>
+		<url-pattern>/dashboard.do</url-pattern>
+	</servlet-mapping>
 </web-app>

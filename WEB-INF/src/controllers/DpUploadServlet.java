@@ -36,9 +36,14 @@ public class DpUploadServlet extends HttpServlet{
 				
 				String fileName = fileItem.getName();
 				
-				String parentPath = getServletContext().getRealPath("/WEB-INF/uploads/"+user.getEmail());
+				String parentPath = getServletContext().getRealPath("/WEB-INF/uploads/");
 				
-				File file = new File(parentPath,fileName);
+				File file = new File(parentPath+user.getEmail(),fileName);
+				
+				if(user.getProfilePic() != null) {
+					File delFile = new File(parentPath,user.getProfilePic());
+					delFile.delete();
+				}
 				
 				try {
 					fileItem.write(file);

@@ -76,7 +76,7 @@ public class User {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
 			
-			String query = "UPDATE users SET name=?, address=?, city_id=?, contact_no=? WHERE user_id=?";
+			String query = "UPDATE users SET name=?, address=?, city_id=?, contact_no=?, status_id=1 WHERE user_id=?";
 			PreparedStatement ps = con.prepareStatement(query);
 			
 			ps.setString(1, name);

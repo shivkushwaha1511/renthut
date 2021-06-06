@@ -19,6 +19,10 @@ public class ShowDpServlet extends HttpServlet{
 		ServletContext context = getServletContext();
 		InputStream is = context.getResourceAsStream("/WEB-INF/uploads/"+path);
 		
+		if(is == null) {
+			is = context.getResourceAsStream("static/images/user_dp.png");
+		}
+		
 		byte[] arr = new byte[1024];
 		
 		int c=0;

@@ -20,12 +20,11 @@ import org.apache.commons.fileupload.FileUploadException;
 
 public class DpUploadServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
-		if(ServletFileUpload.isMultipartContent(request)) {
-			HttpSession session = request.getSession();
-			User user = (User)session.getAttribute("user");
-			
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		
+		if(ServletFileUpload.isMultipartContent(request) && user!=null) {
 			DiskFileItemFactory dfif = new DiskFileItemFactory();
-			
 			ServletFileUpload sfu = new ServletFileUpload(dfif);
 			
 			List<FileItem> fileItems = null;

@@ -70,7 +70,7 @@
 	                                	<% ArrayList<City> cities = City.getAllCities(); 
 	                                		User user = (User)session.getAttribute("user");
 	                                	%>
-	                                    <option>Select</option>
+	                                    <option value="1508">Select</option>
 	                                    <% for(City city : cities){ 
 	                                    	if(user.getCity().getCityId() == city.getCityId() ){ %>
 	                                    	<option value="<%= city.getCityId() %>" selected="selected"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>

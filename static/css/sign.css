@@ -2,13 +2,6 @@ body {
     background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%),url("../images/bg1.jpg") no-repeat;
 }
 
-
-.main-body{
-    margin-top: 65px;
-    margin-bottom: 120px;
-}
-
-
 .left-text{
     padding-right: 0px;
     padding-top: 100px;

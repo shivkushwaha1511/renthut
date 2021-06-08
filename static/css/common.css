@@ -1,3 +1,12 @@
+.main-body{
+    margin-top: 65px;
+    margin-bottom: 120px;
+}
+
+.main-bg{
+	background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%),url("../images/bg1.jpg") no-repeat;
+}
+
 .banner-img{
     background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.1) 100%),url(../images/HomeBanner.jpg) no-repeat;
     height: 850px;

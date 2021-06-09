@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="models.User"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="models.City"%>
 <html lang="en">
@@ -28,7 +29,7 @@
                             <a href="/renthut"><img src="static/images/logo.png" class="logo"></a>
                     </div>
 					<div class="text-center">
-						<img src="showdp.do?${user.profilePic }" id="dp">
+						<img src="showdp.do?path=${user.profilePic }" id="dp">
 					</div>
 					
 					<div class="nav flex-column nav-pills mt-4">
@@ -45,10 +46,85 @@
 							Dashboard
 						</div>
 						<div class="tab-content">
-							<div class="tab-pane fade active show" id="profile"><h1>A</h1></div>
+							<div class="tab-pane fade active show" id="profile">
+								<div class="row">
+									<div class="col-4">
+										<div class="text-center">
+											<img src="showdp.do?path=${user.profilePic}" id="dp" style="background-color: #222629;">
+										</div>
+										<div class="text-center pt-2">
+											<button class="btn btn-primary" id="dp_btn">Upload</button>
+										</div>
+									</div>
+									<div class="col-5 pt-5">
+										<form class="dropzone" id="dpUpload">
+										</form>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<div class="container px-3">
+											<div id="my-detail">My Details</div>
+											<form action="" class=" font-weight-bold">
+												<div class="row">
+													<div class="col">
+														<div class="form-group">
+							                                <label for="">Name</label>
+							                                <input value="${user.name}" type="text" class="form-control" name="name" maxlength="50" minlength="3" autocomplete="off" placeholder="Enter your name">
+							                            </div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+							                                <label for="">Email</label>
+							                                <input disabled="disabled" value="${user.email}" id="email_field" type="email" class="form-control" name="email" autocomplete="off" placeholder="Enter your email">
+							                            </div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+														<div class="form-group">
+							                                <label for="">Address</label>
+							                                <textarea class="form-control" name="address" placeholder="Enter your address" id="address">${user.address}</textarea>
+						                            	</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+							                                <label for="id_city">City</label>
+							                                <select class="form-control" name="city" id="id_city">
+							                                	<% ArrayList<City> cities = City.getAllCities(); 
+							                                		User user = (User)session.getAttribute("user");
+							                                	%>
+							                                    <option value="1508">Select</option>
+							                                    <% for(City city : cities){ 
+							                                    	if(user.getCity().getCityId() == city.getCityId() ){ %>
+							                                    	<option value="<%= city.getCityId() %>" selected="selected"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
+							                                    <% }else{ %>
+							                                    	<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
+							                                    <% 	}} %>
+							                                </select>
+						                            	</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+														<div class="form-group">
+						                            		<label>Contact No.</label>
+						                            		<input type="text" name="contact" class="form-control" value="${user.contactNo}" autocomplete="off">
+						                            	</div>
+													</div>
+													<div class="col">
+													</div>
+												</div>
+												<div class="text-center pt-4">
+													<button type="submit" class="btn btn-primary font-weight-bold">Update</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="tab-pane fade" id="my_properties"><h1>B</h1></div>
 							<div class="tab-pane fade" id="add_property">
-								<div>
 									<div class="hl p-2 mb-3">
 										<ul class="nav nav-pills nav-justified ml-5" style="width:25%;">
 											<li class="nav-item">
@@ -64,8 +140,8 @@
 										<div class="tab-pane fade show active" id="details">
 											<div class="container">
 												<div class="row">
-													<div class="col">
-														<form action="">
+													<div class="col px-3">
+														<form action="" class="font-weight-bold">
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
@@ -84,10 +160,10 @@
 																<div class="col">		
 																	<div class="form-group">
 																		<label>City</label>
-																		<% ArrayList<City> cities = City.getAllCities(); %>
+																		<% ArrayList<City> citie = City.getAllCities(); %>
 																		<select class="form-control">
 																			<option value="1508">Select</option>
-																			<% for(City city : cities){%>
+																			<% for(City city : citie){%>
 																				<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
 																			<% } %>
 																		</select>
@@ -173,6 +249,9 @@
 																	</div>
 																</div>
 															</div>
+															<div class="feature-text pl-2 mb-3 ml-2">
+																More Features :
+															</div>
 
 															<div class="row">
 																<div class="col">
@@ -220,7 +299,7 @@
 															</div>
 
 															<div class="text-right pr-5 py-3">
-																<button type="submit" class="btn btn-primary font-weight-bold">Next</button>
+																<button type="submit" class="btn btn-primary font-weight-bold">Submit</button>
 															</div>
 
 														</form>
@@ -251,8 +330,7 @@
 												<div class="tab-pane fade" id="garden">8</div>
 											</div>
 										</div>
-									</div>
-								</div>	
+									</div>	
 							</div>
 						</div>
 					</div>
@@ -261,9 +339,31 @@
 			</div>
         </div>
 
+	<script type="text/javascript" src="static/js/dropzone.min.js"></script>
+	
+	<script type="text/javascript">
+		Dropzone.autodiscover = false;
+		
+		Dropzone.options.dpUpload={
+			maxFilesize : 2,
+			maxFiles : 1,
+			addRemoveLinks : true,
+			acceptedFiles : ".jpg,.jpeg,.png,.gif",
+			autoProcessQueue : false
+		};
+		
+		let dropZone = new Dropzone("#dpUpload",{url:"dpupload.do"});
+		
+		const dpBtn = document.querySelector("#dp_btn");
+		
+		dpBtn.addEventListener("click",()=>{
+			dropZone.processQueue();
+		});
+	</script>
+
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-
+	
 </body>
 </html>

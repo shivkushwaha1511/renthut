@@ -54,7 +54,6 @@
 								<div class="form-group">
 	                                <label for="">Name</label>
 	                                <input value="${user.name}" type="text" class="form-control" name="name" maxlength="50" minlength="3" autocomplete="off" placeholder="Enter your name">
-
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="">Email</label>

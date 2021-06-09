@@ -55,15 +55,23 @@
 	cursor: pointer;
 }
 
-#dpUpload{
-    background: none;
-    color:white;
-    border: dashed 2px white;
-    border-radius: 10px;
-	padding: 5px;
+.feature-text{
+	border-bottom: solid 4px rgb(0,123,255);
+	width: 15%;
 }
 
-.dropzone {
-    min-height: 0px; 
-    padding: 0px;
+#dpUpload{
+    background: none;
+    color:#222629;
+    border: dashed 2px #222629;
+    border-radius: 10px;
+}
+
+#my-detail{
+	font-size: 35px;
+	font-weight: bold;
+	margin: 40px 0px;
+	border-bottom: solid 4px rgb(0,123,255);
+	width: 30%;
+	padding-left: 10px;
 }

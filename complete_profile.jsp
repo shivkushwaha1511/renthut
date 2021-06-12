@@ -74,8 +74,9 @@
 	                                    	if(user.getCity().getCityId() == city.getCityId() ){ %>
 	                                    	<option value="<%= city.getCityId() %>" selected="selected"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
 	                                    <% }else{ %>
+	                                    <% if(city.getCityId()!=City.NOT_SELECTED){ %>
 	                                    	<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
-	                                    <% 	}} %>
+	                                    <% 	}}} %>
 	                                </select>
                             	</div>
                             	

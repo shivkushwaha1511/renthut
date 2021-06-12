@@ -38,7 +38,7 @@ public class CompleteProfileServlet extends HttpServlet{
 			String contact = request.getParameter("contact");
 			
 			if(user.updateProfile(name,address,city,contact)) {
-				next = "completeprofile.do";
+				next = "dashboard.do";
 			}
 		}
 		

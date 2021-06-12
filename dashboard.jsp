@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <%@page import="models.User"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="models.City"%>
+<%@page import="models.PropertyType" %>
+
+<%@ page import="java.util.ArrayList" %>
 <html lang="en">
 <head>
     <%@ include file="headtags.jsp" %>
@@ -63,9 +65,9 @@
 								</div>
 								<div class="row">
 									<div class="col">
-										<div class="container px-3">
+										<div class="container px-5">
 											<div id="my-detail">My Details</div>
-											<form action="" class=" font-weight-bold">
+											<form action="completeprofile.do" class=" font-weight-bold" method="post">
 												<div class="row">
 													<div class="col">
 														<div class="form-group">
@@ -99,8 +101,9 @@
 							                                    	if(user.getCity().getCityId() == city.getCityId() ){ %>
 							                                    	<option value="<%= city.getCityId() %>" selected="selected"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
 							                                    <% }else{ %>
+							                                    <% if(city.getCityId()!=City.NOT_SELECTED){ %>
 							                                    	<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
-							                                    <% 	}} %>
+							                                    <% 	}}} %>
 							                                </select>
 						                            	</div>
 													</div>
@@ -140,19 +143,19 @@
 										<div class="tab-pane fade show active" id="details">
 											<div class="container">
 												<div class="row">
-													<div class="col px-3">
-														<form action="" class="font-weight-bold">
+													<div class="col px-5">
+														<form action="addpropertydetails.do" class="font-weight-bold" method="post">
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
 																		<label>Title</label>
-																		<input type="text" class="form-control">
+																		<input type="text" class="form-control" name="title" autocomplete="off" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Description</label>
-																		<textarea class="form-control"></textarea>
+																		<textarea class="form-control" name="description" required="required"></textarea>
 																	</div>
 																</div>
 															</div>
@@ -160,19 +163,19 @@
 																<div class="col">		
 																	<div class="form-group">
 																		<label>City</label>
-																		<% ArrayList<City> citie = City.getAllCities(); %>
-																		<select class="form-control">
+																		<select class="form-control" name="city" required="required">
 																			<option value="1508">Select</option>
-																			<% for(City city : citie){%>
+																			<% for(City city : cities){%>
+																			<% if(city.getCityId()!=City.NOT_SELECTED){ %>
 																				<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
-																			<% } %>
+																			<% }} %>
 																		</select>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Address</label>
-																		<textarea class="form-control"></textarea>
+																		<textarea class="form-control" name="address" required="required"></textarea>
 																	</div>
 																</div>
 															</div>
@@ -180,16 +183,21 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Property Type</label>
-																		<select class="form-control" class="form-control">
-																			<option>Select</option>
+																		<select class="form-control" class="form-control" name="property_type" required="required">
+																		<% ArrayList<PropertyType> types = PropertyType.getAllPropertyTypes(); %>
+																			<option value="10">Select</option>
+																		<% for(PropertyType type : types){ %>
+																		<% if(type.getPropertyTypeId()!= PropertyType.NOT_SELECTED){ %>
+																			<option value="<%= type.getPropertyTypeId() %>"><%= type.getPropertyType() %></option>
+																		<%}} %>
 																		</select>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group pt-4">
 																		<label>Electricity Bill:&nbsp;&nbsp;</label>
-																		&nbsp;&nbsp;<input type="radio" name="bill" value="separate" checked="checked">&nbsp;Separate
-																		&nbsp;&nbsp;<input type="radio" name="bill" value="combine">&nbsp;Combine
+																		&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" checked="checked">&nbsp;Separate
+																		&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1">&nbsp;Combine
 																	</div>
 																</div>
 															</div>
@@ -198,13 +206,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Bedroom</label>
-																		<input type="number" class="form-control">
+																		<input type="number" class="form-control" name="bedroom" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Bathroom</label>
-																		<input type="number" class="form-control">
+																		<input type="number" class="form-control" name="bathroom" required="required">
 																	</div>
 																</div>
 															</div>
@@ -213,13 +221,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Room</label>
-																		<input type="number" class="form-control">
+																		<input type="number" class="form-control" name="room" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
-																		<label>Area</label><small>  (in sq.m.)</small>
-																		<input type="text" class="form-control">
+																		<label>Area</label><small>&nbsp;&nbsp;(in sq.m.)</small>
+																		<input type="number" class="form-control" name="area" required="required">
 																	</div>
 																</div>
 															</div>
@@ -227,14 +235,14 @@
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
-																		<label>Distance From School</label><small>  (in KM)</small>
-																		<input type="number" class="form-control">
+																		<label>Distance From School</label><small>&nbsp;&nbsp;(in KM)</small>
+																		<input type="number" class="form-control" name="dist_school" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
-																		<label>Distance From Hospital</label><small>  (in KM)</small>
-																		<input type="number" class="form-control">
+																		<label>Distance From Hospital</label><small>&nbsp;&nbsp;(in KM)</small>
+																		<input type="number" class="form-control" name="dist_hospital" required="required">
 																	</div>
 																</div>
 															</div>
@@ -243,8 +251,11 @@
 																<div class="col-6">
 																	<div class="form-group">
 																		<label>Floor Type</label>
-																		<select class="form-control" class="form-control">
-																			<option>Select</option>
+																		<select class="form-control" class="form-control" name="floor_type" required="required">
+																			<option value="4" selected="selected">Select</option>
+																			<option value="1">Marbel</option>
+																			<option value="2">Tiled</option>
+																			<option value="3">Cemented</option>
 																		</select>
 																	</div>
 																</div>
@@ -256,13 +267,13 @@
 															<div class="row">
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="tank">
+																		<input type="checkbox" class="custom-control-input" id="tank" name="water_tank">
 																		<label class="custom-control-label" for="tank">&nbsp;&nbsp;Water Tank</label>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="parking">
+																		<input type="checkbox" class="custom-control-input" id="parking" name="parking">
 																		<label class="custom-control-label" for="parking">&nbsp;&nbsp;Parking</label>
 																	</div>
 																</div>
@@ -271,13 +282,13 @@
 															<div class="row">
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="terrace">
+																		<input type="checkbox" class="custom-control-input" id="terrace" name="terrace">
 																		<label class="custom-control-label" for="terrace">&nbsp;&nbsp;Terrace</label>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="ventilation">
+																		<input type="checkbox" class="custom-control-input" id="ventilation" name="ventilation">
 																		<label class="custom-control-label" for="ventilation">&nbsp;&nbsp;Ventilation</label>
 																	</div>
 																</div>
@@ -286,13 +297,13 @@
 															<div class="row">
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="garden">
+																		<input type="checkbox" class="custom-control-input" id="garden" name="garden">
 																		<label class="custom-control-label" for="garden">&nbsp;&nbsp;Garden</label>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="pets">
+																		<input type="checkbox" class="custom-control-input" id="pets" name="pets">
 																		<label class="custom-control-label" for="pets">&nbsp;&nbsp;Pets Allowed</label>
 																	</div>
 																</div>
@@ -359,6 +370,18 @@
 		dpBtn.addEventListener("click",()=>{
 			dropZone.processQueue();
 		});
+		
+		
+		// Javascript to enable link to tab
+		var hash = location.hash.replace(/^#/, '');  // ^ means starting, meaning only match the first hash
+		if (hash) {
+		    $('.nav-tabs a[href="#' + hash + '"]').tab('show');
+		} 
+
+		// Change hash for page-reload
+		$('.nav-tabs a').on('shown.bs.tab', function (e) {
+		    window.location.hash = e.target.hash;
+		})
 	</script>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

@@ -13,6 +13,9 @@ public class City {
 	private String city;
 	private State state;
 	
+//	Constant
+	public static final int NOT_SELECTED = 1508;
+	
 //	constructor summary
 	public City(int cityId) {
 		this.cityId = cityId;

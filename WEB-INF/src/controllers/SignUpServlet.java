@@ -62,7 +62,7 @@ public class SignUpServlet extends HttpServlet{
 				Long authCode = new Random().nextLong();
 				
 				if(authCode<0) {
-					authCode = authCode * -1;
+					authCode = authCode*-1;
 				}
 				
 				User user = new User(name,email,password,address,Long.toString(authCode));

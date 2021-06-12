@@ -1,8 +1,13 @@
 package models;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class PropertyFeature {
 	private int featureId;
-	private Property propertyId;
+	private Property property;
 	private int roomCount;
 	private int bedroom;
 	private int bathroom;
@@ -18,22 +23,94 @@ public class PropertyFeature {
 	private int floorType;
 	private boolean garden;
 	
+//	Constructor Summary
+	
+	
+	public PropertyFeature(Property property,int roomCount, int bedroom, int bathroom, boolean electricityBill, int area,
+			boolean waterTank, boolean parking, int distFromSchool, int distFromHospital, boolean terrace,
+			boolean ventilation, boolean petsAllowed, int floorType, boolean garden) {
+		super();
+		this.property = property;
+		this.roomCount = roomCount;
+		this.bedroom = bedroom;
+		this.bathroom = bathroom;
+		this.electricityBill = electricityBill;
+		this.area = area;
+		this.waterTank = waterTank;
+		this.parking = parking;
+		this.distFromSchool = distFromSchool;
+		this.distFromHospital = distFromHospital;
+		this.terrace = terrace;
+		this.ventilation = ventilation;
+		this.petsAllowed = petsAllowed;
+		this.floorType = floorType;
+		this.garden = garden;
+	}
+	
+//	Method Summary
+	
+	public void savePropertyFeatures() {
+		Connection con = null;
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "INSERT INTO property_features (property_id,room_count,bedroom,bathroom,"
+					+ "electricity_bill,area,water_tank,parking,dist_from_school,dist_from_hospital,"
+					+ "terrace,ventilation,pets_allowed,floor_type,garden) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			ps.setInt(1,property.getPropertyId());
+			ps.setInt(2,roomCount);
+			ps.setInt(3,bedroom);
+			ps.setInt(4,bathroom);
+			ps.setBoolean(5,electricityBill);
+			ps.setInt(6,area);
+			ps.setBoolean(7,waterTank);
+			ps.setBoolean(8,parking);
+			ps.setInt(9,distFromSchool);
+			ps.setInt(10,distFromHospital);
+			ps.setBoolean(11,terrace);
+			ps.setBoolean(12,ventilation);
+			ps.setBoolean(13,petsAllowed);
+			ps.setInt(14,floorType);
+			ps.setBoolean(15,garden);
+			
+			ps.executeUpdate();
+			
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+//	Setters & Getters
+	
 	public int getFeatureId() {
 		return featureId;
 	}
-	
+
 	public void setFeatureId(int featureId) {
 		this.featureId = featureId;
 	}
 	
-	public Property getPropertyId() {
-		return propertyId;
-	}
 	
-	public void setPropertyId(Property propertyId) {
-		this.propertyId = propertyId;
+	public Property getProperty() {
+		return property;
 	}
-	
+
+	public void setProperty(Property property) {
+		this.property = property;
+	}
+
+
 	public int getRoomCount() {
 		return roomCount;
 	}

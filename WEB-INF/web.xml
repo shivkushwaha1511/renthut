@@ -101,4 +101,14 @@
 		<servlet-name>a9</servlet-name>
 		<url-pattern>/dashboard.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a10</servlet-name>
+		<servlet-class>controllers.AddPropertyDetailsServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a10</servlet-name>
+		<url-pattern>/addpropertydetails.do</url-pattern>
+	</servlet-mapping>
 </web-app>

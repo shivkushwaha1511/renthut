@@ -19,5 +19,7 @@
 	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/commons-fileupload-1.4.jar"/>
 	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/commons-io-2.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="C:/Tomcat 9.0/lib/standard.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

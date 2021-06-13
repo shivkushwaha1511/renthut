@@ -49,14 +49,16 @@ public class Property {
 			ps.setInt(7,propertyType.getPropertyTypeId());
 			
 			if(ps.executeUpdate()==1) {
-				query = "SELECT property_id FROM properties WHERE property_tag=?";
+				query = "SELECT property_id,p.city_id,city,c.state_id,state FROM properties AS p INNER JOIN cities AS c INNER JOIN states AS s WHERE c.city_id=p.city_id AND c.state_id=s.state_id AND property_tag=?";
 				ps = con.prepareStatement(query);
 				ps.setString(1,propertyTag);
 				
 				ResultSet res = ps.executeQuery();
 				
-				if(res.next())
+				if(res.next()) {
 					this.propertyId = res.getInt(1);
+					this.city = new City(res.getInt(2),res.getString(3),new State(res.getInt(4),res.getString(5)));
+				}
 			}
 			
 		}catch(SQLException | ClassNotFoundException e) {

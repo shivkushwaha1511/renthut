@@ -4,6 +4,8 @@
 <%@page import="models.PropertyType" %>
 
 <%@ page import="java.util.ArrayList" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <%@ include file="headtags.jsp" %>
@@ -35,9 +37,10 @@
 					</div>
 					
 					<div class="nav flex-column nav-pills mt-4">
-						<a class="nav-link active" data-toggle="pill" href="#profile">My Profile</a>
-						<a class="nav-link" data-toggle="pill" href="#my_properties">My Properties</a>
-						<a class="nav-link" data-toggle="pill" href="#add_property">Add property</a>
+						<a class="nav-link <c:if test="${activeTab == 'profile'}">active</c:if>" data-toggle="pill" href="#profile"><i class="fa fa-user mr-2"></i>My Profile</a>
+						<a class="nav-link" data-toggle="pill" href="#my_properties"><i class="fa fa-building mr-2"></i>My Properties</a>
+						<a class="nav-link <c:if test="${activeTab == 'addProperty'}">active</c:if>" data-toggle="pill" href="#add_property"><i class="fa fa-plus-square mr-2"></i>Add property</a>
+						<% session.setAttribute("activeTab",null); %>
 					</div>
 				</div>
 				
@@ -373,15 +376,17 @@
 		
 		
 		// Javascript to enable link to tab
-		var hash = location.hash.replace(/^#/, '');  // ^ means starting, meaning only match the first hash
-		if (hash) {
-		    $('.nav-tabs a[href="#' + hash + '"]').tab('show');
-		} 
+		$(function(){
+  var hash = window.location.hash;
+  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
-		// Change hash for page-reload
-		$('.nav-tabs a').on('shown.bs.tab', function (e) {
-		    window.location.hash = e.target.hash;
-		})
+  $('.nav-tabs a').click(function (e) {
+    $(this).tab('show');
+    var scrollmem = $('body').scrollTop();
+    window.location.hash = this.hash;
+    $('html,body').scrollTop(scrollmem);
+  });
+});
 	</script>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

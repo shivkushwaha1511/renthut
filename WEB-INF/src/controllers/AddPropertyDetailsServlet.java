@@ -98,6 +98,8 @@ public class AddPropertyDetailsServlet extends HttpServlet{
 			
 			session.setAttribute("property", property);
 			
+			session.setAttribute("activeTab","addProperty");
+			
 			next="dashboard.do";
 		}
 		

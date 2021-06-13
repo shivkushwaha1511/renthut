@@ -18,6 +18,10 @@ public class DashboardServlet extends HttpServlet{
 		User user = (User)session.getAttribute("user");
 		
 		if(user != null) {
+			String activeTab = (String)session.getAttribute("activeTab");
+			if(activeTab == null) {
+				session.setAttribute("activeTab","profile");
+			}
 			next = "dashboard.jsp";
 		}
 		

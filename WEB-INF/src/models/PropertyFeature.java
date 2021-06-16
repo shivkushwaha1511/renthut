@@ -135,7 +135,7 @@ public class PropertyFeature {
 		this.bathroom = bathroom;
 	}
 	
-	public boolean isElectricityBill() {
+	public boolean getElectricityBill() {
 		return electricityBill;
 	}
 	
@@ -151,7 +151,7 @@ public class PropertyFeature {
 		this.area = area;
 	}
 	
-	public boolean isWaterTank() {
+	public boolean getWaterTank() {
 		return waterTank;
 	}
 	
@@ -159,7 +159,7 @@ public class PropertyFeature {
 		this.waterTank = waterTank;
 	}
 	
-	public boolean isParking() {
+	public boolean getParking() {
 		return parking;
 	}
 	
@@ -183,7 +183,7 @@ public class PropertyFeature {
 		this.distFromHospital = distFromHospital;
 	}
 	
-	public boolean isTerrace() {
+	public boolean getTerrace() {
 		return terrace;
 	}
 	
@@ -191,7 +191,7 @@ public class PropertyFeature {
 		this.terrace = terrace;
 	}
 	
-	public boolean isVentilation() {
+	public boolean getVentilation() {
 		return ventilation;
 	}
 	
@@ -199,7 +199,7 @@ public class PropertyFeature {
 		this.ventilation = ventilation;
 	}
 	
-	public boolean isPetsAllowed() {
+	public boolean getPetsAllowed() {
 		return petsAllowed;
 	}
 	
@@ -215,7 +215,7 @@ public class PropertyFeature {
 		this.floorType = floorType;
 	}
 	
-	public boolean isGarden() {
+	public boolean getGarden() {
 		return garden;
 	}
 	

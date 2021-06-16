@@ -96,7 +96,7 @@ public class AddPropertyDetailsServlet extends HttpServlet{
 			PropertyFeature feature = new PropertyFeature(property,room,bedroom,bathroom,eleBill,area,water_tank,parking,dist_school,dist_hospital,terrace,ventilation,pets,floor_type,garden);
 			feature.savePropertyFeatures();
 			
-			session.setAttribute("property", property);
+			session.setAttribute("property", feature);
 			
 			session.setAttribute("activeTab","addProperty");
 			

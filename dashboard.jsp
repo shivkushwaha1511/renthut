@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="com.sun.org.apache.xpath.internal.functions.FuncFloor"%>
+<%@page import="models.PropertyFeature"%>
 <%@page import="models.User"%>
 <%@page import="models.City"%>
 <%@page import="models.PropertyType" %>
@@ -38,20 +40,38 @@
 					
 					<div class="nav flex-column nav-pills mt-4">
 						<a class="nav-link <c:if test="${activeTab == 'profile'}">active</c:if>" data-toggle="pill" href="#profile"><i class="fa fa-user mr-2"></i>My Profile</a>
-						<a class="nav-link" data-toggle="pill" href="#my_properties"><i class="fa fa-building mr-2"></i>My Properties</a>
+						<a class="nav-link <c:if test="${activeTab == 'myProperties'}">active</c:if>" data-toggle="pill" href="#my_properties"><i class="fa fa-building mr-2"></i>My Properties</a>
 						<a class="nav-link <c:if test="${activeTab == 'addProperty'}">active</c:if>" data-toggle="pill" href="#add_property"><i class="fa fa-plus-square mr-2"></i>Add property</a>
-						<% session.setAttribute("activeTab",null); %>
 					</div>
 				</div>
 				
 				<div class="col-10" style="padding: 0px;">
-					<div class="right-top"></div>
-					<div class="right-middle">
-						<div class="display-4 ml-4 pl-2 font-weight-bold mb-3 pt-2" id="dash-text">
-							Dashboard
+					<div class="right-top">
+						<div class="row">
+							<div class="col-9 font-weight-bold pt-3 pl-5 mr-2">
+								<a href="http://localhost:8080/renthut/" class="head-link ml-2">Home</a>
+								<a href="" class="head-link ml-4">Contact</a>
+							</div>
+							<%User user = (User)session.getAttribute("user"); %>
+							<div class="col-2 pt-2 ml-5">
+								<div class="dropdown">
+                           			<button class="btn btn-lite dropdown-toggle font-weight-bold text-primary head-link" data-toggle="dropdown"><%= user.getName() %></button>
+	                           		<div class="dropdown-menu">
+	                           			<a class="dropdown-item" href="dashboard.do"><i class="fa fa-user mr-3"></i>My Profile</a>
+	                           			<a class="dropdown-item" href="dashboard.do?activeTabMyProp=myProperties"><i class="fa fa-building mr-3"></i>My Properties</a>
+	                           			<a class="dropdown-item" href="dashboard.do?activeTabAddProp=addProperty"><i class="fa fa-plus-square mr-3"></i>Add Listing</a>
+	                           			<a class="dropdown-item" href="logout.do"><i class="fa fa-sign-out mr-3"></i>Log Out</a>
+                            		</div>
+                           		</div>
+							</div>
 						</div>
+					</div>
+					<div class="right-middle">
 						<div class="tab-content">
-							<div class="tab-pane fade active show" id="profile">
+							<div class="tab-pane fade <c:if test="${activeTab == 'profile'}">active show</c:if>" id="profile">
+								<div class="display-4 ml-4 pl-2 font-weight-bold mb-3 pt-2" id="dash-text">
+									My Profile
+								</div>
 								<div class="row">
 									<div class="col-4">
 										<div class="text-center">
@@ -96,9 +116,7 @@
 														<div class="form-group">
 							                                <label for="id_city">City</label>
 							                                <select class="form-control" name="city" id="id_city">
-							                                	<% ArrayList<City> cities = City.getAllCities(); 
-							                                		User user = (User)session.getAttribute("user");
-							                                	%>
+							                                	<% ArrayList<City> cities = City.getAllCities(); %>
 							                                    <option value="1508">Select</option>
 							                                    <% for(City city : cities){ 
 							                                    	if(user.getCity().getCityId() == city.getCityId() ){ %>
@@ -129,21 +147,30 @@
 									</div>
 								</div>
 							</div>
-							<div class="tab-pane fade" id="my_properties"><h1>B</h1></div>
-							<div class="tab-pane fade" id="add_property">
+							<div class="tab-pane fade <c:if test="${activeTab == 'myProperties'}">active show</c:if>" id="my_properties">
+								<div class="display-4 ml-4 pl-2 font-weight-bold mb-3 pt-2" id="dash-text">
+									My Properties
+								</div>
+							</div>
+							<div class="tab-pane fade <c:if test="${activeTab == 'addProperty'}">active show</c:if>" id="add_property">
+								<div class="display-4 ml-4 pl-2 font-weight-bold mb-5 pt-2" id="dash-text">
+									Add Property
+								</div>
+								<%	PropertyFeature property = (PropertyFeature)session.getAttribute("property");
+								if(property != null){ %>
 									<div class="hl p-2 mb-3">
 										<ul class="nav nav-pills nav-justified ml-5" style="width:25%;">
 											<li class="nav-item">
-												<a class="nav-link active dark-bg dark-hov" href="#details" data-toggle="pill">Details</a>
+												<a class="nav-link dark-bg dark-hov" href="#details" data-toggle="pill">Details</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link dark-bg dark-hov" href="#gallery" data-toggle="pill">Gallery</a>
+												<a class="nav-link dark-bg dark-hov <%if(property != null){ %>active<%} %>" href="#gallery" data-toggle="pill">Gallery</a>
 											</li>
 										</ul>
 									</div>
-									
+								<%} %>
 									<div class="tab-content">
-										<div class="tab-pane fade show active" id="details">
+										<div class="tab-pane fade <%if(property == null){ %>show active<%} %>" id="details">
 											<div class="container">
 												<div class="row">
 													<div class="col px-5">
@@ -152,13 +179,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Title</label>
-																		<input type="text" class="form-control" name="title" autocomplete="off" required="required">
+																		<input type="text" class="form-control" name="title" value=" <%if(property != null){ %>${property.property.title }<%} %>" autocomplete="off" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Description</label>
-																		<textarea class="form-control" name="description" required="required"></textarea>
+																		<textarea class="form-control" name="description" required="required"> <%if(property != null){ %>${property.property.description }<%} %></textarea>
 																	</div>
 																</div>
 															</div>
@@ -168,17 +195,26 @@
 																		<label>City</label>
 																		<select class="form-control" name="city" required="required">
 																			<option value="1508">Select</option>
-																			<% for(City city : cities){%>
-																			<% if(city.getCityId()!=City.NOT_SELECTED){ %>
-																				<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
-																			<% }} %>
+																			 <%if(property != null){ %>
+																			<% for(City city : cities){
+																				if(city.getCityId()!= property.getProperty().getCity().getCityId()){
+																					if(city.getCityId()!=City.NOT_SELECTED){ %>
+																						<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
+																					<% }}else{%>
+																						<option value="<%= city.getCityId() %>" selected="selected"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
+																			<% }}}else{ %>
+																				<% for(City city : cities){%>
+																					<% if(city.getCityId()!=City.NOT_SELECTED){ %>
+																						<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
+																					<% }} %>
+																			<%} %>
 																		</select>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Address</label>
-																		<textarea class="form-control" name="address" required="required"></textarea>
+																		<textarea class="form-control" name="address" required="required"> <%if(property != null){ %>${property.property.address }<%} %></textarea>
 																	</div>
 																</div>
 															</div>
@@ -189,18 +225,33 @@
 																		<select class="form-control" class="form-control" name="property_type" required="required">
 																		<% ArrayList<PropertyType> types = PropertyType.getAllPropertyTypes(); %>
 																			<option value="10">Select</option>
-																		<% for(PropertyType type : types){ %>
-																		<% if(type.getPropertyTypeId()!= PropertyType.NOT_SELECTED){ %>
-																			<option value="<%= type.getPropertyTypeId() %>"><%= type.getPropertyType() %></option>
-																		<%}} %>
+																		
+																		<%if(property != null){
+																			for(PropertyType type : types){ 
+																				if(type.getPropertyTypeId() != property.getProperty().getPropertyType().getPropertyTypeId()){%>
+																					<% if(type.getPropertyTypeId()!= PropertyType.NOT_SELECTED){ %>
+																						<option value="<%= type.getPropertyTypeId() %>"><%= type.getPropertyType() %></option>
+																					<%}}else{%>
+																						<option value="<%= type.getPropertyTypeId() %>" selected="selected"><%= type.getPropertyType() %></option>
+																				<% }}}else{ %>
+																					<% for(PropertyType type : types){ %>
+																						<% if(type.getPropertyTypeId()!= PropertyType.NOT_SELECTED){ %>
+																							<option value="<%= type.getPropertyTypeId() %>"><%= type.getPropertyType() %></option>
+																						<%}} %>
+																				<%} %>
 																		</select>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group pt-4">
 																		<label>Electricity Bill:&nbsp;&nbsp;</label>
-																		&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" checked="checked">&nbsp;Separate
-																		&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1">&nbsp;Combine
+																		<%if(property != null){ %>
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" <%if(!property.getElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Separate
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1"  <%if(property.getElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Combine
+																		<%}else{ %>
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" checked="checked">&nbsp;Separate
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1">&nbsp;Combine
+																		<%} %>
 																	</div>
 																</div>
 															</div>
@@ -209,13 +260,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Bedroom</label>
-																		<input type="number" class="form-control" name="bedroom" required="required">
+																		<input type="number" class="form-control" name="bedroom" value="<%if(property != null){ %>${property.bedroom}<%} %>" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Bathroom</label>
-																		<input type="number" class="form-control" name="bathroom" required="required">
+																		<input type="number" class="form-control" name="bathroom" value="<%if(property != null){ %>${property.bathroom}<%} %>" required="required">
 																	</div>
 																</div>
 															</div>
@@ -224,13 +275,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Room</label>
-																		<input type="number" class="form-control" name="room" required="required">
+																		<input type="number" class="form-control" name="room" value="<%if(property != null){ %>${property.roomCount}<%} %>" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Area</label><small>&nbsp;&nbsp;(in sq.m.)</small>
-																		<input type="number" class="form-control" name="area" required="required">
+																		<input type="number" class="form-control" name="area" value="<%if(property != null){ %>${property.area}<%} %>" required="required">
 																	</div>
 																</div>
 															</div>
@@ -239,13 +290,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Distance From School</label><small>&nbsp;&nbsp;(in KM)</small>
-																		<input type="number" class="form-control" name="dist_school" required="required">
+																		<input type="number" class="form-control" name="dist_school" value="<%if(property != null){ %>${property.distFromSchool}<%} %>" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Distance From Hospital</label><small>&nbsp;&nbsp;(in KM)</small>
-																		<input type="number" class="form-control" name="dist_hospital" required="required">
+																		<input type="number" class="form-control" name="dist_hospital" value="<%if(property != null){ %>${property.distFromHospital}<%} %>" required="required">
 																	</div>
 																</div>
 															</div>
@@ -255,10 +306,10 @@
 																	<div class="form-group">
 																		<label>Floor Type</label>
 																		<select class="form-control" class="form-control" name="floor_type" required="required">
-																			<option value="4" selected="selected">Select</option>
-																			<option value="1">Marbel</option>
-																			<option value="2">Tiled</option>
-																			<option value="3">Cemented</option>
+																			<option value="4" <%if(property == null){ %>${selected="selected"}<%} %>>Select</option>
+																			<option value="1" <%if(property != null && property.getFloorType() == 1){ %>${selected="selected"}<%} %>>Marbel</option>
+																			<option value="2" <%if(property != null && property.getFloorType() == 2){ %>${selected="selected"}<%} %>>Tiled</option>
+																			<option value="3" <%if(property != null && property.getFloorType() == 3){ %>${selected="selected"}<%} %>>Cemented</option>
 																		</select>
 																	</div>
 																</div>
@@ -312,8 +363,9 @@
 																</div>
 															</div>
 
-															<div class="text-right pr-5 py-3">
-																<button type="submit" class="btn btn-primary font-weight-bold">Submit</button>
+															<div class="text-right pr-2 py-3">
+																<button type="submit" class="btn btn-primary font-weight-bold mr-3">Submit</button>
+																<a class="btn btn-primary font-weight-bold" href="#gallery" data-toggle="tab">Next</a>
 															</div>
 
 														</form>
@@ -321,7 +373,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="gallery">
+										<div class="tab-pane fade <%if(property != null){ %>show active<%} %>" id="gallery">
 											<div class="nav nav-tabs pl-5">
 												<a class="nav-link active" data-toggle="tab" href="#exterior">Exterior</a>
 												<a class="nav-link" data-toggle="tab" href="#living">Living Room</a>
@@ -349,6 +401,7 @@
 						</div>
 					</div>
 					
+				<% session.setAttribute("activeTab",null); %>
 				</div>
 			</div>
         </div>
@@ -375,23 +428,7 @@
 		});
 		
 		
-		// Javascript to enable link to tab
-		$(function(){
-  var hash = window.location.hash;
-  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-
-  $('.nav-tabs a').click(function (e) {
-    $(this).tab('show');
-    var scrollmem = $('body').scrollTop();
-    window.location.hash = this.hash;
-    $('html,body').scrollTop(scrollmem);
-  });
-});
+		
 	</script>
-
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-	
 </body>
 </html>

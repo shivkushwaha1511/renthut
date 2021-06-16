@@ -1,4 +1,4 @@
-<%@ page import="java.util.ArrayList,models.City,models.User" %>
+<%@ page import="java.util.ArrayList,models.City" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +67,6 @@
 	                                <label for="id_city">City</label>
 	                                <select class="form-control" name="city" id="id_city">
 	                                	<% ArrayList<City> cities = City.getAllCities(); 
-	                                		User user = (User)session.getAttribute("user");
 	                                	%>
 	                                    <option value="1508">Select</option>
 	                                    <% for(City city : cities){ 

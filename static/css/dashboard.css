@@ -75,3 +75,11 @@
 	width: 30%;
 	padding-left: 10px;
 }
+
+.head-link{
+	font-size: 20px;
+}
+
+.head-link:hover{
+	color: #222629;
+}

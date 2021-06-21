@@ -5,11 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Property {
 	private int propertyId;
 	private User user;
-	private String propertyTag;
 	private String title;
 	private String address;
 	private City city;
@@ -18,11 +18,10 @@ public class Property {
 	private int noOfPeople;
 	
 //	Constructor Summary
-	public Property(User user,String propertyTag, String title, String address, City city,
+	public Property(User user,String title, String address, City city,
 			String description, PropertyType propertyType) {
 		super();
 		this.user = user;
-		this.propertyTag = propertyTag;
 		this.title = title;
 		this.address = address;
 		this.city = city;
@@ -31,35 +30,32 @@ public class Property {
 	}
 
 	//	Method Summary
-	public void addPropertyDetails() {
+	public boolean addPropertyDetails() {
+		boolean flag = false;
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
-			
-			String query = "INSERT INTO properties (user_id,property_tag,title,address,city_id,description,property_type_id) VALUE (?,?,?,?,?,?,?)";
-			PreparedStatement ps = con.prepareStatement(query);
-			
-			ps.setInt(1,user.getUserId());
-			ps.setString(2,propertyTag);
-			ps.setString(3,title);
-			ps.setString(4,address);
-			ps.setInt(5,city.getCityId());
-			ps.setString(6,description);
-			ps.setInt(7,propertyType.getPropertyTypeId());
-			
-			if(ps.executeUpdate()==1) {
-				query = "SELECT property_id,p.city_id,city,c.state_id,state FROM properties AS p INNER JOIN cities AS c INNER JOIN states AS s WHERE c.city_id=p.city_id AND c.state_id=s.state_id AND property_tag=?";
-				ps = con.prepareStatement(query);
-				ps.setString(1,propertyTag);
+
+				String query = "INSERT INTO properties (user_id,title,address,city_id,description,property_type_id) VALUE (?,?,?,?,?,?)";
+				PreparedStatement ps = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 				
-				ResultSet res = ps.executeQuery();
+				ps.setInt(1,user.getUserId());
+				ps.setString(2,title);
+				ps.setString(3,address);
+				ps.setInt(4,city.getCityId());
+				ps.setString(5,description);
+				ps.setInt(6,propertyType.getPropertyTypeId());
 				
-				if(res.next()) {
-					this.propertyId = res.getInt(1);
-					this.city = new City(res.getInt(2),res.getString(3),new State(res.getInt(4),res.getString(5)));
+				if(ps.executeUpdate()==1) {
+					ResultSet res = ps.getGeneratedKeys();
+					
+					if(res.next()) {
+						this.propertyId = res.getInt(1);
+					}
+					
+					flag = true;
 				}
-			}
 			
 		}catch(SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -70,6 +66,42 @@ public class Property {
 				e.printStackTrace();
 			}
 		}
+		
+		return flag;
+	}
+	
+	public boolean UpdatePropertyDetails(String title,String address,City city,String description,PropertyType propertyType) {
+		boolean flag = false;
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String	query = "UPDATE properties SET title=?,address=?,city_id=?,description=?,property_type_id=? WHERE property_id=?";
+			PreparedStatement	ps = con.prepareStatement(query);
+
+				ps.setString(1,title);
+				ps.setString(2,address);
+				ps.setInt(3,city.getCityId());
+				ps.setString(4,description);
+				ps.setInt(5,propertyType.getPropertyTypeId());
+				ps.setInt(6,propertyId);
+				
+				if(ps.executeUpdate() == 1) {
+					flag = true;
+				}
+				
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return flag;
 	}
 	
 //	Setter & Getters
@@ -88,15 +120,6 @@ public class Property {
 	
 	public void setUser(User user) {
 		this.user = user;
-	}
-	
-	
-	public String getPropertyTag() {
-		return propertyTag;
-	}
-
-	public void setPropertyTag(String propertyTag) {
-		this.propertyTag = propertyTag;
 	}
 	
 	

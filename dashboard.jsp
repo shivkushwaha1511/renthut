@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<%@page import="com.sun.org.apache.xpath.internal.functions.FuncFloor"%>
 <%@page import="models.PropertyFeature"%>
 <%@page import="models.User"%>
 <%@page import="models.City"%>
@@ -84,7 +83,7 @@
 									<div class="col-5 pt-5">
 										<form class="dropzone" id="dpUpload">
 										</form>
-									</div>
+									</div>  
 								</div>
 								<div class="row">
 									<div class="col">
@@ -115,7 +114,7 @@
 													<div class="col">
 														<div class="form-group">
 							                                <label for="id_city">City</label>
-							                                <select class="form-control" name="city" id="id_city">
+							                                <select class="form-control" name="city">
 							                                	<% ArrayList<City> cities = City.getAllCities(); %>
 							                                    <option value="1508">Select</option>
 							                                    <% for(City city : cities){ 
@@ -156,36 +155,35 @@
 								<div class="display-4 ml-4 pl-2 font-weight-bold mb-5 pt-2" id="dash-text">
 									Add Property
 								</div>
-								<%	PropertyFeature property = (PropertyFeature)session.getAttribute("property");
-								if(property != null){ %>
-									<div class="hl p-2 mb-3">
+								<%	PropertyFeature property = (PropertyFeature)session.getAttribute("property");%>
+									<div class="hl p-2 mb-3" <%if(property == null){ %>style="display: none;"<%} %> id="prop_bar">
 										<ul class="nav nav-pills nav-justified ml-5" style="width:25%;">
 											<li class="nav-item">
 												<a class="nav-link dark-bg dark-hov" href="#details" data-toggle="pill">Details</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link dark-bg dark-hov <%if(property != null){ %>active<%} %>" href="#gallery" data-toggle="pill">Gallery</a>
+												<a class="nav-link dark-bg dark-hov <%if(property != null){ %>active<%} %>" href="#gallery" data-toggle="pill" id="gallery_pill">Gallery</a>
 											</li>
 										</ul>
 									</div>
-								<%} %>
+									
 									<div class="tab-content">
 										<div class="tab-pane fade <%if(property == null){ %>show active<%} %>" id="details">
 											<div class="container">
 												<div class="row">
-													<div class="col px-5">
-														<form action="addpropertydetails.do" class="font-weight-bold" method="post">
+													<div class="col px-5 font-weight-bold">
+												<%-- 		<form action="addpropertydetails.do" class="font-weight-bold" method="post"> --%>
 															<div class="row">
 																<div class="col">
 																	<div class="form-group">
 																		<label>Title</label>
-																		<input type="text" class="form-control" name="title" value=" <%if(property != null){ %>${property.property.title }<%} %>" autocomplete="off" required="required">
+																		<input type="text" class="form-control" name="title" id="id_title" value=" <%if(property != null){ %>${property.property.title }<%} %>" autocomplete="off" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Description</label>
-																		<textarea class="form-control" name="description" required="required"> <%if(property != null){ %>${property.property.description }<%} %></textarea>
+																		<textarea class="form-control" name="description" id="id_description" required="required"> <%if(property != null){ %>${property.property.description }<%} %></textarea>
 																	</div>
 																</div>
 															</div>
@@ -193,7 +191,7 @@
 																<div class="col">		
 																	<div class="form-group">
 																		<label>City</label>
-																		<select class="form-control" name="city" required="required">
+																		<select class="form-control" name="city" id="id_city" required="required">
 																			<option value="1508">Select</option>
 																			 <%if(property != null){ %>
 																			<% for(City city : cities){
@@ -214,7 +212,7 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Address</label>
-																		<textarea class="form-control" name="address" required="required"> <%if(property != null){ %>${property.property.address }<%} %></textarea>
+																		<textarea class="form-control" name="address" id="id_address" required="required"> <%if(property != null){ %>${property.property.address }<%} %></textarea>
 																	</div>
 																</div>
 															</div>
@@ -222,7 +220,7 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Property Type</label>
-																		<select class="form-control" class="form-control" name="property_type" required="required">
+																		<select class="form-control" class="form-control" id="id_propertyType" name="property_type" required="required">
 																		<% ArrayList<PropertyType> types = PropertyType.getAllPropertyTypes(); %>
 																			<option value="10">Select</option>
 																		
@@ -246,10 +244,10 @@
 																	<div class="form-group pt-4">
 																		<label>Electricity Bill:&nbsp;&nbsp;</label>
 																		<%if(property != null){ %>
-																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" <%if(!property.getElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Separate
-																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1"  <%if(property.getElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Combine
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" id="id_electricityBill" <%if(!property.isElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Separate
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1" <%if(property.isElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Combine
 																		<%}else{ %>
-																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" checked="checked">&nbsp;Separate
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" id="id_electricityBill" value="0" checked>&nbsp;Separate
 																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1">&nbsp;Combine
 																		<%} %>
 																	</div>
@@ -260,13 +258,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Bedroom</label>
-																		<input type="number" class="form-control" name="bedroom" value="<%if(property != null){ %>${property.bedroom}<%} %>" required="required">
+																		<input type="number" class="form-control" name="bedroom" id="id_bedroom" value="<%if(property != null){ %>${property.bedroom}<%} %>" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Bathroom</label>
-																		<input type="number" class="form-control" name="bathroom" value="<%if(property != null){ %>${property.bathroom}<%} %>" required="required">
+																		<input type="number" class="form-control" name="bathroom" id="id_bathroom" value="<%if(property != null){ %>${property.bathroom}<%} %>" required="required">
 																	</div>
 																</div>
 															</div>
@@ -275,13 +273,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Room</label>
-																		<input type="number" class="form-control" name="room" value="<%if(property != null){ %>${property.roomCount}<%} %>" required="required">
+																		<input type="number" class="form-control" name="room" id="id_room" value="<%if(property != null){ %>${property.roomCount}<%} %>" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Area</label><small>&nbsp;&nbsp;(in sq.m.)</small>
-																		<input type="number" class="form-control" name="area" value="<%if(property != null){ %>${property.area}<%} %>" required="required">
+																		<input type="number" class="form-control" name="area" id="id_area" value="<%if(property != null){ %>${property.area}<%} %>" required="required">
 																	</div>
 																</div>
 															</div>
@@ -290,13 +288,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Distance From School</label><small>&nbsp;&nbsp;(in KM)</small>
-																		<input type="number" class="form-control" name="dist_school" value="<%if(property != null){ %>${property.distFromSchool}<%} %>" required="required">
+																		<input type="number" class="form-control" name="dist_school" id="id_distSchool" value="<%if(property != null){ %>${property.distFromSchool}<%} %>" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Distance From Hospital</label><small>&nbsp;&nbsp;(in KM)</small>
-																		<input type="number" class="form-control" name="dist_hospital" value="<%if(property != null){ %>${property.distFromHospital}<%} %>" required="required">
+																		<input type="number" class="form-control" name="dist_hospital" id="id_distHospital" value="<%if(property != null){ %>${property.distFromHospital}<%} %>" required="required">
 																	</div>
 																</div>
 															</div>
@@ -305,7 +303,7 @@
 																<div class="col-6">
 																	<div class="form-group">
 																		<label>Floor Type</label>
-																		<select class="form-control" class="form-control" name="floor_type" required="required">
+																		<select class="form-control" class="form-control" name="floor_type" id="id_floorType" required="required">
 																			<option value="4" <%if(property == null){ %>${selected="selected"}<%} %>>Select</option>
 																			<option value="1" <%if(property != null && property.getFloorType() == 1){ %>${selected="selected"}<%} %>>Marbel</option>
 																			<option value="2" <%if(property != null && property.getFloorType() == 2){ %>${selected="selected"}<%} %>>Tiled</option>
@@ -321,29 +319,14 @@
 															<div class="row">
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="tank" name="water_tank">
-																		<label class="custom-control-label" for="tank">&nbsp;&nbsp;Water Tank</label>
+																		<input type="checkbox" class="custom-control-input" id="id_waterTank" <%if(property != null && property.isWaterTank()){ %>checked<%} %> name="water_tank">
+																		<label class="custom-control-label" for="id_waterTank">&nbsp;&nbsp;Water Tank</label>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="parking" name="parking">
-																		<label class="custom-control-label" for="parking">&nbsp;&nbsp;Parking</label>
-																	</div>
-																</div>
-															</div>
-
-															<div class="row">
-																<div class="col">
-																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="terrace" name="terrace">
-																		<label class="custom-control-label" for="terrace">&nbsp;&nbsp;Terrace</label>
-																	</div>
-																</div>
-																<div class="col">
-																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="ventilation" name="ventilation">
-																		<label class="custom-control-label" for="ventilation">&nbsp;&nbsp;Ventilation</label>
+																		<input type="checkbox" class="custom-control-input" id="id_parking" <%if(property != null && property.isParking()){ %>checked<%} %> name="parking">
+																		<label class="custom-control-label" for="id_parking">&nbsp;&nbsp;Parking</label>
 																	</div>
 																</div>
 															</div>
@@ -351,24 +334,38 @@
 															<div class="row">
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="garden" name="garden">
-																		<label class="custom-control-label" for="garden">&nbsp;&nbsp;Garden</label>
+																		<input type="checkbox" class="custom-control-input" id="id_terrace" <%if(property != null && property.isTerrace()){ %>checked<%} %> name="terrace">
+																		<label class="custom-control-label" for="id_terrace">&nbsp;&nbsp;Terrace</label>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="pets" name="pets">
-																		<label class="custom-control-label" for="pets">&nbsp;&nbsp;Pets Allowed</label>
+																		<input type="checkbox" class="custom-control-input" id="id_ventilation" <%if(property != null && property.isVentilation()){ %>checked<%} %> name="ventilation">
+																		<label class="custom-control-label" for="id_ventilation">&nbsp;&nbsp;Ventilation</label>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row">
+																<div class="col">
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input" id="id_garden" <%if(property != null && property.isGarden()){ %>checked<%} %> name="garden">
+																		<label class="custom-control-label" for="id_garden">&nbsp;&nbsp;Garden</label>
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input" id="id_pets" <%if(property != null && property.isPetsAllowed()){ %>checked<%} %> name="pets">
+																		<label class="custom-control-label" for="id_pets">&nbsp;&nbsp;Pets Allowed</label>
 																	</div>
 																</div>
 															</div>
 
 															<div class="text-right pr-2 py-3">
-																<button type="submit" class="btn btn-primary font-weight-bold mr-3">Submit</button>
-																<a class="btn btn-primary font-weight-bold" href="#gallery" data-toggle="tab">Next</a>
+																<button id="id_nextBtn" class="btn btn-primary font-weight-bold mr-3">Next</button>
 															</div>
 
-														</form>
+											<%--			</form>  --%>
 													</div>
 												</div>
 											</div>
@@ -407,8 +404,9 @@
         </div>
 
 	<script type="text/javascript" src="static/js/dropzone.min.js"></script>
+	<script type="text/javascript" src="static/js/dashboard.js"></script>
 	
-	<script type="text/javascript">
+ 	<script type="text/javascript">
 		Dropzone.autodiscover = false;
 		
 		Dropzone.options.dpUpload={
@@ -425,10 +423,8 @@
 		
 		dpBtn.addEventListener("click",()=>{
 			dropZone.processQueue();
-		});
+		});	
 		
-		
-		
-	</script>
+	</script> 
 </body>
 </html>

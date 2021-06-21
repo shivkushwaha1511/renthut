@@ -49,19 +49,20 @@ public class PropertyFeature {
 	
 //	Method Summary
 	
-	public void savePropertyFeatures() {
+	public boolean savePropertyFeatures() {
+		boolean flag = false;
 		Connection con = null;
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
-			
-			String query = "INSERT INTO property_features (property_id,room_count,bedroom,bathroom,"
-					+ "electricity_bill,area,water_tank,parking,dist_from_school,dist_from_hospital,"
-					+ "terrace,ventilation,pets_allowed,floor_type,garden) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+			String	query = "INSERT INTO property_features (property_id,room_count,bedroom,bathroom,"
+						+ "electricity_bill,area,water_tank,parking,dist_from_school,dist_from_hospital,"
+						+ "terrace,ventilation,pets_allowed,floor_type,garden) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement ps = con.prepareStatement(query);
-			
+				
 			ps.setInt(1,property.getPropertyId());
 			ps.setInt(2,roomCount);
 			ps.setInt(3,bedroom);
@@ -78,7 +79,9 @@ public class PropertyFeature {
 			ps.setInt(14,floorType);
 			ps.setBoolean(15,garden);
 			
-			ps.executeUpdate();
+			if(ps.executeUpdate() == 1) {
+				flag = true;
+			}
 			
 		}catch(SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -89,6 +92,54 @@ public class PropertyFeature {
 				e.printStackTrace();
 			}
 		}
+		return flag;
+	}
+	
+	public boolean updatePropertyFeatures(int roomCount,int bedroom,int bathroom,boolean electricityBill,int area,boolean waterTank,boolean parking,int distFromSchool,int distFromHospital,boolean terrace,boolean ventilation,boolean petsAllowed,int floorType,boolean garden) {
+		boolean flag = false;
+		Connection con = null;
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String	query = "UPDATE property_features SET room_count=?,bedroom=?,bathroom=?,"
+						+ "electricity_bill=?,area=?,water_tank=?,parking=?,dist_from_school=?,dist_from_hospital=?,"
+						+ "terrace=?,ventilation=?,pets_allowed=?,floor_type=?,garden=? WHERE property_id=?";
+				
+			PreparedStatement	ps = con.prepareStatement(query);
+				
+			ps.setInt(1,roomCount);
+			ps.setInt(2,bedroom);
+			ps.setInt(3,bathroom);
+			ps.setBoolean(4,electricityBill);
+			ps.setInt(5,area);
+			ps.setBoolean(6,waterTank);
+			ps.setBoolean(7,parking);
+			ps.setInt(8,distFromSchool);
+			ps.setInt(9,distFromHospital);
+			ps.setBoolean(10,terrace);
+			ps.setBoolean(11,ventilation);
+			ps.setBoolean(12,petsAllowed);
+			ps.setInt(13,floorType);
+			ps.setBoolean(14,garden);
+			ps.setInt(15,property.getPropertyId());
+			
+			if(ps.executeUpdate()==1) {
+				flag = true;
+			}
+			
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return flag;
 	}
 	
 //	Setters & Getters
@@ -135,7 +186,7 @@ public class PropertyFeature {
 		this.bathroom = bathroom;
 	}
 	
-	public boolean getElectricityBill() {
+	public boolean isElectricityBill() {
 		return electricityBill;
 	}
 	
@@ -151,7 +202,7 @@ public class PropertyFeature {
 		this.area = area;
 	}
 	
-	public boolean getWaterTank() {
+	public boolean isWaterTank() {
 		return waterTank;
 	}
 	
@@ -159,7 +210,7 @@ public class PropertyFeature {
 		this.waterTank = waterTank;
 	}
 	
-	public boolean getParking() {
+	public boolean isParking() {
 		return parking;
 	}
 	
@@ -183,7 +234,7 @@ public class PropertyFeature {
 		this.distFromHospital = distFromHospital;
 	}
 	
-	public boolean getTerrace() {
+	public boolean isTerrace() {
 		return terrace;
 	}
 	
@@ -191,7 +242,7 @@ public class PropertyFeature {
 		this.terrace = terrace;
 	}
 	
-	public boolean getVentilation() {
+	public boolean isVentilation() {
 		return ventilation;
 	}
 	
@@ -199,7 +250,7 @@ public class PropertyFeature {
 		this.ventilation = ventilation;
 	}
 	
-	public boolean getPetsAllowed() {
+	public boolean isPetsAllowed() {
 		return petsAllowed;
 	}
 	
@@ -215,7 +266,7 @@ public class PropertyFeature {
 		this.floorType = floorType;
 	}
 	
-	public boolean getGarden() {
+	public boolean isGarden() {
 		return garden;
 	}
 	

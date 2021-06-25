@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.MediaType;
 import models.User;
 import utils.EmailSender;
 import utils.GoogleCaptcha;
@@ -72,6 +73,10 @@ public class SignUpServlet extends HttpServlet{
 					String parentpath = context.getRealPath("/WEB-INF/uploads");
 					File file = new File(parentpath,email);
 					file.mkdir();
+					
+					for(int i=0;i<8;i++) {
+						new File(parentpath+"/"+email,MediaType.TYPES[i]).mkdir();
+					}
 					
 					String message = MessageTemplate.activateAccount(name,email,authCode);
 					String subject = "Activate Account";

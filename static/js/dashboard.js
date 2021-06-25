@@ -19,11 +19,13 @@ const garden = document.querySelector("#id_garden");
 const pets = document.querySelector("#id_pets");
 
 const nextBtn = document.querySelector("#id_nextBtn");
+const updtBtn = document.querySelector("#id_updtBtn");
 
 const gallery = document.querySelector("#gallery");
 const details = document.querySelector("#details");
 const prop_bar = document.querySelector("#prop_bar");
 const gallery_pill = document.querySelector("#gallery_pill");
+const details_pill = document.querySelector("#details_pill");
 
 const addDetails = async ()=>{
 	const response = await fetch("addpropertydetails.do",{
@@ -59,7 +61,7 @@ const addDetails = async ()=>{
 	return response.text();
 };
 
-nextBtn.addEventListener("click",()=>{
+updtBtn.addEventListener("click",()=>{
 	addDetails().then((data)=>{
 		data = JSON.parse(data);
 		
@@ -68,18 +70,50 @@ nextBtn.addEventListener("click",()=>{
 		}else if(data == "failed"){
 			console.log("failed");
 		}else{
-			details.classList.remove("show");
-			details.classList.remove("active");
-			gallery.classList.add("show");
-			gallery.classList.add("active");
-			gallery_pill.classList.add("active");
-			prop_bar.style.display = "inline";
+				details.classList.remove("show");
+				details.classList.remove("active");
+				gallery.classList.add("show");
+				gallery.classList.add("active");
+				gallery_pill.classList.add("active");
+				prop_bar.style.display = "block";
 		}
 	}).catch((error)=>{
 		console.log("false");
 	});
 });
 
+/*
+nextBtn.addEventListener("click",()=>{
+	details.classList.remove("show");
+	details.classList.remove("active");
+	gallery.classList.add("show");
+	gallery.classList.add("active");
+	details_pill.classList.remove("active");
+	gallery_pill.classList.add("active");
+});  */
+
+/************************************************* */
+
+const thumb_next = document.querySelector("#thumb_next");
+const thumb_upload = document.querySelector("#thumb_upload");
+const pic_next = document.querySelector("#pic_next");
+const thumbnail_box = document.querySelector("#thumbnail_box");
+const property_pics_box = document.querySelector("#property_pics_box");
+
+thumb_next.addEventListener("click",()=>{
+	thumbnail_box.style.display = "none";
+	property_pics_box.style.display = "block";
+});
+
+thumb_upload.addEventListener("click",()=>{
+	thumbnail_box.style.display = "none";
+	property_pics_box.style.display = "block";
+});
+
+pic_next.addEventListener("click",()=>{
+	thumbnail_box.style.display = "block";
+	property_pics_box.style.display = "none";
+});
 
 
 

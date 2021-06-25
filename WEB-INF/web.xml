@@ -22,6 +22,7 @@
 		<url-pattern>/signup.do</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
 		<servlet-name>a2</servlet-name>
 		<servlet-class>controllers.SignInServlet</servlet-class>
@@ -31,6 +32,7 @@
 		<servlet-name>a2</servlet-name>
 		<url-pattern>/signin.do</url-pattern>
 	</servlet-mapping>
+	
 	
 	<servlet>
 		<servlet-name>a3</servlet-name>
@@ -42,6 +44,7 @@
 		<url-pattern>/activateuser.do</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
 		<servlet-name>a4</servlet-name>
 		<servlet-class>controllers.UniqueEmailServlet</servlet-class>
@@ -51,6 +54,7 @@
 		<servlet-name>a4</servlet-name>
 		<url-pattern>/uniqueemail.do</url-pattern>
 	</servlet-mapping>
+	
 	
 	<servlet>
 		<servlet-name>a5</servlet-name>
@@ -62,6 +66,7 @@
 		<url-pattern>/completeprofile.do</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
 		<servlet-name>a6</servlet-name>
 		<servlet-class>controllers.LogOutServlet</servlet-class>
@@ -71,6 +76,7 @@
 		<servlet-name>a6</servlet-name>
 		<url-pattern>/logout.do</url-pattern>
 	</servlet-mapping>
+	
 	
 	<servlet>
 		<servlet-name>a7</servlet-name>
@@ -82,6 +88,7 @@
 		<url-pattern>/dpupload.do</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
 		<servlet-name>a8</servlet-name>
 		<servlet-class>controllers.ShowDpServlet</servlet-class>
@@ -91,6 +98,7 @@
 		<servlet-name>a8</servlet-name>
 		<url-pattern>/showdp.do</url-pattern>
 	</servlet-mapping>
+	
 	
 	<servlet>
 		<servlet-name>a9</servlet-name>
@@ -102,6 +110,7 @@
 		<url-pattern>/dashboard.do</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
 		<servlet-name>a10</servlet-name>
 		<servlet-class>controllers.AddPropertyDetailsServlet</servlet-class>
@@ -110,5 +119,26 @@
 	<servlet-mapping>
 		<servlet-name>a10</servlet-name>
 		<url-pattern>/addpropertydetails.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>a11</servlet-name>
+		<servlet-class>controllers.ThumbnailUploadServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a11</servlet-name>
+		<url-pattern>/thumbupload.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a12</servlet-name>
+		<servlet-class>controllers.PicUploadServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a12</servlet-name>
+		<url-pattern>/picsupload.do</url-pattern>
 	</servlet-mapping>
 </web-app>

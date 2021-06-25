@@ -246,7 +246,6 @@ public class AddPropertyDetailsServlet extends HttpServlet{
 				flag2 = feature.savePropertyFeatures();
 				
 				if(flag1 && flag2) {
-					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 					session.setAttribute("property", feature);
 					String propertyJson = gson.toJson(feature);
 					response.getWriter().print(propertyJson);

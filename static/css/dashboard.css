@@ -60,7 +60,7 @@
 	width: 15%;
 }
 
-#dpUpload{
+.dropzone{
     background: none;
     color:#222629;
     border: dashed 2px #222629;

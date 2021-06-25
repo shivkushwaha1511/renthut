@@ -16,6 +16,7 @@ public class Property {
 	private String description;
 	private PropertyType propertyType;
 	private int noOfPeople;
+	private String thumbnail;
 	
 //	Constructor Summary
 	public Property(User user,String title, String address, City city,
@@ -30,6 +31,36 @@ public class Property {
 	}
 
 	//	Method Summary
+	public void saveThumbnail(String path) {
+		Connection con = null;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "UPDATE properties SET thumbnail=? where property_id=?";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			ps.setString(1,path);
+			ps.setInt(2,propertyId);
+						
+			if(ps.executeUpdate() == 1) {
+				this.thumbnail = path;
+			}
+					
+		}catch(ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 	public boolean addPropertyDetails() {
 		boolean flag = false;
 		Connection con = null;
@@ -169,6 +200,14 @@ public class Property {
 	
 	public void setNoOfPeople(int noOfPeople) {
 		this.noOfPeople = noOfPeople;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 	
 }

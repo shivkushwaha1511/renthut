@@ -159,7 +159,7 @@
 									<div class="hl p-2 mb-3" <%if(property == null){ %>style="display: none;"<%} %> id="prop_bar">
 										<ul class="nav nav-pills nav-justified ml-5" style="width:25%;">
 											<li class="nav-item">
-												<a class="nav-link dark-bg dark-hov" href="#details" data-toggle="pill">Details</a>
+												<a class="nav-link dark-bg dark-hov" href="#details" data-toggle="pill" id="details_pill">Details</a>
 											</li>
 											<li class="nav-item">
 												<a class="nav-link dark-bg dark-hov <%if(property != null){ %>active<%} %>" href="#gallery" data-toggle="pill" id="gallery_pill">Gallery</a>
@@ -360,37 +360,131 @@
 																	</div>
 																</div>
 															</div>
-
-															<div class="text-right pr-2 py-3">
-																<button id="id_nextBtn" class="btn btn-primary font-weight-bold mr-3">Next</button>
+															
+															<div class="row pt-4 pb-4 px-3">
+																<div class="col-7 text-right pr-5">
+																	<button id="id_updtBtn" class="btn btn-primary font-weight-bold">Submit</button>
+																</div>
+																<div class="col-5 text-right">
+																<%--	<button id="id_nextBtn" class="btn btn-primary font-weight-bold">Next</button> --%>
+																</div>
 															</div>
-
 											<%--			</form>  --%>
 													</div>
 												</div>
 											</div>
 										</div>
 										<div class="tab-pane fade <%if(property != null){ %>show active<%} %>" id="gallery">
-											<div class="nav nav-tabs pl-5">
-												<a class="nav-link active" data-toggle="tab" href="#exterior">Exterior</a>
-												<a class="nav-link" data-toggle="tab" href="#living">Living Room</a>
-												<a class="nav-link" data-toggle="tab" href="#bedroom">Bedroom</a>
-												<a class="nav-link" data-toggle="tab" href="#kitchen">Kitchen</a>
-												<a class="nav-link" data-toggle="tab" href="#dining">Dining Room</a>
-												<a class="nav-link" data-toggle="tab" href="#bathroom">Bathroom</a>
-												<a class="nav-link" data-toggle="tab" href="#terrace">Terrace</a>
-												<a class="nav-link" data-toggle="tab" href="#garden">Garden</a>
+											<div id="thumbnail_box">
+												<div class="ml-5 pl-3 mt-5" style="width:30%; border-bottom:3px solid rgb(0,123,255)">
+													<h3>Upload Thumbnail</h3>
+												</div>
+												<div class="p-5">
+													<form class="dropzone" id="thumb_upload">
+													</form>
+												</div>
+												<div class="row text-left mt-1 px-5">
+													<div class="col-7 text-right pr-5">
+														<button class="btn btn-primary" id="thumb_upload">Upload</button>
+													</div>
+													<div class="col-5 text-right">
+														<button class="btn btn-primary" id="thumb_next">Next</button>
+													</div>
+												</div>
 											</div>
 											
-											<div class="tab-content">
-												<div class="tab-pane fade show active" id="exterior">1</div>
-												<div class="tab-pane fade" id="living">2</div>
-												<div class="tab-pane fade" id="bedroom">3</div>
-												<div class="tab-pane fade" id="kitchen">4</div>
-												<div class="tab-pane fade" id="dining">5</div>
-												<div class="tab-pane fade" id="bathroom">6</div>
-												<div class="tab-pane fade" id="terrace">7</div>
-												<div class="tab-pane fade" id="garden">8</div>
+											<div id="property_pics_box" style="display:none;">
+												<div class="nav nav-tabs pl-5">
+													<a class="nav-link active" data-toggle="tab" href="#id_exterior">Exterior</a>
+													<a class="nav-link" data-toggle="tab" href="#id_living">Living Room</a>
+													<a class="nav-link" data-toggle="tab" href="#id_bedRoom">Bedroom</a>
+													<a class="nav-link" data-toggle="tab" href="#id_kitchen">Kitchen</a>
+													<a class="nav-link" data-toggle="tab" href="#id_dining">Dining Room</a>
+													<a class="nav-link" data-toggle="tab" href="#id_bathRoom">Bathroom</a>
+													<a class="nav-link" data-toggle="tab" href="#id_Terrace">Terrace</a>
+													<a class="nav-link" data-toggle="tab" href="#id_Garden">Garden</a>
+												</div>
+											
+												<div class="tab-content">
+													<div class="tab-pane fade show active" id="id_exterior">
+														<div class="p-5">
+															<form class="dropzone pic" id="picup_exterior">
+															</form>
+														</div>
+														<div class="col-7 text-left mt-4" style="float: right">
+															<button class="btn btn-primary" id="btn_exterior">Upload</button>
+														</div>
+													</div>
+													<div class="tab-pane fade" id="id_living">
+														<div class="p-5">
+															<form class="dropzone pic" id="picup_living">
+															</form>
+														</div>
+														<div class="col-7 text-left mt-4" style="float: right">
+															<button class="btn btn-primary" id="btn_living">Upload</button>
+														</div>
+													</div>
+													<div class="tab-pane fade" id="id_bedRoom">
+														<div class="p-5">
+															<form class="dropzone pic" id="picup_bedroom">
+															</form>
+														</div>
+														<div class="col-7 text-left mt-4" style="float: right">
+															<button class="btn btn-primary" id="btn_bedroom">Upload</button>
+														</div>
+													</div>
+													<div class="tab-pane fade" id="id_kitchen">
+														<div class="p-5">
+															<form class="dropzone pic" id="picup_kitchen">
+															</form>
+														</div>
+														<div class="col-7 text-left mt-4" style="float: right">
+															<button class="btn btn-primary" id="btn_kitchen">Upload</button>
+														</div>
+													</div>
+													<div class="tab-pane fade" id="id_dining">
+														<div class="p-5">
+															<form class="dropzone pic" id="picup_dining">
+															</form>
+														</div>
+														<div class="col-7 text-left mt-4" style="float: right">
+															<button class="btn btn-primary" id="btn_dining">Upload</button>
+														</div>
+													</div>
+													<div class="tab-pane fade" id="id_bathRoom">
+														<div class="p-5">
+															<form class="dropzone pic" id="picup_bathroom">
+															</form>
+														</div>
+														<div class="col-7 text-left mt-4" style="float: right">
+															<button class="btn btn-primary" id="btn_bathroom">Upload</button>
+														</div>
+													</div>
+													<div class="tab-pane fade" id="id_Terrace">
+														<div class="p-5">
+															<form class="dropzone pic" id="picup_terrace">
+															</form>
+														</div>
+														<div class="col-7 text-left mt-4" style="float: right">
+															<button class="btn btn-primary" id="btn_terrace">Upload</button>
+														</div>
+													</div>
+													<div class="tab-pane fade" id="id_Garden">
+														<div class="p-5">
+															<form class="dropzone pic" id="picup_garden">
+															</form>
+														</div>
+														<div class="col-7 text-left mt-4" style="float: right">
+															<button class="btn btn-primary" id="btn_garden">Upload</button>
+														</div>
+													</div>
+												</div>
+																																			
+												<div class="row text-left mt-4 px-4">
+													<div class="col-4">
+														<button class="btn btn-primary" id="pic_next">Previous</button>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>	
@@ -417,13 +511,58 @@
 			autoProcessQueue : false
 		};
 		
-		let dropZone = new Dropzone("#dpUpload",{url:"dpupload.do"});
+		let dpDropZone = new Dropzone("#dpUpload",{url:"dpupload.do"});
 		
 		const dpBtn = document.querySelector("#dp_btn");
 		
 		dpBtn.addEventListener("click",()=>{
-			dropZone.processQueue();
+			dpDropZone.processQueue();
 		});	
+		
+		/* ******************************************** */
+		Dropzone.autodiscover = false;
+		
+		Dropzone.options.thumb_upload = {
+				maxFilesize : 2,
+				maxFiles : 1,
+				addRemoveLinks : true,
+				acceptedFiles : ".jpg,.jpeg,.png,.gif",
+				autoProcessQueue : false
+		};
+		
+		let thumbDropZone = new Dropzone("#thumb_upload",{url:"thumbupload.do"});
+		
+		//const thumb_upload = document.querySelector("#thumb_upload"); already in js
+		
+		thumb_upload.addEventListener("click",()=>{
+			thumbDropZone.processQueue();
+		});
+		
+		/* ******************************************************* */
+		const pic_types = document.querySelectorAll(".pic");
+		
+		pic_types.forEach((type,count)=>{
+			Dropzone.autodiscover = false;
+			
+			Dropzone.options[type.id] = {
+					maxFilesize : 2,
+					maxFiles : 3,
+					addRemoveLinks : true,
+					acceptedFiles : ".jpg,.jpeg,.png,.gif",
+					autoProcessQueue : false
+			};
+			
+			count++;
+			
+			let picDropzone = new Dropzone("#"+type.id,{url:"picsupload.do?picTypeId="+count});
+			
+			const btn = document.querySelector("#btn_"+type.id.substring(6));
+			btn.dz = picDropzone;
+			
+			btn.addEventListener("click",(event)=>{
+				event.target.dz.processQueue();
+			});
+		});
 		
 	</script> 
 </body>

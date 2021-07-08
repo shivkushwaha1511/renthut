@@ -29,6 +29,8 @@ public class PicUploadServlet extends HttpServlet{
 			
 			List<FileItem> items = null;
 			try {
+				PropertyFeature property = (PropertyFeature)session.getAttribute("property");
+				
 				items = sfu.parseRequest(request);		
 				FileItem item = items.get(0);
 				
@@ -47,13 +49,12 @@ public class PicUploadServlet extends HttpServlet{
 				
 				String folderPath = getServletContext().getRealPath("/WEB-INF/uploads/");
 				
-				File file = new File(folderPath+user.getEmail()+"/"+MediaType.TYPES[picTypeId-1],fileName);
+				File file = new File(folderPath+user.getEmail()+"/"+property.getProperty().getPropertyId()+"_"+property.getProperty().getTitle()+"/"+MediaType.TYPES[picTypeId-1],fileName);
 				
 				try {
 					item.write(file);
 					
-					PropertyFeature property = (PropertyFeature)session.getAttribute("property");
-					models.FileItem fileItem = new models.FileItem(property.getProperty(), user.getEmail()+"/"+MediaType.TYPES[picTypeId-1]+"/"+fileName,fileItemType,new MediaType(picTypeId));
+					models.FileItem fileItem = new models.FileItem(property.getProperty(), user.getEmail()+"/"+property.getProperty().getPropertyId()+"_"+property.getProperty().getTitle()+"/"+MediaType.TYPES[picTypeId-1]+"/"+fileName,fileItemType,new MediaType(picTypeId));
 					fileItem.savePic();
 				
 				}catch(Exception e) {

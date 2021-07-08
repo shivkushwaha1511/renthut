@@ -36,22 +36,22 @@ public class ThumbnailUploadServlet extends HttpServlet{
 				FileItem fileItem = fileItems.get(0);
 				
 				String fileName = fileItem.getName();
+				PropertyFeature property = (PropertyFeature)session.getAttribute("property");
+				Property propertyObj = property.getProperty();
 				
 				String folderPath = getServletContext().getRealPath("/WEB-INF/uploads/");
+				folderPath =  folderPath+user.getEmail()+"/"+propertyObj.getPropertyId()+"_"+propertyObj.getTitle();
 				
-				File file = new File(folderPath+user.getEmail(),fileName);
-				
-				PropertyFeature propertyFeature = (PropertyFeature)session.getAttribute("property"); 
-				Property property = propertyFeature.getProperty();
-				
-				if(property.getThumbnail()!=null) {
-					File delFile = new File(folderPath,property.getThumbnail());
+				File file = new File(folderPath,fileName);
+			
+				if(propertyObj.getThumbnail()!=null) {
+					File delFile = new File(folderPath,propertyObj.getThumbnail());
 					delFile.delete();
 				}
 				
 				try {
 					fileItem.write(file);
-					property.saveThumbnail(user.getEmail()+"/"+fileName);
+					propertyObj.saveThumbnail(user.getEmail()+"/"+propertyObj.getPropertyId()+"_"+propertyObj.getTitle()+"/"+fileName);
 				}catch(Exception e) {
 					e.printStackTrace();
 				}

@@ -1,12 +1,13 @@
 package utils;
 
 public class PropertyDetails {
+	private int id;
 	private String title;
 	private String address;
 	private int city;
 	private String description;
 	private int property_type;
-	private int ele_bill;
+	private boolean ele_bill;
 	private int bedroom;
 	private int bathroom;
 	private int room;
@@ -14,18 +15,24 @@ public class PropertyDetails {
 	private int dist_school;
 	private int dist_hospital;
 	private int floor_type;
-	private int water_tank;
-	private int parking;
-	private int terrace;
-	private int ventilation;
-	private int garden;
-	private int pets;
+	private boolean water_tank;
+	private boolean parking;
+	private boolean terrace;
+	private boolean ventilation;
+	private boolean garden;
+	private boolean pets;
 
 	
-	public int getEle_bill() {
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public boolean getEle_bill() {
 		return ele_bill;
 	}
-	public void setEle_bill(int ele_bill) {
+	public void setEle_bill(boolean ele_bill) {
 		this.ele_bill = ele_bill;
 	}
 	public int getBedroom() {
@@ -70,40 +77,40 @@ public class PropertyDetails {
 	public void setFloor_type(int floor_type) {
 		this.floor_type = floor_type;
 	}
-	public int getWater_tank() {
+	public boolean getWater_tank() {
 		return water_tank;
 	}
-	public void setWater_tank(int water_tank) {
+	public void setWater_tank(boolean water_tank) {
 		this.water_tank = water_tank;
 	}
-	public int getParking() {
+	public boolean getParking() {
 		return parking;
 	}
-	public void setParking(int parking) {
+	public void setParking(boolean parking) {
 		this.parking = parking;
 	}
-	public int getTerrace() {
+	public boolean getTerrace() {
 		return terrace;
 	}
-	public void setTerrace(int terrace) {
+	public void setTerrace(boolean terrace) {
 		this.terrace = terrace;
 	}
-	public int getVentilation() {
+	public boolean getVentilation() {
 		return ventilation;
 	}
-	public void setVentilation(int ventilation) {
+	public void setVentilation(boolean ventilation) {
 		this.ventilation = ventilation;
 	}
-	public int getGarden() {
+	public boolean getGarden() {
 		return garden;
 	}
-	public void setGarden(int garden) {
+	public void setGarden(boolean garden) {
 		this.garden = garden;
 	}
-	public int getPets() {
+	public boolean getPets() {
 		return pets;
 	}
-	public void setPets(int pets) {
+	public void setPets(boolean pets) {
 		this.pets = pets;
 	}
 	public String getTitle() {

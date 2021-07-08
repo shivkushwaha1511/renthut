@@ -37,7 +37,7 @@ const addDetails = async ()=>{
 			city : city.value,
 			address : address.value,
 			property_type : propertyType.value,
-			ele_bill : electricityBill.checked?0:1,
+			ele_bill : electricityBill.checked?false:true,
 			bedroom : bedroom.value,
 			bathroom : bathroom.value,
 			room : room.value,
@@ -45,12 +45,12 @@ const addDetails = async ()=>{
 			dist_school : distSchool.value,
 			dist_hospital : distHospital.value,
 			floor_type : floorType.value,
-			water_tank : waterTank.checked?1:0,
-			parking : parking.checked?1:0,
-			terrace : terrace.checked?1:0,
-			ventilation : ventilation.checked?1:0,
-			garden : garden.checked?1:0,
-			pets : pets.checked?1:0
+			water_tank : waterTank.checked?true:false,
+			parking : parking.checked?true:false,
+			terrace : terrace.checked?true:false,
+			ventilation : ventilation.checked?true:false,
+			garden : garden.checked?true:false,
+			pets : pets.checked?true:false
 		}),
 		
 		headers: { 'Content-type': 'application/json; charset=UTF-8'}
@@ -82,15 +82,15 @@ updtBtn.addEventListener("click",()=>{
 	});
 });
 
-/*
-nextBtn.addEventListener("click",()=>{
+
+updtBtn.addEventListener("click",()=>{
 	details.classList.remove("show");
 	details.classList.remove("active");
 	gallery.classList.add("show");
 	gallery.classList.add("active");
 	details_pill.classList.remove("active");
 	gallery_pill.classList.add("active");
-});  */
+});
 
 /************************************************* */
 
@@ -115,9 +115,109 @@ pic_next.addEventListener("click",()=>{
 	property_pics_box.style.display = "none";
 });
 
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+const btn_props_edits = document.querySelectorAll(".btn_prop_edit");
+const main_body = document.querySelector("#main-body");
+const left_col = document.querySelector("#left-col");
 
+btn_props_edits.forEach((btn_prop_edit)=>{
+	btn_prop_edit.addEventListener("click",(event)=>{
+		const edit_prop_box = document.querySelector("#edit_prop_box_"+event.target.id.substring(3));
+		edit_prop_box.style.display = "block";
+		main_body.style.position = "fixed";
+		left_col.classList.remove("sticky-top");
+	});
+});
 
+const btn_close = document.querySelectorAll(".btn-close");
+
+btn_close.forEach((btn)=>{
+	btn.addEventListener("click",(event)=>{
+		let id = event.target.id.substring(4);
+		const edit_prop_box = document.querySelector("#edit_prop_box_"+id);
+		edit_prop_box.style.display = "none";
+		main_body.style.position = "static";
+		left_col.classList.add("sticky-top");
+			
+				
+	});
+});
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+const updtBtns = document.querySelectorAll(".updtBtn");
+
+updtBtns.forEach((updtBtn)=>{
+	updtBtn.addEventListener("click",(event)=>{
+		let id = event.target.id.substring(11);
+		const N_title = document.querySelector("#id_title_"+id);
+		const N_description = document.querySelector("#id_description_"+id);
+		const N_city = document.querySelector("#id_city_"+id);
+		const N_address = document.querySelector("#id_address_"+id);
+		const N_propertyType = document.querySelector("#id_propertyType_"+id);
+		const N_electricityBill = document.querySelector("#id_electricityBill_"+id);
+		const N_bedroom = document.querySelector("#id_bedroom_"+id);
+		const N_bathroom = document.querySelector("#id_bathroom_"+id);
+		const N_room = document.querySelector("#id_room_"+id);
+		const N_area = document.querySelector("#id_area_"+id);
+		const N_distSchool = document.querySelector("#id_distSchool_"+id);
+		const N_distHospital = document.querySelector("#id_distHospital_"+id);
+		const N_floorType = document.querySelector("#id_floorType_"+id);
+		const N_waterTank = document.querySelector("#id_waterTank_"+id);
+		const N_parking = document.querySelector("#id_parking_"+id);
+		const N_terrace = document.querySelector("#id_terrace_"+id);
+		const N_ventilation = document.querySelector("#id_ventilation_"+id);
+		const N_garden = document.querySelector("#id_garden_"+id);
+		const N_pets = document.querySelector("#id_pets_"+id);
+		
+		const updtDetails = async ()=>{
+			const response = await fetch("addpropertydetails.do",{
+				
+				method : "POST",
+			
+				body : JSON.stringify({
+					id : id,
+					title : N_title.value,
+					description : N_description.value,
+					city : N_city.value,
+					address : N_address.value,
+					property_type : N_propertyType.value,
+					ele_bill : N_electricityBill.checked?false:true,
+					bedroom : N_bedroom.value,
+					bathroom : N_bathroom.value,
+					room : N_room.value,
+					area : N_area.value,
+					dist_school : N_distSchool.value,
+					dist_hospital : N_distHospital.value,
+					floor_type : N_floorType.value,
+					water_tank : N_waterTank.checked?true:false,
+					parking : N_parking.checked?true:false,
+					terrace : N_terrace.checked?true:false,
+					ventilation : N_ventilation.checked?true:false,
+					garden : N_garden.checked?true:false,
+					pets : N_pets.checked?true:false
+				}),
+				
+				headers: { 'Content-type': 'application/json; charset=UTF-8'} 				
+			});
+			
+			return response.text();
+		};
+
+		updtDetails().then((data)=>{
+			data = JSON.parse(data);
+	
+			if(data == "expired"){
+				window.location = "signin.do";
+			}else if(data == "failed"){
+				console.log("failed");
+			}
+		}).catch((error)=>{
+			console.log("fail")
+		})
+	});
+});
 
 
 

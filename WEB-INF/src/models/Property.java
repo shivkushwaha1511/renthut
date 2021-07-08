@@ -19,6 +19,8 @@ public class Property {
 	private String thumbnail;
 	
 //	Constructor Summary
+	public Property() {}
+	
 	public Property(User user,String title, String address, City city,
 			String description, PropertyType propertyType) {
 		super();

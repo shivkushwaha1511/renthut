@@ -74,10 +74,6 @@ public class SignUpServlet extends HttpServlet{
 					File file = new File(parentpath,email);
 					file.mkdir();
 					
-					for(int i=0;i<8;i++) {
-						new File(parentpath+"/"+email,MediaType.TYPES[i]).mkdir();
-					}
-					
 					String message = MessageTemplate.activateAccount(name,email,authCode);
 					String subject = "Activate Account";
 					EmailSender.sendEmail(email,subject, message);

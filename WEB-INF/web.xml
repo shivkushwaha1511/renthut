@@ -141,4 +141,14 @@
 		<servlet-name>a12</servlet-name>
 		<url-pattern>/picsupload.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a13</servlet-name>
+		<servlet-class>controllers.EndSessionServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a13</servlet-name>
+		<url-pattern>/endsession.do</url-pattern>
+	</servlet-mapping>
 </web-app>

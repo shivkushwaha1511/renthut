@@ -3,7 +3,9 @@ package models;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PropertyFeature {
 	private int featureId;
@@ -24,7 +26,7 @@ public class PropertyFeature {
 	private boolean garden;
 	
 //	Constructor Summary
-	
+	public PropertyFeature() {}
 	
 	public PropertyFeature(Property property,int roomCount, int bedroom, int bathroom, boolean electricityBill, int area,
 			boolean waterTank, boolean parking, int distFromSchool, int distFromHospital, boolean terrace,
@@ -48,6 +50,68 @@ public class PropertyFeature {
 	}
 	
 //	Method Summary
+	
+	public static ArrayList<PropertyFeature> collectAllProperties(User user){
+		ArrayList<PropertyFeature> features = new ArrayList<PropertyFeature>();
+		Connection con = null;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "SELECT * FROM property_features AS f INNER JOIN properties AS p WHERE p.property_id=f.property_id AND p.user_id=?";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1,user.getUserId());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				PropertyFeature feature = new PropertyFeature();
+				Property property = new Property();
+				
+				feature.setFeatureId(rs.getInt(1));
+				feature.setRoomCount(rs.getInt(3));
+				feature.setBedroom(rs.getInt(4));
+				feature.setBathroom(rs.getInt(5));
+				feature.setElectricityBill(rs.getBoolean(6));
+				feature.setArea(rs.getInt(7));
+				feature.setWaterTank(rs.getBoolean(8));
+				feature.setParking(rs.getBoolean(9));
+				feature.setDistFromSchool(rs.getInt(10));
+				feature.setDistFromHospital(rs.getInt(11));
+				feature.setTerrace(rs.getBoolean(12));
+				feature.setVentilation(rs.getBoolean(13));
+				feature.setPetsAllowed(rs.getBoolean(14));
+				feature.setFloorType(rs.getInt(15));
+				feature.setGarden(rs.getBoolean(16));
+				property.setPropertyId(rs.getInt(17));
+				property.setTitle(rs.getString(19));
+				property.setAddress(rs.getString(20));
+				property.setCity(new City(rs.getInt(21)));
+				property.setDescription(rs.getString(22));
+				property.setPropertyType(new PropertyType(rs.getInt(23)));
+				property.setNoOfPeople(rs.getInt(24));
+				property.setThumbnail(rs.getString(25));
+				
+				feature.setProperty(property);
+				
+				features.add(feature);
+			}
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return features;
+	}
+	
 	
 	public boolean savePropertyFeatures() {
 		boolean flag = false;

@@ -7,13 +7,16 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import models.City;
+import models.MediaType;
 import models.Property;
 import models.PropertyFeature;
 import models.PropertyType;
@@ -21,122 +24,7 @@ import models.User;
 import utils.PropertyDetails;
 
 public class AddPropertyDetailsServlet extends HttpServlet{
-//	public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
-//		String next = "signin.do";
-//		
-//		HttpSession session = request.getSession();
-//		User user = (User)session.getAttribute("user");
-//		
-//		if(user!=null) {
-//					
-//			String title = request.getParameter("title");
-//			String description = request.getParameter("description");
-//			int cityId = Integer.parseInt(request.getParameter("city"));
-//			String address = request.getParameter("address");
-//			int propertyTypeId = Integer.parseInt(request.getParameter("property_type"));
-//			int eleBill_I = Integer.parseInt(request.getParameter("ele_bill"));
-//			int bedroom = Integer.parseInt(request.getParameter("bedroom"));
-//			int bathroom = Integer.parseInt(request.getParameter("bathroom"));
-//			int room = Integer.parseInt(request.getParameter("room"));
-//			int area = Integer.parseInt(request.getParameter("area"));
-//			int dist_school = Integer.parseInt(request.getParameter("dist_school"));
-//			int dist_hospital = Integer.parseInt(request.getParameter("dist_hospital"));
-//			int floor_type = Integer.parseInt(request.getParameter("floor_type"));
-//			String water_tank_I = request.getParameter("water_tank");
-//			String parking_I = request.getParameter("parking");
-//			String terrace_I = request.getParameter("terrace");
-//			String ventilation_I = request.getParameter("ventilation");
-//			String garden_I = request.getParameter("garden");
-//			String pets_I = request.getParameter("pets");
-//			
-//			boolean eleBill = false;
-//			boolean water_tank = false;
-//			boolean parking = false;
-//			boolean terrace = false;
-//			boolean ventilation = false;
-//			boolean garden = false;
-//			boolean pets = false;
-//			
-//			if(eleBill_I == 1) {
-//				eleBill = true;
-//			}
-//			
-//			if(water_tank_I != null) {
-//					water_tank = true;
-//			}		
-//			
-//			if(parking_I != null) {
-//				parking = true;
-//			}
-//			
-//			if(terrace_I != null) {
-//				terrace = true;
-//			}
-//			
-//			if(ventilation_I != null) {
-//				ventilation = true;
-//			}
-//			
-//			if(garden_I != null) {
-//				garden = true;
-//			}
-//			
-//			if(pets_I != null) {
-//				pets = true;
-//			}
-//			
-//			PropertyType proType = new PropertyType(propertyTypeId);
-//			City city = new City(cityId); 
-//			
-//			Property property = null;
-//			PropertyFeature feature = (PropertyFeature)session.getAttribute("property");
-//			
-//			if(feature!=null) {
-//				property = feature.getProperty();
-//				if(property.UpdatePropertyDetails(title,address,city,description,proType)) {
-//					property.setTitle(title);
-//					property.setAddress(address);
-//					property.setDescription(description);
-//					property.setPropertyType(proType);
-//				}
-//
-//				if(feature.updatePropertyFeatures(room,bedroom,bathroom,eleBill,area,water_tank,parking,dist_school,dist_hospital,terrace,ventilation,pets,floor_type,garden)) {
-//					feature.setRoomCount(room);
-//					feature.setBedroom(bedroom);
-//					feature.setBathroom(bathroom);
-//					feature.setElectricityBill(eleBill);
-//					feature.setArea(area);
-//					feature.setWaterTank(water_tank);
-//					feature.setParking(parking);
-//					feature.setDistFromSchool(dist_school);
-//					feature.setDistFromHospital(dist_hospital);
-//					feature.setTerrace(terrace);
-//					feature.setVentilation(ventilation);
-//					feature.setPetsAllowed(pets);
-//					feature.setFloorType(floor_type);
-//					feature.setGarden(garden);
-//				}
-//			}else {
-//				property = new Property(user,title,address,city,description,proType);
-//				property.addPropertyDetails();
-//				
-//				feature = new PropertyFeature(property,room,bedroom,bathroom,eleBill,area,water_tank,parking,dist_school,dist_hospital,terrace,ventilation,pets,floor_type,garden);
-//				feature.savePropertyFeatures();
-//			}
-//			
-//			session.setAttribute("property", feature);
-//			
-//			session.setAttribute("activeTab","addProperty");
-//			
-//			next="dashboard.do";
-//		}
-//		
-//		response.sendRedirect(next);
-//	}
-//	###################################################################################
-	
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
-
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 
@@ -151,12 +39,13 @@ public class AddPropertyDetailsServlet extends HttpServlet{
 			
 			PropertyDetails propdetails = gson.fromJson(br, PropertyDetails.class);
 			
+			int id = propdetails.getId();
 			String title = propdetails.getTitle();
 			String description = propdetails.getDescription();
 			int cityId = propdetails.getCity();
 			String address = propdetails.getAddress();
 			int propertyTypeId = propdetails.getProperty_type();
-			int eleBill_I = propdetails.getEle_bill();
+			boolean eleBill = propdetails.getEle_bill();
 			int bedroom = propdetails.getBedroom();
 			int bathroom = propdetails.getBathroom();
 			int room = propdetails.getRoom();
@@ -164,49 +53,13 @@ public class AddPropertyDetailsServlet extends HttpServlet{
 			int dist_school = propdetails.getDist_school();
 			int dist_hospital = propdetails.getDist_hospital();
 			int floor_type = propdetails.getFloor_type();
-			int water_tank_I = propdetails.getWater_tank();
-			int parking_I = propdetails.getParking();
-			int terrace_I = propdetails.getTerrace();
-			int ventilation_I = propdetails.getVentilation();
-			int garden_I = propdetails.getGarden();
-			int pets_I = propdetails.getPets();
+			boolean water_tank = propdetails.getWater_tank();
+			boolean parking = propdetails.getParking();
+			boolean terrace = propdetails.getTerrace();
+			boolean ventilation = propdetails.getVentilation();
+			boolean garden = propdetails.getGarden();
+			boolean pets = propdetails.getPets();
 
-			boolean eleBill = false;
-			boolean water_tank = false;
-			boolean parking = false;
-			boolean terrace = false;
-			boolean ventilation = false;
-			boolean garden = false;
-			boolean pets = false;
-			
-			if(eleBill_I == 1) {
-				eleBill = true;
-			}
-			
-			if(water_tank_I == 1) {
-					water_tank = true;
-			}		
-			
-			if(parking_I == 1) {
-				parking = true;
-			}
-			
-			if(terrace_I == 1) {
-				terrace = true;
-			}
-			
-			if(ventilation_I == 1) {
-				ventilation = true;
-			}
-			
-			if(garden_I == 1) {
-				garden = true;
-			}
-			
-			if(pets_I == 1) {
-				pets = true;
-			}
-			
 			PropertyType proType = new PropertyType(propertyTypeId);
 			City city = new City(cityId); 
 			
@@ -238,7 +91,16 @@ public class AddPropertyDetailsServlet extends HttpServlet{
 					feature.setFloorType(floor_type);
 					feature.setGarden(garden);
 				}
+				response.getWriter().print("Updated");
+			}else if(id != 0) {
+				property = new Property(user,title,address,city,description,proType);
+				property.setPropertyId(id);
+				property.UpdatePropertyDetails(title,address,city,description,proType);
+				
+				feature = new PropertyFeature(property,room,bedroom,bathroom,eleBill,area,water_tank,parking,dist_school,dist_hospital,terrace,ventilation,pets,floor_type,garden);
+				feature.updatePropertyFeatures(room,bedroom,bathroom,eleBill,area,water_tank,parking,dist_school,dist_hospital,terrace,ventilation,pets,floor_type,garden);
 			}else {
+				
 				property = new Property(user,title,address,city,description,proType);
 				flag1 = property.addPropertyDetails();
 				
@@ -247,6 +109,17 @@ public class AddPropertyDetailsServlet extends HttpServlet{
 				
 				if(flag1 && flag2) {
 					session.setAttribute("property", feature);
+					
+					ServletContext context = request.getServletContext();
+					String parentpath = context.getRealPath("/WEB-INF/uploads");
+					
+					File file = new File(parentpath+"/"+user.getEmail(),property.getPropertyId()+"_"+title);
+					file.mkdir();
+					
+					for(int i=0;i<8;i++) {
+						new File(parentpath+"/"+user.getEmail()+"/"+property.getPropertyId()+"_"+title,MediaType.TYPES[i]).mkdir();
+					}
+					
 					String propertyJson = gson.toJson(feature);
 					response.getWriter().print(propertyJson);
 				}else {

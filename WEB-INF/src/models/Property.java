@@ -46,10 +46,6 @@ public class Property {
 			
 			ps.setString(1,path);
 			ps.setInt(2,propertyId);
-						
-			if(ps.executeUpdate() == 1) {
-				this.thumbnail = path;
-			}
 					
 		}catch(ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

@@ -50,6 +50,37 @@ public class PropertyFeature {
 	}
 	
 //	Method Summary
+	public ArrayList<String> collectAllPropPics(){
+		ArrayList<String> pics = new ArrayList<String>();
+		Connection con = null;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "select file_item_path from file_items where property_id=?";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, this.getProperty().getPropertyId());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				pics.add(rs.getString(1));
+			}
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return pics;
+	}
 	
 	public static ArrayList<PropertyFeature> collectAllProperties(User user){
 		ArrayList<PropertyFeature> features = new ArrayList<PropertyFeature>();

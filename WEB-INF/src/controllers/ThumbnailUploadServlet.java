@@ -51,7 +51,10 @@ public class ThumbnailUploadServlet extends HttpServlet{
 				
 				try {
 					fileItem.write(file);
-					propertyObj.saveThumbnail(user.getEmail()+"/"+propertyObj.getPropertyId()+"_"+propertyObj.getTitle()+"/"+fileName);
+					String path = user.getEmail()+"/"+propertyObj.getPropertyId()+"_"+propertyObj.getTitle()+"/"+fileName;
+					propertyObj.saveThumbnail(path);
+					
+					propertyObj.setThumbnail(path);
 				}catch(Exception e) {
 					e.printStackTrace();
 				}

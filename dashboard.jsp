@@ -157,189 +157,216 @@
 								<div id="edit_prop_box_<%=property.getProperty().getPropertyId() %>" class="pt-2" style="position: fixed;top: 0;left: 0;background-color: rgba(0,0,0,0.7);height: 100%;width: 100%;z-index: 1;display: none;">
 									<div class="bg-light mx-auto mt-5" style="overflow: auto; width:70%; height:530px;">
 										<div class="row">
-											<div class="col-5 display-4 ml-4 pl-2 font-weight-bold mb-5 pt-2 dash-text">
+											<div class="col-5 display-4 ml-4 pl-2 font-weight-bold mb-3 pt-2 dash-text">
 												Edit Property
 											</div>
 											<div class="col-3 text-right ml-auto fixed-top text-light pr-3 pt-3" style="float: right;">
 												<i id="btn_<%=property.getProperty().getPropertyId() %>" class="fa fa-times fa-lg btn-close" style="cursor: pointer;"></i>
 											</div>
 										</div>
-										<div class="col px-5 font-weight-bold">
-											<div class="row">
-												<div class="col">
-													<div class="form-group">
-														<label>Title</label>
-														<input type="text" class="form-control" name="title" id="id_title_<%=property.getProperty().getPropertyId() %>" value="<%= property.getProperty().getTitle() %>" autocomplete="off" required="required">
+										<div class="row">
+											<div class="col">
+												<div class="pl-5 py-2 mb-3 bg-white">
+													<ul class="nav nav-pills">
+														<li class="nav-item">
+															<a class="nav-link dark-bg dark-hov active" data-toggle="pill" href="#prop-edit-details">Details</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link dark-bg dark-hov" data-toggle="pill" href="#prop-edit-photos">Gallery</a>
+														</li>
+													</ul>
+												</div>
+												<div class="tab-content">
+													<div class="tab-pane fade show active" id="prop-edit-details">
+														<div class="col px-5 font-weight-bold">
+															<div class="row">
+																<div class="col">
+																	<div class="form-group">
+																		<label>Title</label>
+																		<input type="text" class="form-control" name="title" id="id_title_<%=property.getProperty().getPropertyId() %>" value="<%= property.getProperty().getTitle() %>" autocomplete="off" required="required">
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="form-group">
+																		<label>Description</label>
+																		<textarea class="form-control" name="description" id="id_description_<%=property.getProperty().getPropertyId() %>" required="required"><%= property.getProperty().getDescription() %></textarea>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col">		
+																	<div class="form-group">
+																		<label>City</label>
+																		<select class="form-control" name="city" id="id_city_<%=property.getProperty().getPropertyId() %>" required="required">
+																			<option value="1508">Select</option>
+																			<% for(City city : cities){
+																				if(city.getCityId()!= property.getProperty().getCity().getCityId()){
+																					if(city.getCityId()!=City.NOT_SELECTED){ %>
+																						<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
+																					<% }}else{%>
+																						<option value="<%= city.getCityId() %>" selected="selected"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
+																			<% }} %>
+																		</select>
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="form-group">
+																		<label>Address</label>
+																		<textarea class="form-control" name="address" id="id_address_<%=property.getProperty().getPropertyId() %>" required="required"><%= property.getProperty().getAddress() %></textarea>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col">
+																	<div class="form-group">
+																		<label>Property Type</label>
+																		<select class="form-control" class="form-control" id="id_propertyType_<%=property.getProperty().getPropertyId() %>" name="property_type" required="required">
+																		<% ArrayList<PropertyType> types = PropertyType.getAllPropertyTypes(); %>
+																			<option value="10">Select</option>
+																		
+																		<%	for(PropertyType type : types){ 
+																				if(type.getPropertyTypeId() != property.getProperty().getPropertyType().getPropertyTypeId()){%>
+																					<% if(type.getPropertyTypeId()!= PropertyType.NOT_SELECTED){ %>
+																						<option value="<%= type.getPropertyTypeId() %>"><%= type.getPropertyType() %></option>
+																				<%}}else{%>
+																						<option value="<%= type.getPropertyTypeId() %>" selected="selected"><%= type.getPropertyType() %></option>
+																				<% }}%>
+																		</select>
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="form-group pt-4">
+																		<label>Electricity Bill:&nbsp;&nbsp;</label>
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" id="id_electricityBill_<%=property.getProperty().getPropertyId() %>" <%if(!property.isElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Separate
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1" <%if(property.isElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Combine
+																	</div>
+																</div>
+															</div>
+				
+															<div class="row">
+																<div class="col">
+																	<div class="form-group">
+																		<label>Bedroom</label>
+																		<input type="number" class="form-control" name="bedroom" id="id_bedroom_<%=property.getProperty().getPropertyId() %>" value="<%= property.getBedroom() %>" required="required">
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="form-group">
+																		<label>Bathroom</label>
+																		<input type="number" class="form-control" name="bathroom" id="id_bathroom_<%=property.getProperty().getPropertyId() %>" value="<%= property.getBathroom() %>" required="required">
+																	</div>
+																</div>
+															</div>
+				
+															<div class="row">
+																<div class="col">
+																	<div class="form-group">
+																		<label>Room</label>
+																		<input type="number" class="form-control" name="room" id="id_room_<%=property.getProperty().getPropertyId() %>" value="<%= property.getRoomCount() %>" required="required">
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="form-group">
+																		<label>Area</label><small>&nbsp;&nbsp;(in sq.m.)</small>
+																		<input type="number" class="form-control" name="area" id="id_area_<%=property.getProperty().getPropertyId() %>" value="<%= property.getArea() %>" required="required">
+																	</div>
+																</div>
+															</div>
+				
+															<div class="row">
+																<div class="col">
+																	<div class="form-group">
+																		<label>Distance From School</label><small>&nbsp;&nbsp;(in KM)</small>
+																		<input type="number" class="form-control" name="dist_school" id="id_distSchool_<%=property.getProperty().getPropertyId() %>" value="<%= property.getDistFromSchool() %>" required="required">
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="form-group">
+																		<label>Distance From Hospital</label><small>&nbsp;&nbsp;(in KM)</small>
+																		<input type="number" class="form-control" name="dist_hospital" id="id_distHospital_<%=property.getProperty().getPropertyId() %>" value="<%= property.getDistFromHospital() %>" required="required">
+																	</div>
+																</div>
+															</div>
+				
+															<div class="row">
+																<div class="col-6">
+																	<div class="form-group">
+																		<label>Floor Type</label>
+																		<select class="form-control" class="form-control" name="floor_type" id="id_floorType_<%=property.getProperty().getPropertyId() %>" required="required">
+																			<option value="1" <%if(property.getFloorType() == 1){ %>${selected="selected"}<%} %>>Marbel</option>
+																			<option value="2" <%if(property.getFloorType() == 2){ %>${selected="selected"}<%} %>>Tiled</option>
+																			<option value="3" <%if(property.getFloorType() == 3){ %>${selected="selected"}<%} %>>Cemented</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+															<div class="feature-text pl-2 mb-3 ml-2">
+																More Features :
+															</div>
+				
+															<div class="row">
+																<div class="col">
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input" id="id_waterTank_<%=property.getProperty().getPropertyId() %>" <%if(property.isWaterTank()){ %>checked<%} %> name="water_tank">
+																		<label class="custom-control-label" for="id_waterTank">&nbsp;&nbsp;Water Tank</label>
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input" id="id_parking_<%=property.getProperty().getPropertyId() %>" <%if(property.isParking()){ %>checked<%} %> name="parking">
+																		<label class="custom-control-label" for="id_parking">&nbsp;&nbsp;Parking</label>
+																	</div>
+																</div>
+															</div>
+				
+															<div class="row">
+																<div class="col">
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input" id="id_terrace_<%=property.getProperty().getPropertyId() %>" <%if(property.isTerrace()){ %>checked<%} %> name="terrace">
+																		<label class="custom-control-label" for="id_terrace">&nbsp;&nbsp;Terrace</label>
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input" id="id_ventilation_<%=property.getProperty().getPropertyId() %>" <%if(property.isVentilation()){ %>checked<%} %> name="ventilation">
+																		<label class="custom-control-label" for="id_ventilation">&nbsp;&nbsp;Ventilation</label>
+																	</div>
+																</div>
+															</div>
+				
+															<div class="row">
+																<div class="col">
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input" id="id_garden_<%=property.getProperty().getPropertyId() %>" <%if(property.isGarden()){ %>checked<%} %> name="garden">
+																		<label class="custom-control-label" for="id_garden">&nbsp;&nbsp;Garden</label>
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="custom-control custom-switch">
+																		<input type="checkbox" class="custom-control-input" id="id_pets_<%=property.getProperty().getPropertyId() %>" <%if(property.isPetsAllowed()){ %>checked<%} %> name="pets">
+																		<label class="custom-control-label" for="id_pets">&nbsp;&nbsp;Pets Allowed</label>
+																	</div>
+																</div>
+															</div>
+															
+															<div class="row pt-4 pb-4 px-3">
+																<div class="col-7 text-right pr-5">
+																	<button id="id_updtbtn_<%= property.getProperty().getPropertyId()%>" class="btn btn-primary font-weight-bold updtBtn">Update</button>
+																</div>
+																<div class="col-5 text-right">
+																</div>
+															</div>
+														</div>
 													</div>
-												</div>
-												<div class="col">
-													<div class="form-group">
-														<label>Description</label>
-														<textarea class="form-control" name="description" id="id_description_<%=property.getProperty().getPropertyId() %>" required="required"><%= property.getProperty().getDescription() %></textarea>
+													<div class="tab-pane fade" id="prop-edit-photos">
+														<div class="card-columns px-3 pb-3">
+														<% ArrayList<String> pics = property.collectAllPropPics(); 
+															for(String pic : pics){
+														%>
+															<img src="showpropimg.do?path=<%= pic %>">
+														<%} %>
+														</div>
 													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col">		
-													<div class="form-group">
-														<label>City</label>
-														<select class="form-control" name="city" id="id_city_<%=property.getProperty().getPropertyId() %>" required="required">
-															<option value="1508">Select</option>
-															<% for(City city : cities){
-																if(city.getCityId()!= property.getProperty().getCity().getCityId()){
-																	if(city.getCityId()!=City.NOT_SELECTED){ %>
-																		<option value="<%= city.getCityId() %>"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
-																	<% }}else{%>
-																		<option value="<%= city.getCityId() %>" selected="selected"><%= city.getCity()+" ("+city.getState().getState()+")" %></option>
-															<% }} %>
-														</select>
-													</div>
-												</div>
-												<div class="col">
-													<div class="form-group">
-														<label>Address</label>
-														<textarea class="form-control" name="address" id="id_address_<%=property.getProperty().getPropertyId() %>" required="required"><%= property.getProperty().getAddress() %></textarea>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col">
-													<div class="form-group">
-														<label>Property Type</label>
-														<select class="form-control" class="form-control" id="id_propertyType_<%=property.getProperty().getPropertyId() %>" name="property_type" required="required">
-														<% ArrayList<PropertyType> types = PropertyType.getAllPropertyTypes(); %>
-															<option value="10">Select</option>
-														
-														<%	for(PropertyType type : types){ 
-																if(type.getPropertyTypeId() != property.getProperty().getPropertyType().getPropertyTypeId()){%>
-																	<% if(type.getPropertyTypeId()!= PropertyType.NOT_SELECTED){ %>
-																		<option value="<%= type.getPropertyTypeId() %>"><%= type.getPropertyType() %></option>
-																<%}}else{%>
-																		<option value="<%= type.getPropertyTypeId() %>" selected="selected"><%= type.getPropertyType() %></option>
-																<% }}%>
-														</select>
-													</div>
-												</div>
-												<div class="col">
-													<div class="form-group pt-4">
-														<label>Electricity Bill:&nbsp;&nbsp;</label>
-															&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" id="id_electricityBill_<%=property.getProperty().getPropertyId() %>" <%if(!property.isElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Separate
-															&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1" <%if(property.isElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Combine
-													</div>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col">
-													<div class="form-group">
-														<label>Bedroom</label>
-														<input type="number" class="form-control" name="bedroom" id="id_bedroom_<%=property.getProperty().getPropertyId() %>" value="<%= property.getBedroom() %>" required="required">
-													</div>
-												</div>
-												<div class="col">
-													<div class="form-group">
-														<label>Bathroom</label>
-														<input type="number" class="form-control" name="bathroom" id="id_bathroom_<%=property.getProperty().getPropertyId() %>" value="<%= property.getBathroom() %>" required="required">
-													</div>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col">
-													<div class="form-group">
-														<label>Room</label>
-														<input type="number" class="form-control" name="room" id="id_room_<%=property.getProperty().getPropertyId() %>" value="<%= property.getRoomCount() %>" required="required">
-													</div>
-												</div>
-												<div class="col">
-													<div class="form-group">
-														<label>Area</label><small>&nbsp;&nbsp;(in sq.m.)</small>
-														<input type="number" class="form-control" name="area" id="id_area_<%=property.getProperty().getPropertyId() %>" value="<%= property.getArea() %>" required="required">
-													</div>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col">
-													<div class="form-group">
-														<label>Distance From School</label><small>&nbsp;&nbsp;(in KM)</small>
-														<input type="number" class="form-control" name="dist_school" id="id_distSchool_<%=property.getProperty().getPropertyId() %>" value="<%= property.getDistFromSchool() %>" required="required">
-													</div>
-												</div>
-												<div class="col">
-													<div class="form-group">
-														<label>Distance From Hospital</label><small>&nbsp;&nbsp;(in KM)</small>
-														<input type="number" class="form-control" name="dist_hospital" id="id_distHospital_<%=property.getProperty().getPropertyId() %>" value="<%= property.getDistFromHospital() %>" required="required">
-													</div>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col-6">
-													<div class="form-group">
-														<label>Floor Type</label>
-														<select class="form-control" class="form-control" name="floor_type" id="id_floorType_<%=property.getProperty().getPropertyId() %>" required="required">
-															<option value="1" <%if(property.getFloorType() == 1){ %>${selected="selected"}<%} %>>Marbel</option>
-															<option value="2" <%if(property.getFloorType() == 2){ %>${selected="selected"}<%} %>>Tiled</option>
-															<option value="3" <%if(property.getFloorType() == 3){ %>${selected="selected"}<%} %>>Cemented</option>
-														</select>
-													</div>
-												</div>
-											</div>
-											<div class="feature-text pl-2 mb-3 ml-2">
-												More Features :
-											</div>
-
-											<div class="row">
-												<div class="col">
-													<div class="custom-control custom-switch">
-														<input type="checkbox" class="custom-control-input" id="id_waterTank_<%=property.getProperty().getPropertyId() %>" <%if(property.isWaterTank()){ %>checked<%} %> name="water_tank">
-														<label class="custom-control-label" for="id_waterTank">&nbsp;&nbsp;Water Tank</label>
-													</div>
-												</div>
-												<div class="col">
-													<div class="custom-control custom-switch">
-														<input type="checkbox" class="custom-control-input" id="id_parking_<%=property.getProperty().getPropertyId() %>" <%if(property.isParking()){ %>checked<%} %> name="parking">
-														<label class="custom-control-label" for="id_parking">&nbsp;&nbsp;Parking</label>
-													</div>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col">
-													<div class="custom-control custom-switch">
-														<input type="checkbox" class="custom-control-input" id="id_terrace_<%=property.getProperty().getPropertyId() %>" <%if(property.isTerrace()){ %>checked<%} %> name="terrace">
-														<label class="custom-control-label" for="id_terrace">&nbsp;&nbsp;Terrace</label>
-													</div>
-												</div>
-												<div class="col">
-													<div class="custom-control custom-switch">
-														<input type="checkbox" class="custom-control-input" id="id_ventilation_<%=property.getProperty().getPropertyId() %>" <%if(property.isVentilation()){ %>checked<%} %> name="ventilation">
-														<label class="custom-control-label" for="id_ventilation">&nbsp;&nbsp;Ventilation</label>
-													</div>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col">
-													<div class="custom-control custom-switch">
-														<input type="checkbox" class="custom-control-input" id="id_garden_<%=property.getProperty().getPropertyId() %>" <%if(property.isGarden()){ %>checked<%} %> name="garden">
-														<label class="custom-control-label" for="id_garden">&nbsp;&nbsp;Garden</label>
-													</div>
-												</div>
-												<div class="col">
-													<div class="custom-control custom-switch">
-														<input type="checkbox" class="custom-control-input" id="id_pets_<%=property.getProperty().getPropertyId() %>" <%if(property.isPetsAllowed()){ %>checked<%} %> name="pets">
-														<label class="custom-control-label" for="id_pets">&nbsp;&nbsp;Pets Allowed</label>
-													</div>
-												</div>
-											</div>
-											
-											<div class="row pt-4 pb-4 px-3">
-												<div class="col-7 text-right pr-5">
-													<button id="id_updtbtn_<%= property.getProperty().getPropertyId()%>" class="btn btn-primary font-weight-bold updtBtn">Update</button>
-												</div>
-												<div class="col-5 text-right">
 												</div>
 											</div>
 										</div>
@@ -350,7 +377,7 @@
 									<div class="card mt-5 ml-5 shadow" style="border-bottom-right-radius: 30px;border-top-left-radius: 30px;">
 										<div class="row">
 											<div class="col-4">
-												<img src="static/images/defaultproperty.jpg" width="250px" style="border-top-left-radius: 30px;">
+												<img src="showpropimg.do?path=<%=property.getProperty().getThumbnail() %>" width="250px" height="170px" style="border-top-left-radius: 30px;">
 											</div>
 											<div class="col-8">
 												<div class="card-body">

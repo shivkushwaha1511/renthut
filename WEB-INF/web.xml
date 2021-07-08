@@ -151,4 +151,14 @@
 		<servlet-name>a13</servlet-name>
 		<url-pattern>/endsession.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a14</servlet-name>
+		<servlet-class>controllers.ShowPropertyUtilsServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a14</servlet-name>
+		<url-pattern>/showpropimg.do</url-pattern>
+	</servlet-mapping>
 </web-app>

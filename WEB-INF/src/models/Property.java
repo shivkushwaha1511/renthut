@@ -33,6 +33,46 @@ public class Property {
 	}
 
 	//	Method Summary
+	public static boolean removeProperty(int propertyId) {
+		Connection con = null;
+		boolean flag = false;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			String query = "DELETE FROM file_items WHERE property_id=?";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, propertyId);
+			
+			ps.executeUpdate();
+			
+			query = "DELETE FROM property_features WHERE property_id=?";
+			ps = con.prepareStatement(query);
+			ps.setInt(1, propertyId);
+			
+			ps.executeUpdate();
+			
+			query = "DELETE FROM properties WHERE property_id=?";
+			ps = con.prepareStatement(query);
+			ps.setInt(1, propertyId);
+			
+			ps.executeUpdate();
+			
+			flag = true;
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return flag;
+	}
+	
+	
 	public void saveThumbnail(String path) {
 		Connection con = null;
 		

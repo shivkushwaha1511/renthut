@@ -161,4 +161,14 @@
 		<servlet-name>a14</servlet-name>
 		<url-pattern>/showpropimg.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>a15</servlet-name>
+		<servlet-class>controllers.RemovePropertyServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>a15</servlet-name>
+		<url-pattern>/removeprop.do</url-pattern>
+	</servlet-mapping>
 </web-app>

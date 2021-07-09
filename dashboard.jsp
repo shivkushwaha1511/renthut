@@ -373,6 +373,22 @@
 									</div>
 								</div>
 								
+								<div id="remove_prop_box_<%=property.getProperty().getPropertyId() %>" class="pt-5" style="position: fixed;background-color: rgba(0,0,0,0.5);height: 100%;width: 100%;top: 0;left: 0;z-index: 1;display:none;">
+									<div class="bg-white mx-auto mt-5 pl-5 pt-4 pb-5" style="width:60%;">
+										<div class="row ml-4">
+											<div class="col">
+												<h1>Are You Sure?</h1>
+											</div>
+										</div>
+										<div class="row ml-4">
+											<div class="col mt-3">
+												<a class="btn btn-danger mr-2 font-weight-bold" href="removeprop.do?id=<%=property.getProperty().getPropertyId() %>" style="font-size: 20px; width:10%">Yes</a>
+												<button id="id_btn_no_<%=property.getProperty().getPropertyId() %>" class="btn btn-primary font-weight-bold btn_no" style="font-size: 20px; width:10%">No</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								
 								<div style="padding: 0px 100px;">
 									<div class="card mt-5 ml-5 shadow" style="border-bottom-right-radius: 30px;border-top-left-radius: 30px;">
 										<div class="row">
@@ -387,7 +403,7 @@
 												<div class="text-right mr-5">
 													<a id="id_<%=property.getProperty().getPropertyId() %>" class="btn btn-primary mr-2 btn_prop_edit">Edit</a>
 													<a class="btn btn-success mr-2">Post</a>
-													<a class="btn btn-danger mr-2">Remove</a>
+													<a id="id_remove_btn_<%=property.getProperty().getPropertyId() %>" class="btn btn-danger mr-2 remove_btn">Remove</a>
 												</div>
 											</div>
 										</div>

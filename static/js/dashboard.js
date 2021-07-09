@@ -219,7 +219,31 @@ updtBtns.forEach((updtBtn)=>{
 	});
 });
 
+//############################################################
 
+const remove_btns = document.querySelectorAll(".remove_btn");
+
+remove_btns.forEach((remove_btn)=>{
+	remove_btn.addEventListener("click",(event)=>{
+		let id = event.target.id.substring(14);
+		let remove_box = document.querySelector("#remove_prop_box_"+id);
+		remove_box.style.display = "block";
+		left_col.classList.remove("sticky-top");
+		main_body.style.position = "fixed";
+	});
+});
+
+const btns_no = document.querySelectorAll(".btn_no");
+
+btns_no.forEach((no_btn)=>{
+	no_btn.addEventListener("click",(event)=>{
+		let id = event.target.id.substring(10);
+		let remove_box = document.querySelector("#remove_prop_box_"+id);
+		remove_box.style.display = "none";
+		left_col.classList.add("sticky-top");
+		main_body.style.position = "static";
+	});
+});
 
 
 

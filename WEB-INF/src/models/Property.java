@@ -10,6 +10,7 @@ import java.sql.Statement;
 public class Property {
 	private int propertyId;
 	private User user;
+	private Status status; 
 	private String title;
 	private String address;
 	private City city;
@@ -39,21 +40,9 @@ public class Property {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
-			String query = "DELETE FROM file_items WHERE property_id=?";
+			String query = "UPDATE properties SET status_id=4 WHERE property_id=?";
 			
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setInt(1, propertyId);
-			
-			ps.executeUpdate();
-			
-			query = "DELETE FROM property_features WHERE property_id=?";
-			ps = con.prepareStatement(query);
-			ps.setInt(1, propertyId);
-			
-			ps.executeUpdate();
-			
-			query = "DELETE FROM properties WHERE property_id=?";
-			ps = con.prepareStatement(query);
 			ps.setInt(1, propertyId);
 			
 			ps.executeUpdate();
@@ -86,6 +75,7 @@ public class Property {
 			
 			ps.setString(1,path);
 			ps.setInt(2,propertyId);
+			ps.executeUpdate();
 					
 		}catch(ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -192,6 +182,14 @@ public class Property {
 	}
 	
 	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	public String getTitle() {
 		return title;
 	}

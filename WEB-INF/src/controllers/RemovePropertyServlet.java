@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -21,9 +22,7 @@ public class RemovePropertyServlet extends HttpServlet{
 		if(user!=null) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			
-			if(Property.removeProperty(id)) {
-				
-			}
+			Property.removeProperty(id);
 			
 			session.setAttribute("activeTab","myProperties");
 			

@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="utils.PropertyDetails"%>
+<%@page import="models.Property"%>
 <%@page import="models.PropertyFeature"%>
 <%@page import="models.User"%>
 <%@page import="models.City"%>
@@ -393,14 +395,16 @@
 									<div class="card mt-5 ml-5 shadow" style="border-bottom-right-radius: 30px;border-top-left-radius: 30px;">
 										<div class="row">
 											<div class="col-4">
-												<img src="showpropimg.do?path=<%=property.getProperty().getThumbnail() %>" width="250px" height="170px" style="border-top-left-radius: 30px;">
+												<img src="showpropimg.do?path=<%=property.getProperty().getThumbnail() %>" width="280px" height="210px" style="border-top-left-radius: 30px;">
 											</div>
 											<div class="col-8">
 												<div class="card-body">
 													<h2 class="card-title"><%= property.getProperty().getTitle() %></h2>
-													<p class="card-text"><%= property.getProperty().getDescription() %></p>
+													<% Property mainProp = property.getProperty(); %>
+													<p class="card-text"><%=PropertyDetails.shortString(mainProp.getDescription(), 10)%>....</p>
+													<p class="card-text"><i class="fa fa-map-marker fa-lg"></i>&nbsp;&nbsp;<%= property.getProperty().getAddress() %></p>
 												</div>
-												<div class="text-right mr-5">
+												<div class="text-right mr-5 mb-3">
 													<a id="id_<%=property.getProperty().getPropertyId() %>" class="btn btn-primary mr-2 btn_prop_edit">Edit</a>
 													<a class="btn btn-success mr-2">Post</a>
 													<a id="id_remove_btn_<%=property.getProperty().getPropertyId() %>" class="btn btn-danger mr-2 remove_btn">Remove</a>

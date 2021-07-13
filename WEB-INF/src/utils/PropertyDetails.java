@@ -21,6 +21,10 @@ public class PropertyDetails {
 	private boolean ventilation;
 	private boolean garden;
 	private boolean pets;
+	
+	public static String shortString(String target,Integer upto) {
+		return target.substring(0,upto);
+	}
 
 	
 	public int getId() {

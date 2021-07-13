@@ -90,7 +90,7 @@ public class PropertyFeature {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
 			
-			String query = "SELECT * FROM property_features AS f INNER JOIN properties AS p WHERE p.property_id=f.property_id AND p.user_id=?";
+			String query = "SELECT * FROM property_features AS f INNER JOIN properties AS p WHERE p.property_id=f.property_id AND p.user_id=? AND p.status_id=1";
 			
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1,user.getUserId());
@@ -117,13 +117,14 @@ public class PropertyFeature {
 				feature.setFloorType(rs.getInt(15));
 				feature.setGarden(rs.getBoolean(16));
 				property.setPropertyId(rs.getInt(17));
-				property.setTitle(rs.getString(19));
-				property.setAddress(rs.getString(20));
-				property.setCity(new City(rs.getInt(21)));
-				property.setDescription(rs.getString(22));
-				property.setPropertyType(new PropertyType(rs.getInt(23)));
-				property.setNoOfPeople(rs.getInt(24));
-				property.setThumbnail(rs.getString(25));
+				property.setStatus(new Status(rs.getInt(19)));
+				property.setTitle(rs.getString(20));
+				property.setAddress(rs.getString(21));
+				property.setCity(new City(rs.getInt(22)));
+				property.setDescription(rs.getString(23));
+				property.setPropertyType(new PropertyType(rs.getInt(24)));
+				property.setNoOfPeople(rs.getInt(25));
+				property.setThumbnail(rs.getString(26));
 				
 				feature.setProperty(property);
 				

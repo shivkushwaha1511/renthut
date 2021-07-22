@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+<%@page import="java.util.Calendar"%>
 <%@page import="utils.PropertyDetails"%>
 <%@page import="models.Property"%>
 <%@page import="models.PropertyFeature"%>
 <%@page import="models.User"%>
 <%@page import="models.City"%>
 <%@page import="models.PropertyType" %>
+<%@ page import="models.PropertyPost" %>
 
 <%@ page import="java.util.ArrayList" %>
 
@@ -155,15 +157,17 @@
 									My Properties
 								</div>
 								<% ArrayList<PropertyFeature> properties = PropertyFeature.collectAllProperties(user); %>
-								<% for(PropertyFeature property : properties){%>
-								<div id="edit_prop_box_<%=property.getProperty().getPropertyId() %>" class="pt-2" style="position: fixed;top: 0;left: 0;background-color: rgba(0,0,0,0.7);height: 100%;width: 100%;z-index: 1;display: none;">
-									<div class="bg-light mx-auto mt-5" style="overflow: auto; width:70%; height:530px;">
+								<% for(PropertyFeature property : properties){
+									int propId = property.getProperty().getPropertyId();
+								%>
+								<div id="edit_prop_box_<%=propId %>" class="pt-2" style="position: fixed;top: 0;left: 0;background-color: rgba(0,0,0,0.7);height: 100%;width: 100%;z-index: 1;display: none;">
+									<div class="bg-light mx-auto mt-5 rounded" style="overflow-y: scroll; width:70%; height:530px;">
 										<div class="row">
 											<div class="col-5 display-4 ml-4 pl-2 font-weight-bold mb-3 pt-2 dash-text">
 												Edit Property
 											</div>
 											<div class="col-3 text-right ml-auto fixed-top text-light pr-3 pt-3" style="float: right;">
-												<i id="btn_<%=property.getProperty().getPropertyId() %>" class="fa fa-times fa-lg btn-close" style="cursor: pointer;"></i>
+												<i id="btn_<%=propId %>" class="fa fa-times fa-lg btn-close" style="cursor: pointer;"></i>
 											</div>
 										</div>
 										<div class="row">
@@ -185,13 +189,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Title</label>
-																		<input type="text" class="form-control" name="title" id="id_title_<%=property.getProperty().getPropertyId() %>" value="<%= property.getProperty().getTitle() %>" autocomplete="off" required="required">
+																		<input type="text" class="form-control" name="title" id="id_title_<%=propId %>" value="<%= property.getProperty().getTitle() %>" autocomplete="off" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Description</label>
-																		<textarea class="form-control" name="description" id="id_description_<%=property.getProperty().getPropertyId() %>" required="required"><%= property.getProperty().getDescription() %></textarea>
+																		<textarea class="form-control" name="description" id="id_description_<%=propId %>" required="required"><%= property.getProperty().getDescription() %></textarea>
 																	</div>
 																</div>
 															</div>
@@ -199,7 +203,7 @@
 																<div class="col">		
 																	<div class="form-group">
 																		<label>City</label>
-																		<select class="form-control" name="city" id="id_city_<%=property.getProperty().getPropertyId() %>" required="required">
+																		<select class="form-control" name="city" id="id_city_<%=propId %>" required="required">
 																			<option value="1508">Select</option>
 																			<% for(City city : cities){
 																				if(city.getCityId()!= property.getProperty().getCity().getCityId()){
@@ -214,7 +218,7 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Address</label>
-																		<textarea class="form-control" name="address" id="id_address_<%=property.getProperty().getPropertyId() %>" required="required"><%= property.getProperty().getAddress() %></textarea>
+																		<textarea class="form-control" name="address" id="id_address_<%=propId %>" required="required"><%= property.getProperty().getAddress() %></textarea>
 																	</div>
 																</div>
 															</div>
@@ -222,7 +226,7 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Property Type</label>
-																		<select class="form-control" class="form-control" id="id_propertyType_<%=property.getProperty().getPropertyId() %>" name="property_type" required="required">
+																		<select class="form-control" class="form-control" id="id_propertyType_<%=propId %>" name="property_type" required="required">
 																		<% ArrayList<PropertyType> types = PropertyType.getAllPropertyTypes(); %>
 																			<option value="10">Select</option>
 																		
@@ -239,7 +243,7 @@
 																<div class="col">
 																	<div class="form-group pt-4">
 																		<label>Electricity Bill:&nbsp;&nbsp;</label>
-																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" id="id_electricityBill_<%=property.getProperty().getPropertyId() %>" <%if(!property.isElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Separate
+																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="0" id="id_electricityBill_<%=propId %>" <%if(!property.isElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Separate
 																			&nbsp;&nbsp;<input type="radio" name="ele_bill" value="1" <%if(property.isElectricityBill()){ %>checked="checked"<% }%>>&nbsp;Combine
 																	</div>
 																</div>
@@ -249,13 +253,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Bedroom</label>
-																		<input type="number" class="form-control" name="bedroom" id="id_bedroom_<%=property.getProperty().getPropertyId() %>" value="<%= property.getBedroom() %>" required="required">
+																		<input type="number" class="form-control" name="bedroom" id="id_bedroom_<%=propId %>" value="<%= property.getBedroom() %>" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Bathroom</label>
-																		<input type="number" class="form-control" name="bathroom" id="id_bathroom_<%=property.getProperty().getPropertyId() %>" value="<%= property.getBathroom() %>" required="required">
+																		<input type="number" class="form-control" name="bathroom" id="id_bathroom_<%=propId %>" value="<%= property.getBathroom() %>" required="required">
 																	</div>
 																</div>
 															</div>
@@ -264,13 +268,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Room</label>
-																		<input type="number" class="form-control" name="room" id="id_room_<%=property.getProperty().getPropertyId() %>" value="<%= property.getRoomCount() %>" required="required">
+																		<input type="number" class="form-control" name="room" id="id_room_<%=propId %>" value="<%= property.getRoomCount() %>" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Area</label><small>&nbsp;&nbsp;(in sq.m.)</small>
-																		<input type="number" class="form-control" name="area" id="id_area_<%=property.getProperty().getPropertyId() %>" value="<%= property.getArea() %>" required="required">
+																		<input type="number" class="form-control" name="area" id="id_area_<%=propId %>" value="<%= property.getArea() %>" required="required">
 																	</div>
 																</div>
 															</div>
@@ -279,13 +283,13 @@
 																<div class="col">
 																	<div class="form-group">
 																		<label>Distance From School</label><small>&nbsp;&nbsp;(in KM)</small>
-																		<input type="number" class="form-control" name="dist_school" id="id_distSchool_<%=property.getProperty().getPropertyId() %>" value="<%= property.getDistFromSchool() %>" required="required">
+																		<input type="number" class="form-control" name="dist_school" id="id_distSchool_<%=propId %>" value="<%= property.getDistFromSchool() %>" required="required">
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="form-group">
 																		<label>Distance From Hospital</label><small>&nbsp;&nbsp;(in KM)</small>
-																		<input type="number" class="form-control" name="dist_hospital" id="id_distHospital_<%=property.getProperty().getPropertyId() %>" value="<%= property.getDistFromHospital() %>" required="required">
+																		<input type="number" class="form-control" name="dist_hospital" id="id_distHospital_<%=propId %>" value="<%= property.getDistFromHospital() %>" required="required">
 																	</div>
 																</div>
 															</div>
@@ -294,7 +298,7 @@
 																<div class="col-6">
 																	<div class="form-group">
 																		<label>Floor Type</label>
-																		<select class="form-control" class="form-control" name="floor_type" id="id_floorType_<%=property.getProperty().getPropertyId() %>" required="required">
+																		<select class="form-control" class="form-control" name="floor_type" id="id_floorType_<%=propId %>" required="required">
 																			<option value="1" <%if(property.getFloorType() == 1){ %>${selected="selected"}<%} %>>Marbel</option>
 																			<option value="2" <%if(property.getFloorType() == 2){ %>${selected="selected"}<%} %>>Tiled</option>
 																			<option value="3" <%if(property.getFloorType() == 3){ %>${selected="selected"}<%} %>>Cemented</option>
@@ -309,13 +313,13 @@
 															<div class="row">
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="id_waterTank_<%=property.getProperty().getPropertyId() %>" <%if(property.isWaterTank()){ %>checked<%} %> name="water_tank">
+																		<input type="checkbox" class="custom-control-input" id="id_waterTank_<%=propId %>" <%if(property.isWaterTank()){ %>checked<%} %> name="water_tank">
 																		<label class="custom-control-label" for="id_waterTank">&nbsp;&nbsp;Water Tank</label>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="id_parking_<%=property.getProperty().getPropertyId() %>" <%if(property.isParking()){ %>checked<%} %> name="parking">
+																		<input type="checkbox" class="custom-control-input" id="id_parking_<%=propId %>" <%if(property.isParking()){ %>checked<%} %> name="parking">
 																		<label class="custom-control-label" for="id_parking">&nbsp;&nbsp;Parking</label>
 																	</div>
 																</div>
@@ -324,13 +328,13 @@
 															<div class="row">
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="id_terrace_<%=property.getProperty().getPropertyId() %>" <%if(property.isTerrace()){ %>checked<%} %> name="terrace">
+																		<input type="checkbox" class="custom-control-input" id="id_terrace_<%=propId %>" <%if(property.isTerrace()){ %>checked<%} %> name="terrace">
 																		<label class="custom-control-label" for="id_terrace">&nbsp;&nbsp;Terrace</label>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="id_ventilation_<%=property.getProperty().getPropertyId() %>" <%if(property.isVentilation()){ %>checked<%} %> name="ventilation">
+																		<input type="checkbox" class="custom-control-input" id="id_ventilation_<%=propId %>" <%if(property.isVentilation()){ %>checked<%} %> name="ventilation">
 																		<label class="custom-control-label" for="id_ventilation">&nbsp;&nbsp;Ventilation</label>
 																	</div>
 																</div>
@@ -339,13 +343,13 @@
 															<div class="row">
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="id_garden_<%=property.getProperty().getPropertyId() %>" <%if(property.isGarden()){ %>checked<%} %> name="garden">
+																		<input type="checkbox" class="custom-control-input" id="id_garden_<%=propId %>" <%if(property.isGarden()){ %>checked<%} %> name="garden">
 																		<label class="custom-control-label" for="id_garden">&nbsp;&nbsp;Garden</label>
 																	</div>
 																</div>
 																<div class="col">
 																	<div class="custom-control custom-switch">
-																		<input type="checkbox" class="custom-control-input" id="id_pets_<%=property.getProperty().getPropertyId() %>" <%if(property.isPetsAllowed()){ %>checked<%} %> name="pets">
+																		<input type="checkbox" class="custom-control-input" id="id_pets_<%=propId %>" <%if(property.isPetsAllowed()){ %>checked<%} %> name="pets">
 																		<label class="custom-control-label" for="id_pets">&nbsp;&nbsp;Pets Allowed</label>
 																	</div>
 																</div>
@@ -353,7 +357,7 @@
 															
 															<div class="row pt-4 pb-4 px-3">
 																<div class="col-7 text-right pr-5">
-																	<button id="id_updtbtn_<%= property.getProperty().getPropertyId()%>" class="btn btn-primary font-weight-bold updtBtn">Update</button>
+																	<button id="id_updtbtn_<%= propId%>" class="btn btn-primary font-weight-bold updtBtn">Update</button>
 																</div>
 																<div class="col-5 text-right">
 																</div>
@@ -375,21 +379,102 @@
 									</div>
 								</div>
 								
-								<div id="remove_prop_box_<%=property.getProperty().getPropertyId() %>" class="pt-5" style="position: fixed;background-color: rgba(0,0,0,0.5);height: 100%;width: 100%;top: 0;left: 0;z-index: 1;display:none;">
-									<div class="bg-white mx-auto mt-5 pl-5 pt-4 pb-5" style="width:60%;">
-										<div class="row ml-4">
-											<div class="col">
-												<h1>Are You Sure?</h1>
+								<div id="remove_prop_box_<%=propId %>" class="modal fade">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h1 class="modal-title">Are You Sure?</h1>
+												<button type="button" class="close" data-dismiss="modal">
+													<span>&times;</span>
+												</button>
 											</div>
-										</div>
-										<div class="row ml-4">
-											<div class="col mt-3">
-												<a class="btn btn-danger mr-2 font-weight-bold" href="removeprop.do?id=<%=property.getProperty().getPropertyId() %>" style="font-size: 20px; width:10%">Yes</a>
-												<button id="id_btn_no_<%=property.getProperty().getPropertyId() %>" class="btn btn-primary font-weight-bold btn_no" style="font-size: 20px; width:10%">No</button>
+											<div class="modal-body">
+												<p>This is irreversible step,once done can't be rolled back</p>
+											</div>
+											<div class="modal-footer">
+												<a href="removeprop.do?id=<%=propId %>" class="btn btn-danger">Yes</a>
+        										<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
 											</div>
 										</div>
 									</div>
 								</div>
+								
+	
+								<div class="modal fade" id="post_box_<%=propId %>">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+										<%PropertyPost post = PropertyPost.getPost(propId); %>
+											<form action="post.do">
+												<input type="hidden" name="propId" value="<%=propId %>">
+												<div class="modal-header">
+													<h1 class="modal-title"><%=property.getProperty().getTitle() %></h1>
+													<div class="custom-control custom-switch mt-3" style="margin-left:310px;">
+														<input type="checkbox" name="status" class="custom-control-input" id="id_status_<%=propId %>" <%if(post.getStatus()!=null && post.getStatus().getStatusId()==1){ %>checked<%} %>>
+														<label class="text-primary custom-control-label font-weight-bold" for="id_status_<%=propId %>" style="font-size: 18px;">&nbsp;Status</label>
+													</div>	
+													<button type="button" class="close" data-dismiss="modal">
+											          <span>&times;</span>
+											        </button>
+												</div>
+												<div class="modal-body">
+													<div class="row px-4">
+														<div class="col">
+															<div class="form-check">
+																<input name="markFill" class="form-check-input" type="checkbox" id="archive">
+																<label class="form-check-label" for="archive">
+																	Mark As Filled
+																</label>
+															</div>
+														</div>
+														<div class="col text-right">
+															<button class="btn btn-danger">Remove Post</button>
+														</div>
+													</div>
+													<div class="container mt-4">
+														<div class="row">
+															<div class="col">
+																<div class="form-group">
+																	<label>Rent</label>
+																	<input name="rent" class="form-control" type="text" value="<%= post.getRent()%>">
+																</div>
+															</div>
+															<div class="col">
+																<div class="form-group">
+																	<label>Tenant Type</label>
+																	<select class="form-control" name="tenantType">
+																		<option value="5">Select</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col">
+																<div class="form-group">
+																	<label>Start Date:</label>
+																	<input class="form-control" type="date" disabled="disabled" value="<%= post.getStartDate()%>">
+																</div>
+															</div>
+															<div class="col">
+																<div class="form-group">
+																	<label>End Date:</label>
+																	<% Calendar cal = Calendar.getInstance();
+																		cal.setTime(post.getEndDate());
+																	%>
+																	<input name="endDate" class="form-control" type="date" <% if(cal.get(Calendar.YEAR)!=2000){%>value="<%=post.getEndDate()%>"<%} %>>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-success mx-auto">Post</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+	
 								
 								<div style="padding: 0px 100px;">
 									<div class="card mt-5 ml-5 shadow" style="border-bottom-right-radius: 30px;border-top-left-radius: 30px;">
@@ -399,20 +484,27 @@
 											</div>
 											<div class="col-8">
 												<div class="card-body">
-													<h2 class="card-title"><%= property.getProperty().getTitle() %></h2>
-													<% Property mainProp = property.getProperty(); %>
-													<p class="card-text"><%=PropertyDetails.shortString(mainProp.getDescription(), 10)%>....</p>
-													<p class="card-text"><i class="fa fa-map-marker fa-lg"></i>&nbsp;&nbsp;<%= property.getProperty().getAddress() %></p>
+													<div class="row">
+														<div class="col-8">
+															<h2 class="card-title"><%= property.getProperty().getTitle() %></h2>
+															<p class="card-text"><%= property.getProperty().getTitle().substring(0,15)%>....</p>
+															<p class="card-text"><i class="fa fa-map-marker fa-lg"></i>&nbsp;&nbsp;<%= property.getProperty().getAddress() %></p>														
+														</div>
+														<div class="col-4 pt-3">
+															<button class="btn btn-primary">View Records</button>
+														</div>
+													</div>
 												</div>
 												<div class="text-right mr-5 mb-3">
-													<a id="id_<%=property.getProperty().getPropertyId() %>" class="btn btn-primary mr-2 btn_prop_edit">Edit</a>
-													<a class="btn btn-success mr-2">Post</a>
-													<a id="id_remove_btn_<%=property.getProperty().getPropertyId() %>" class="btn btn-danger mr-2 remove_btn">Remove</a>
+													<button id="id_<%=propId %>" class="btn btn-primary mr-2 btn_prop_edit">Edit</button>
+													<button class="btn btn-success mr-2" data-toggle="modal" data-target="#post_box_<%=propId %>">Post</button>
+													<button data-toggle="modal" data-target="#remove_prop_box_<%=propId %>" class="btn btn-danger">Remove</button>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+								
 								<%} %>
 							</div>
 							<div class="tab-pane fade <c:if test="${activeTab == 'addProperty'}">active show</c:if>" id="add_property">

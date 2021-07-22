@@ -22,6 +22,10 @@ public class Property {
 //	Constructor Summary
 	public Property() {}
 	
+	public Property(int propertyId) {
+		this.propertyId = propertyId;
+	}
+	
 	public Property(User user,String title, String address, City city,
 			String description, PropertyType propertyType) {
 		super();

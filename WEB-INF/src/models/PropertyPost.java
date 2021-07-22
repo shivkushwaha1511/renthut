@@ -1,14 +1,137 @@
 package models;
 
+import java.sql.Date;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 public class PropertyPost {
 	private int postId;
-	private Property propertyId;
-	private User userId;
+	private Property property;
+	private User user;
 	private int rent;
-	private Status statusId;
-	private String startDate;
-	private String endDate;
-	private TenantType tenantTypeId;
+	private Status status;
+	private Date startDate;
+	private Date endDate;
+	private TenantType tenantType;
+	
+	public PropertyPost() {
+		
+	}
+	
+	public PropertyPost(Property property,User user,int rent,Date endDate,TenantType tenantType) {
+		this.property = property;
+		this.user = user;
+		this.rent = rent;
+		this.endDate = endDate;
+		this.tenantType = tenantType;
+	}
+	
+	
+	public static PropertyPost getPost(int postId) {
+		PropertyPost post = new PropertyPost();
+		Connection con = null;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/renthut?user=root&password=1234");
+			
+			String query = "SELECT post_id,rent,status_id,start_date,end_date,tenant_type_id FROM property_posts WHERE property_id=? AND status_id=1 OR status_id=2";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, postId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				post.setPostId(rs.getInt(1));
+				post.setRent(rs.getInt(2));
+				post.setStatus(new Status(rs.getInt(3)));
+				post.setStartDate(rs.getDate(4));
+				post.setEndDate(rs.getDate(5));
+				post.setTenantType(new TenantType(rs.getInt(6)));
+			}
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return post;
+	}
+	
+	public void updatePost() {
+		Connection con = null;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "UPDATE property_posts SET status_id=?,rent=?,end_date=?,tenant_type_id=? WHERE post_id=?";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, status.getStatusId());
+			ps.setInt(2, rent);
+			ps.setDate(3, endDate);
+			ps.setInt(4, tenantType.getTenantTypeId());
+			ps.setInt(5, postId);
+			
+			ps.executeUpdate();
+			
+		}catch(SQLException|ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void savePost() {
+		Connection con = null;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "INSERT INTO property_posts (property_id,user_id,rent,end_date,tenant_type_id) VALUE (?,?,?,?,?)";
+			
+			PreparedStatement ps = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, property.getPropertyId());
+			ps.setInt(2, user.getUserId());
+			ps.setInt(3, rent);
+			ps.setDate(4, endDate);
+			ps.setInt(5, tenantType.getTenantTypeId());
+			
+			if(ps.executeUpdate()==1) {
+				ResultSet rs = ps.getGeneratedKeys();
+				
+				if(rs.next()) {
+					this.postId = rs.getInt(1); 
+				}
+			}
+			
+		}catch(SQLException|ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 	public int getPostId() {
 		return postId;
@@ -18,20 +141,20 @@ public class PropertyPost {
 		this.postId = postId;
 	}
 	
-	public Property getPropertyId() {
-		return propertyId;
+	public Property getProperty() {
+		return property;
 	}
 	
-	public void setPropertyId(Property propertyId) {
-		this.propertyId = propertyId;
+	public void setProperty(Property property) {
+		this.property = property;
 	}
 	
-	public User getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 	
-	public void setUserId(User userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public int getRent() {
@@ -42,35 +165,35 @@ public class PropertyPost {
 		this.rent = rent;
 	}
 	
-	public Status getStatusId() {
-		return statusId;
+	public Status getStatus() {
+		return status;
 	}
 	
-	public void setStatusId(Status statusId) {
-		this.statusId = statusId;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 	
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 	
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 	
-	public TenantType getTenantTypeId() {
-		return tenantTypeId;
+	public TenantType getTenantType() {
+		return tenantType;
 	}
 	
-	public void setTenantTypeId(TenantType tenantTypeId) {
-		this.tenantTypeId = tenantTypeId;
+	public void setTenantType(TenantType tenantType) {
+		this.tenantType = tenantType;
 	}
 }

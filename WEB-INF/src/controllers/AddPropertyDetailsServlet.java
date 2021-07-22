@@ -92,6 +92,8 @@ public class AddPropertyDetailsServlet extends HttpServlet{
 					feature.setGarden(garden);
 				}
 				response.getWriter().print("Updated");
+				
+				session.setAttribute("activeTab","addProperty");
 			}else if(id != 0) {
 				property = new Property(user,title,address,city,description,proType);
 				property.setPropertyId(id);
@@ -125,9 +127,9 @@ public class AddPropertyDetailsServlet extends HttpServlet{
 				}else {
 					response.getWriter().print("failed");					
 				}
+				
+				session.setAttribute("activeTab","addProperty");
 			}
-			
-			session.setAttribute("activeTab","addProperty");
 					
 		}else {
 			response.getWriter().print("expired");

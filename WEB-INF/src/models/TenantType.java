@@ -4,6 +4,10 @@ public class TenantType {
 	private int tenantTypeId;
 	private String tenantType;
 	
+	public TenantType(int tenantTypeId) {
+		this.tenantTypeId = tenantTypeId;
+	}
+	
 	public int getTenantTypeId() {
 		return tenantTypeId;
 	}

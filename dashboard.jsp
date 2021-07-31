@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="models.TenantType"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="utils.PropertyDetails"%>
 <%@page import="models.Property"%>
@@ -426,9 +427,6 @@
 																</label>
 															</div>
 														</div>
-														<div class="col text-right">
-															<button class="btn btn-danger">Remove Post</button>
-														</div>
 													</div>
 													<div class="container mt-4">
 														<div class="row">
@@ -443,6 +441,13 @@
 																	<label>Tenant Type</label>
 																	<select class="form-control" name="tenantType">
 																		<option value="5">Select</option>
+																		<%ArrayList<TenantType> tenantTypes = TenantType.getAllTenantType();
+																			for(TenantType tenantType:tenantTypes){
+																				if(post.getTenantType().getTenantTypeId()==tenantType.getTenantTypeId()){%>
+																					<option value="<%= tenantType.getTenantTypeId()%>" selected><%=tenantType.getTenantType() %></option>
+																				<%}else{ %>
+																					<option value="<%= tenantType.getTenantTypeId()%>"><%=tenantType.getTenantType() %></option>
+																			<%}} %>
 																	</select>
 																</div>
 															</div>

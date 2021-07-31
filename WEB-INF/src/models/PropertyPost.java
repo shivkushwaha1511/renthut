@@ -31,6 +31,28 @@ public class PropertyPost {
 		this.tenantType = tenantType;
 	}
 	
+//	public static void removePost(int propertyId) {
+//		Connection con = null;
+//		try {
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+//			
+//			String query = "UPDATE property_posts SET status_id=3 WHERE property_id=? AND status_id=1"; 
+//			PreparedStatement ps = con.prepareStatement(query);
+//			ps.setInt(1, propertyId);
+//			
+//			ps.executeUpdate();
+//			
+//		}catch(SQLException|ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}finally {
+//			try {
+//				con.close();
+//			}catch(SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 	
 	public static PropertyPost getPost(int postId) {
 		PropertyPost post = new PropertyPost();
@@ -38,9 +60,9 @@ public class PropertyPost {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost/renthut?user=root&password=1234");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
 			
-			String query = "SELECT post_id,rent,status_id,start_date,end_date,tenant_type_id FROM property_posts WHERE property_id=? AND status_id=1 OR status_id=2";
+			String query = "SELECT post_id,rent,status_id,start_date,end_date,tenant_type_id FROM property_posts WHERE (property_id=?) AND (status_id=1 OR status_id=2)";
 			
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, postId);

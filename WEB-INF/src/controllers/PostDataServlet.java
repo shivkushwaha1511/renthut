@@ -46,6 +46,7 @@ public class PostDataServlet extends HttpServlet{
 				endDate = "2000-01-01";
 			}
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			
 			java.util.Date OendDate = null;
 			try {
 				OendDate = format.parse(endDate);

@@ -85,7 +85,9 @@
 	color: #222629;
 }
 
-
+#record_back_btn{
+	cursor: pointer;
+}
 
 
 

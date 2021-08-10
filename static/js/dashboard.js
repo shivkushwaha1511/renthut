@@ -219,3 +219,50 @@ updtBtns.forEach((updtBtn)=>{
 	});
 });
 
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+const view_records = document.querySelector("#view_records");
+const prop_listing_box = document.querySelector("#prop_listing_box");
+const prop_listing_text = document.querySelector("#prop_listing_text");
+const prop_records_box = document.querySelector("#prop_records_box");
+const record_back_btn = document.querySelector("#record_back_btn");
+
+record_back_btn.addEventListener("click",()=>{
+	prop_listing_box.style.display = "block";
+	prop_listing_text.style.display = "block";
+	prop_records_box.style.display = "none";
+});
+
+view_records.addEventListener("click",()=>{
+	prop_listing_box.style.display = "none";
+	prop_listing_text.style.display = "none";
+	prop_records_box.style.display = "block";	
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

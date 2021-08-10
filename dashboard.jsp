@@ -154,7 +154,7 @@
 
 							
 							<div class="tab-pane fade <c:if test="${activeTab == 'myProperties'}">active show</c:if>" id="my_properties">
-								<div class="display-4 ml-4 pl-2 font-weight-bold mb-5 pt-2 dash-text">
+								<div id="prop_listing_text" class="display-4 ml-4 pl-2 font-weight-bold mb-5 pt-2 dash-text">
 									My Properties
 								</div>
 								<% ArrayList<PropertyFeature> properties = PropertyFeature.collectAllProperties(user); %>
@@ -399,8 +399,7 @@
 										</div>
 									</div>
 								</div>
-								
-	
+							
 								<div class="modal fade" id="post_box_<%=propId %>">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -479,39 +478,64 @@
 										</div>
 									</div>
 								</div>
-	
-								
-								<div style="padding: 0px 100px;">
-									<div class="card mt-5 ml-5 shadow" style="border-bottom-right-radius: 30px;border-top-left-radius: 30px;">
-										<div class="row">
-											<div class="col-4">
-												<img src="showpropimg.do?path=<%=property.getProperty().getThumbnail() %>" width="280px" height="210px" style="border-top-left-radius: 30px;">
-											</div>
-											<div class="col-8">
-												<div class="card-body">
-													<div class="row">
-														<div class="col-8">
-															<h2 class="card-title"><%= property.getProperty().getTitle() %></h2>
-															<p class="card-text"><%= property.getProperty().getTitle().substring(0,15)%>....</p>
-															<p class="card-text"><i class="fa fa-map-marker fa-lg"></i>&nbsp;&nbsp;<%= property.getProperty().getAddress() %></p>														
-														</div>
-														<div class="col-4 pt-3">
-															<button class="btn btn-primary">View Records</button>
+							
+								<div id="prop_listing_box">
+									<div style="padding: 0px 100px;">
+										<div class="card mt-5 ml-5 shadow" style="border-bottom-right-radius: 30px;border-top-left-radius: 30px;">
+											<div class="row">
+												<div class="col-4">
+													<img src="showpropimg.do?path=<%=property.getProperty().getThumbnail() %>" width="280px" height="210px" style="border-top-left-radius: 30px;">
+												</div>
+												<div class="col-8">
+													<div class="card-body">
+														<div class="row">
+															<div class="col-8">
+																<h2 class="card-title"><%= property.getProperty().getTitle() %></h2>
+																<p class="card-text"><%= property.getProperty().getTitle().substring(0,15)%>....</p>
+																<p class="card-text"><i class="fa fa-map-marker fa-lg"></i>&nbsp;&nbsp;<%= property.getProperty().getAddress() %></p>														
+															</div>
+															<div class="col-4 pt-3">
+																<button id="view_records" class="btn btn-primary">View Records</button>
+															</div>
 														</div>
 													</div>
-												</div>
-												<div class="text-right mr-5 mb-3">
-													<button id="id_<%=propId %>" class="btn btn-primary mr-2 btn_prop_edit">Edit</button>
-													<button class="btn btn-success mr-2" data-toggle="modal" data-target="#post_box_<%=propId %>">Post</button>
-													<button data-toggle="modal" data-target="#remove_prop_box_<%=propId %>" class="btn btn-danger">Remove</button>
+													<div class="text-right mr-5 mb-3">
+														<button id="id_<%=propId %>" class="btn btn-primary mr-2 btn_prop_edit">Edit</button>
+														<button class="btn btn-success mr-2" data-toggle="modal" data-target="#post_box_<%=propId %>">Post</button>
+														<button data-toggle="modal" data-target="#remove_prop_box_<%=propId %>" class="btn btn-danger">Remove</button>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 								
+								<div class="pt-3" id="prop_records_box" style="display:none;">
+										<i id="record_back_btn" class="fa fa-chevron-circle-left fa-3x ml-3 mr-2"></i>
+										<div class="display-4 font-weight-bold mb-5 pt-2 dash-text" style="display:inline;">
+											Records
+										</div>
+										<div class="px-5 pt-5">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Sr. No.</th>
+														<th>Tenant Name</th>
+														<th>Tenant Address</th>
+														<th>Visit Date</th>
+														<th>Leave Date</th>
+														<th>Status</th>
+													</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
 								<%} %>
 							</div>
+							
 							<div class="tab-pane fade <c:if test="${activeTab == 'addProperty'}">active show</c:if>" id="add_property">
 								<div class="display-4 ml-4 pl-2 font-weight-bold mb-5 pt-2">
 									<div class="row">

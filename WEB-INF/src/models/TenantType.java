@@ -11,6 +11,10 @@ public class TenantType {
 	private int tenantTypeId;
 	private String tenantType;
 	
+	public TenantType() {
+		
+	}
+	
 	public TenantType(int tenantTypeId,String tenantType) {
 		this.tenantTypeId = tenantTypeId;
 		this.tenantType = tenantType;

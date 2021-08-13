@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -85,6 +87,23 @@ public class PropertyPost {
 			}catch(SQLException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		if(post.tenantType==null) {
+			post.setTenantType(new TenantType());
+		}
+		
+		if(post.endDate == null) {
+			String	date = "2000-01-01";
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			
+			java.util.Date OendDate = null;
+			try {
+				OendDate = format.parse(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			post.endDate = new Date(OendDate.getTime());
 		}
 		
 		return post;

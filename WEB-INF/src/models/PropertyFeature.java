@@ -50,6 +50,69 @@ public class PropertyFeature {
 	}
 	
 //	Method Summary
+	public static ArrayList<PropertyFeature> getAllProperties(String searchvalue){
+		ArrayList<PropertyFeature> properties = new ArrayList<PropertyFeature>();
+		Connection con = null;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/renthut?user=root&password=1234");
+			
+			String query = "SELECT * FROM property_features AS f INNER JOIN properties AS p INNER JOIN cities AS c INNER JOIN property_posts as pp WHERE p.property_id = f.property_id AND p.city_id = c.city_id AND pp.property_id=p.property_id AND pp.status_id=1 AND p.title LIKE '%"+searchvalue+"%'";
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			ResultSet rs = ps.executeQuery(query);
+			
+			while(rs.next()) {
+				PropertyFeature feature = new PropertyFeature();
+				Property property = new Property();
+				
+				feature.setFeatureId(rs.getInt(1));
+				feature.setRoomCount(rs.getInt(3));
+				feature.setBedroom(rs.getInt(4));
+				feature.setBathroom(rs.getInt(5));
+				feature.setElectricityBill(rs.getBoolean(6));
+				feature.setArea(rs.getInt(7));
+				feature.setWaterTank(rs.getBoolean(8));
+				feature.setParking(rs.getBoolean(9));
+				feature.setDistFromSchool(rs.getInt(10));
+				feature.setDistFromHospital(rs.getInt(11));
+				feature.setTerrace(rs.getBoolean(12));
+				feature.setVentilation(rs.getBoolean(13));
+				feature.setPetsAllowed(rs.getBoolean(14));
+				feature.setFloorType(rs.getInt(15));
+				feature.setGarden(rs.getBoolean(16));
+				property.setPropertyId(rs.getInt(17));
+				property.setUser(new User(rs.getInt(18)));
+				property.setStatus(new Status(rs.getInt(19)));
+				property.setTitle(rs.getString(20));
+				property.setAddress(rs.getString(21));
+				property.setDescription(rs.getString(23));
+				property.setPropertyType(new PropertyType(rs.getInt(24)));
+				property.setNoOfPeople(rs.getInt(25));
+				property.setThumbnail(rs.getString(26));
+				property.setCity(new City(rs.getInt(27),rs.getString(28)));
+				
+				feature.setProperty(property);
+				
+				properties.add(feature);
+			}
+			
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return properties;
+	}
+	
+	
 	public ArrayList<String> collectAllPropPics(){
 		ArrayList<String> pics = new ArrayList<String>();
 		Connection con = null;

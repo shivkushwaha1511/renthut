@@ -26,6 +26,10 @@ public class User {
 		
 	}
 	
+	public User(int userId) {
+		this.userId = userId;
+	}
+	
 	public User(String name, String email, String password, String address, String activationCode) {
 		super();
 		this.name = name;

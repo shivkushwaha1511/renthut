@@ -55,3 +55,24 @@ a:hover{
 .footer{
     background-color: #222629;
 }
+
+
+#home_search_bar{
+	 width:650px; 
+	 background: none; 
+	 border-top:none; 
+	 border-left: none;
+	 border-right: none;
+	 border-bottom: 5px white solid;
+	 outline: none;
+	 font-size: 20px;
+}
+
+#home_search_bar::placeholder{
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+
+

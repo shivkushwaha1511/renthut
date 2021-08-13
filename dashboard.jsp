@@ -491,7 +491,7 @@
 														<div class="row">
 															<div class="col-8">
 																<h2 class="card-title"><%= property.getProperty().getTitle() %></h2>
-																<p class="card-text"><%= property.getProperty().getTitle().substring(0,15)%>....</p>
+																<p class="card-text"><%= property.getProperty().getTitle().substring(0,10)%>....</p>
 																<p class="card-text"><i class="fa fa-map-marker fa-lg"></i>&nbsp;&nbsp;<%= property.getProperty().getAddress() %></p>														
 															</div>
 															<div class="col-4 pt-3">
